@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import subprocess
+import datetime
 
 from .__private import db_user_pass, secret_key
 
@@ -147,3 +149,18 @@ try:
     print('RUNNING IN LOCAL MODE')
 except ImportError as e:
     print('RUNNING IN PRODUCTION MODE')
+
+
+proc = subprocess.Popen('git log -n 1 --pretty=format:"%H"', shell=True, stdout=subprocess.PIPE)
+CURRENT_COMMIT = proc.stdout.read()[:7].decode()
+print('COMMIT =', CURRENT_COMMIT)
+NODE_NAME = os.uname().nodename
+PID = os.getpid()
+COUNTRY_CODE = 'AU'
+
+
+def get_debug_info():
+    return 'Rendered by PID %i on %s at %s running #%s country code: %s.' %\
+           (PID, NODE_NAME,
+            datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S'),
+            CURRENT_COMMIT, COUNTRY_CODE)

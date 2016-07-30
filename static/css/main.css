@@ -532,4 +532,15 @@ body {
     font-weight: 200;
     color: #292f33; }
 
+.debuginfo {
+  position: fixed;
+  bottom: 0;
+  right: 0; }
+  .debuginfo .icon:hover + .content {
+    display: inline-block; }
+  .debuginfo .content {
+    font-weight: lighter;
+    font-size: smaller;
+    display: none; }
+
 /*# sourceMappingURL=main.css.map */

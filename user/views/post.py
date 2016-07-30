@@ -11,6 +11,7 @@ from django.shortcuts import render, get_object_or_404
 from user.forms import PostForm
 from user.models import UserProfile, Follow, Post, Like, Repost, Notification
 import re
+import gabr.settings
 
 
 username_regex = re.compile('@(?P<username>[^\s]+)')
@@ -119,6 +120,7 @@ def feed(request):
         'current_user_follow_count': current_user_follow_count,
         'current_user_follower_count': current_user_follower_count,
         'post_form': PostForm,
+        'debug_info': gabr.settings.get_debug_info(),
     }
     return render(request, 'feed.html', context)
 

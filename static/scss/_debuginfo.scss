@@ -1,0 +1,19 @@
+.debuginfo {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+
+    .icon {
+
+    }
+
+    .icon:hover + .content {
+        display: inline-block;
+    }
+
+    .content {
+        font-weight: lighter;
+        font-size: smaller;
+        display: none;
+    }
+}
