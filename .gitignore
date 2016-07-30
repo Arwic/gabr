@@ -113,3 +113,4 @@ tests/report/
 media/*
 migrations/*
 __private.*
+gabrenv/*
