@@ -77,6 +77,7 @@ class PostInfo:
 
 def get_feed_posts(current_user, time_oldest=datetime.fromtimestamp(0), time_newest=datetime.fromtimestamp(0)):
     posts = []
+    # get posts from the people the use follows
     for follow in Follow.objects.filter(follower__user=current_user.id):
         for post in Post.objects.filter(user=follow.subject, time__gt=time_oldest, time__lt=time_newest) \
                 .order_by('-time'):
@@ -84,6 +85,13 @@ def get_feed_posts(current_user, time_oldest=datetime.fromtimestamp(0), time_new
         for repost in Repost.objects.filter(user=follow.subject, time__gt=time_oldest, time__lt=time_newest) \
                 .order_by('-time'):
             posts.append(PostInfo(True, repost, current_user))
+    # get the user's own posts
+    for post in Post.objects.filter(user=current_user, time__gt=time_oldest, time__lt=time_newest) \
+            .order_by('-time'):
+        posts.append(PostInfo(False, post, current_user))
+    for repost in Repost.objects.filter(user=current_user, time__gt=time_oldest, time__lt=time_newest) \
+            .order_by('-time'):
+        posts.append(PostInfo(True, repost, current_user))
     return posts
 
 
