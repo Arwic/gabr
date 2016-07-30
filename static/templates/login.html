@@ -1,23 +1,22 @@
 {% extends 'base.html' %}
 {% load user_tags %}
-
 {% block header %}
-
     <title>Log in | Gab</title>
-
 {% endblock %}
-
 {% block content %}
-
-    <form class="form-horizontal col-md-4" action="{% url "login" %}" method="post">{% csrf_token %}
-        <div class="form-group input-group">
-            <span class="input-group-addon">@</span>
-            {{ form.username|add_class_placeholder:"form-control`Username" }}
-        </div>
-        <div class="form-group">
-            {{ form.password|add_class_placeholder:"form-control`Password" }}
-        </div>
-        <button type="submit" class="btn btn-primary">Log in</button>
-    </form>
-
+    <div class="b-login-container">
+        <h1>Gabr</h1>
+        <h2>Log in</h2>
+        <hr class="divider">
+        <form class="form" action="{% url "login" %}" method="post">{% csrf_token %}
+            <div class="form-group input-group">
+                <span class="input-group-addon">@</span>
+                {{ form.username|add_class_placeholder:"form-control`Username" }}
+            </div>
+            <div class="form-group">
+                {{ form.password|add_class_placeholder:"form-control`Password" }}
+            </div>
+            <button type="submit" class="button">Log in</button>
+        </form>
+    </div>
 {% endblock %}

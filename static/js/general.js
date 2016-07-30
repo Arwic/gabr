@@ -27,7 +27,6 @@ $(document).ready(function () {
             window.location.pathname = "/";
     });
 
-
     global_profile_card.mouseleave(function () {
         $(this).hide();
     });
@@ -274,7 +273,19 @@ function writePost(post_json)
     // Post body
     var p_body = document.createElement("p");
     div_post.appendChild(p_body);
-    p_body.appendChild(document.createTextNode(post_json["post"]["body"]));
+
+    // replace hash tags
+    p_body.innerHTML = post_json["post"]["body"].replace(/(^|)#(\w+)/g,
+            function (s) {
+                return '<a href="/tag/' + s.replace(/#/,'') + '">' + s + '</a>';
+            });
+
+    // replace mentions
+    p_body.innerHTML = p_body.innerHTML.replace(/(^|)@(\w+)/g,
+            function (s) {
+                return '<a href="/user/' + s.replace(/@/,'') + '">' + s + '</a>';
+            });
+
     // Like button
     var button_like = document.createElement("button");
     div_post.appendChild(button_like);

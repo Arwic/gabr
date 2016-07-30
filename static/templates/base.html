@@ -27,17 +27,16 @@
 
 <!--<body background="{% static "img/backgrounds/diagmonds.png" %}">-->
 
-<!-- Navigation -->
-<nav class="b-navbar">
-    <!-- Left nav -->
-    <div class="item left">
-        <a class="link" href="/">
-            <span class="icon icon-home"></span>
-            Feed
-        </a>
-    </div>
-
-    {% if user.is_authenticated %}
+{% if user.is_authenticated %}
+    <!-- Navigation -->
+    <nav class="b-navbar">
+        <!-- Left nav -->
+        <div class="item left">
+            <a class="link" href="/">
+                <span class="icon icon-home"></span>
+                Feed
+            </a>
+        </div>
         <div class="item left">
             <a class="link" href="{% url "messages" %}">
                 <span class="icon icon-message"></span>
@@ -105,10 +104,8 @@
         <div class="item right">
             <input class="text-input" type="text" placeholder="Search">
         </div>
-    {% endif %}
-</nav>
+    </nav>
 
-{% if user.is_authenticated %}
     <!-- Universal new post modal -->
     <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
         <div class="modal-dialog " role="document">
@@ -127,8 +124,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" form="post-form" class="btn btn-primary">Post</button>
+                    <button type="button" class="button" data-dismiss="modal">Close</button>
+                    <button type="submit" form="post-form" class="button">Post</button>
                 </div>
             </div>
         </div>
@@ -171,51 +168,48 @@
             </div>
         </div>
     </div>
-{% endif %}
 
-<div class="b-profile-small" id="global-profile-card">
-    <div class="banner">
-        <img class="image" id="profile-card-banner" src="" />
-    </div>
-    <div>
-        <a id="profile-card-profile-link" href="#">
-            <div class="avatar">
-                <img class="image" id="profile-card-avatar" src="" />
+    <div class="b-profile-small" id="global-profile-card">
+        <div class="banner">
+            <img class="image" id="profile-card-banner" src="" />
+        </div>
+        <div>
+            <a id="profile-card-profile-link" href="#">
+                <div class="avatar">
+                    <img class="image" id="profile-card-avatar" src="" />
+                </div>
+                <span class="display-name" id="profile-card-display-name"></span><br>
+                <span class="user-name" id="profile-card-user-name"></span>
+            </a>
+
+            <div class="bio" id="profile-card-bio"></div>
+
+            <div class="stats">
+                <a id="profile-card-profile-link-posts" href="#">
+                    <div class="label">
+                        posts<br>
+                        <span class="value" id="profile-card-profile-post-count"></span>
+                    </div>
+                </a>
+                <a id="profile-card-profile-link-following" href="#">
+                    <div class="label">
+                        following<br>
+                        <span class="value" id="profile-card-profile-following-count"></span>
+                    </div>
+                </a>
+                <a id="profile-card-profile-link-followers" href="#">
+                    <div class="label">
+                        followers<br>
+                        <span class="value" id="profile-card-profile-follower-count"></span>
+                    </div>
+                </a>
             </div>
-            <span class="display-name" id="profile-card-display-name"></span><br>
-            <span class="user-name" id="profile-card-user-name"></span>
-        </a>
-
-        <div class="bio" id="profile-card-bio"></div>
-
-        <div class="stats">
-            <a id="profile-card-profile-link-posts" href="#">
-                <div class="label">
-                    posts<br>
-                    <span class="value" id="profile-card-profile-post-count"></span>
-                </div>
-            </a>
-            <a id="profile-card-profile-link-following" href="#">
-                <div class="label">
-                    following<br>
-                    <span class="value" id="profile-card-profile-following-count"></span>
-                </div>
-            </a>
-            <a id="profile-card-profile-link-followers" href="#">
-                <div class="label">
-                    followers<br>
-                    <span class="value" id="profile-card-profile-follower-count"></span>
-                </div>
-            </a>
         </div>
     </div>
-</div>
-
-<!-- Page Content -->
+{% endif %}
 
 {% block content %} {% endblock %}
 
-<!-- /.container -->
 <div class="debuginfo">
     <span class="icon">π</span>
     <span class="content">
@@ -223,5 +217,4 @@
     </span>
 </div>
 </body>
-
 </html>

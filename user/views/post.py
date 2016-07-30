@@ -107,11 +107,10 @@ def get_profile_posts(current_user, target_user, time_oldest, time_newest):
     return posts
 
 
-@login_required
 def feed(request):
     try:
         current_user = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
+    except:
         return render(request, 'landing.html')
     current_user_post_count, current_user_follow_count, current_user_follower_count = current_user.stats()
     context = {

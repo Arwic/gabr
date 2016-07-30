@@ -1,36 +1,32 @@
 {% extends 'base.html' %}
 {% load user_tags %}
-
 {% block header %}
-
-    <title>Sign up | Gab</title>
-
-    <style>
-        .center {
-            text-align: center;
-        }
-    </style>
-
+    <title>Sign up | Gabr</title>
 {% endblock %}
-
 {% block content %}
-    <form id="form" name="form" class="form-horizontal col-md-4" action="{% url "signup" %}" method="post">{% csrf_token %}
-        <div class="form-group input-group">
-            <span class="input-group-addon">@</span>
-            {{ form.username|add_class_placeholder:"form-control`Username" }}
-        </div>
-        <div class="form-group">
-            {{ form.email|add_class_placeholder:"form-control`Email" }}
-        </div>
-        <div class="form-group">
-            {{ form.password|add_class_placeholder:"form-control`Password" }}
-        </div>
-        <div class="form-group">
-            {{ form.password2|add_class_placeholder:"form-control`Confirm password" }}
-        </div>
-        <div class="form-group">
-            {{ form.gender }}
-        </div>
-        <button type="submit" class="btn btn-primary">Sign up</button>
-    </form>
+    <div class="b-signup-container">
+        <h1>Gabr</h1>
+        <h2>Sign up</h2>
+        <hr class="divider">
+        <form id="form" name="form" class="form" action="{% url "signup" %}" method="post">{% csrf_token %}
+            <div class="form-group input-group">
+                <span class="input-group-addon">@</span>
+                {{ form.username|add_class_placeholder:"form-control`Username" }}
+            </div>
+            <div class="form-group">
+                {{ form.email|add_class_placeholder:"form-control`Email" }}
+            </div>
+            <div class="form-group">
+                {{ form.password|add_class_placeholder:"form-control`Password" }}
+            </div>
+            <div class="form-group">
+                {{ form.password2|add_class_placeholder:"form-control`Confirm password" }}
+            </div>
+            <div class="form-group">
+                {{ form.gender }}
+            </div>
+            <button type="submit" class="button">Sign up</button>
+        </form>
+        <a class="login-link" href="{% url "login" %}">Already have an account?</a>
+    </div>
 {% endblock %}
