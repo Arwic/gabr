@@ -10,5 +10,5 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-STATIC_ROOT = '/Library/WebServer/Documents/gab/static/'
-MEDIA_ROOT = '/Library/WebServer/Documents/gab/media/'
+STATIC_ROOT = '/Library/WebServer/Documents/gabr/static/'
+MEDIA_ROOT = '/Library/WebServer/Documents/gabr/media/'
