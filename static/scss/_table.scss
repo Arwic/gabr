@@ -1,0 +1,62 @@
+.b-table {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .col {
+        position: relative;
+        .row {
+            width: 100%;
+            margin: 0px;
+        }
+    }
+
+    .width-1 {
+        width: 100px;
+    }
+
+    .width-2 {
+        width: 200px;
+    }
+
+    .width-3 {
+        width: 300px;
+    }
+
+    .width-4 {
+        width: 400px;
+    }
+
+    .width-5 {
+        width: 500px;
+    }
+
+    .width-6 {
+        width: 600px;
+    }
+
+    .width-7 {
+        width: 700px;
+    }
+
+    .width-8 {
+        width: 800px;
+    }
+
+    .width-9 {
+        width: 900px;
+    }
+
+    .width-10 {
+        width: 1000px;
+    }
+
+    .width-11 {
+        width: 1100px;
+    }
+
+    .width-12 {
+        width: 1200px;
+    }
+}

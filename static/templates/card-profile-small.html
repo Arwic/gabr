@@ -1,0 +1,45 @@
+{% load user_tags %}
+
+<div class="b-profile-small">
+    <div class="banner">
+        <img class="image" src="{{ card_user.banner.url }}" />
+    </div>
+    <div>
+        <a id="card-profile-small-{{ card_user.user.username }}" href="{% url "profile" user_name=card_user.user.username %}">
+            <div class="avatar">
+                <img class="image" src="{{ card_user.avatar.url }}" />
+            </div>
+            <span class="display-name">{{ card_user.display_name }}</span><br>
+            <span class="user-name">{{ card_user.user.username }}</span>
+        </a>
+
+        <div class="bio">{{ card_user.bio }}</div>
+
+        <div class="stats">
+            <a href="{% url "profile" user_name=card_user.user.username %}">
+                <div class="label">
+                    posts<br>
+                    <span class="value">
+                        {{ card_user_post_count }}
+                    </span>
+                </div>
+            </a>
+            <a href="{% url "profile_following" user_name=card_user.user.username %}">
+                <div class="label">
+                    following<br>
+                    <span class="value">
+                        {{ card_user_follow_count }}
+                    </span>
+                </div>
+            </a>
+            <a href="{% url "profile_followers" user_name=card_user.user.username %}">
+                <div class="label">
+                    followers<br>
+                    <span class="value">
+                        {{ card_user_follower_count }}
+                    </span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

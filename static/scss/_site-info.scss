@@ -1,0 +1,20 @@
+.b-site-info {
+    border: solid $col-border 1px;
+    border-radius: 5px;
+    background-color: $col-background;
+    max-width: 300px;
+    color: $col-text-sec;
+    margin: 5px;
+    padding: 20px;
+    font-size: 12px;
+
+    .link {
+        color: $col-text-sec;
+    }
+
+    .separator {
+        &:after {
+            content: " · ";
+        }
+    }
+}

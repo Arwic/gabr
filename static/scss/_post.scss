@@ -1,0 +1,84 @@
+.b-post {
+    border: 1px solid $col-border;
+    border-bottom-style: none;
+    background-color: $col-background;
+    padding: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    animation: fadein 0.5s;
+
+    .avatar {
+        display: inline;
+        float: left;
+        border-radius: 5px;
+        width: 48px;
+        height: 48px;
+        margin-right: 10px;
+        overflow: hidden;
+        .image {
+            border-radius: 5px;
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .display-name {
+        font-size: 14px;
+        font-weight: $font-bold;
+        color: $col-text-pri;
+    }
+
+    .user-name {
+        font-size: 13px;
+        color: $col-text-sec;
+        &:before {
+            content: " @";
+        }
+    }
+
+    .time {
+        font-size: 13px;
+        color: $col-text-sec;
+        &:before {
+            content: " · ";
+        }
+    }
+
+    .body {
+        word-wrap: break-word;
+        margin-left: 60px;
+        color: $col-text-pri;
+        font-weight: $font-regular;
+        font-size: 14px;
+    }
+
+    .repost-icon {
+        color: #00c800;
+    }
+
+    .repost-display-name {
+        color: $col-text-sec;
+        font-size: 14px;
+    }
+
+    .button {
+        display: inline;
+        border: none;
+        background-color: transparent;
+        padding: 0;
+        margin: 0 20px 0 20px;
+        width: 30px;
+        height: 30px;
+        color: $col-text-sec;
+    }
+}
+
+.rounded-top {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.rounded-bottom {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

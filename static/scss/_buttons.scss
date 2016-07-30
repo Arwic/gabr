@@ -1,0 +1,29 @@
+.like-button-true:before {
+    content: "\f004";
+    color: #ac2925;
+    transition: color 0.2s;
+}
+
+.like-button-false:before {
+    content: "\f004";
+    transition: color 0.2s;
+}
+
+.repost-button-true:before {
+    content: "\f079";
+    color: #5cb85c;
+    transition: color 0.2s;
+}
+
+.repost-button-false:before {
+    content: "\f079";
+    transition: color 0.2s;
+}
+
+.follow-button-false:before {
+    content: "Follow";
+}
+
+.follow-button-true:before {
+    content: "Unfollow";
+}

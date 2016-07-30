@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+
+{% block header %}
+    <title>Notifications | Gab</title>
+{% endblock %}
+
+{% block content %}
+    <div class="b-table">
+        <div class="col width-7">
+            {% for notif in notifications %}
+                <div class="row">
+                    <div class="b-notification">
+                        <div class="{% if not notif.read %}unread{% endif %}">
+                            {% if notif.notification_type == "f" %}
+                                <div class="body">
+                                    <span class="new-label"></span>
+                                    <a id="notif-follow-{{ notif.follow.id }}" class="link" href="{% url "profile" notif.follow.follower %}">
+                                        <div class="avatar">
+                                            <img class="image" src="{{ notif.follow.follower.avatar.url }}">
+                                        </div>
+                                        {{ notif.follow.follower.display_name }}
+                                    </a>
+                                    <script>
+                                        registerHoverCard("#notif-follow-{{ notif.follow.id }}", "{{ notif.follow.follower.user.username }}")
+                                    </script>
+                                    <span class="text">followed you</span>
+                                    <span class="time">{{ notif.time }}</span>
+                                </div>
+                            {% elif notif.notification_type == "p" %}
+                                <div class="body">
+                                    <span class="new-label"></span>
+                                    <a id="notif-msg-{{ notif.message.id }}" class="link" href="{% url "profile" notif.message.user %}">
+                                        <div class="avatar">
+                                            <img class="image" src="{{ notif.message.user.avatar.url }}">
+                                        </div>
+                                        {{ notif.message.user.display_name }}
+                                    </a>
+                                    <script>
+                                        registerHoverCard("#notif-msg-{{ notif.message.id }}", "{{ notif.message.user.user.username }}")
+                                    </script>
+                                    <span class="text">messaged you</span>
+                                    <span class="time">{{ notif.time }}</span>
+                                    <p class="text">{{ notif.message.body }}</p>
+                                </div>
+                            {% elif notif.notification_type == "l" %}
+                                <div class="body">
+                                    <span class="new-label"></span>
+                                    <a id="notif-like-{{ notif.like.id }}" class="link" href="{% url "profile" notif.like.user %}">
+                                        <div class="avatar">
+                                            <img class="image" src="{{ notif.like.user.avatar.url }}">
+                                        </div>
+                                        {{ notif.like.user.display_name }}
+                                    </a>
+                                    <script>
+                                        registerHoverCard("#notif-like-{{ notif.like.id }}", "{{ notif.like.user.user.username }}")
+                                    </script>
+                                    <span class="text">liked your</span>
+                                    <a class="link" onclick="viewPost({{ notif.like.post.id }})" href="#">post</a>
+                                    <span class="time">{{ notif.time }}</span>
+                                </div>
+                            {% elif notif.notification_type == "r" %}
+                                <div class="body">
+                                    <span class="new-label"></span>
+                                    <a id="notif-repost-{{ notif.repost.id }}" class="link" href="{% url "profile" notif.repost.user %}">
+                                        <div class="avatar">
+                                            <img class="image" src="{{ notif.repost.user.avatar.url }}">
+                                        </div>
+                                        {{ notif.repost.user.display_name }}
+                                    </a>
+                                    <script>
+                                        registerHoverCard("#notif-repost-{{ notif.repost.id }}", "{{ notif.repost.user.user.username }}")
+                                    </script>
+                                    <span class="text">reposted your</span>
+                                    <a class="link" onclick="viewPost({{ notif.repost.post.id }})" href="#">post</a>
+                                    <span class="time">{{ notif.time }}</span>
+                                </div>
+                            {% elif notif.notification_type == "m" %}
+                                <div class="body">
+                                    <span class="new-label"></span>
+                                    <a id="notif-mention-{{ notif.mention.id }}" class="link" href="{% url "profile" notif.mention.user %}">
+                                        <div class="avatar">
+                                            <img class="image" src="{{ notif.mention.user.avatar.url }}">
+                                        </div>
+                                        {{ notif.mention.user.display_name }}
+                                    </a>
+                                    <script>
+                                        registerHoverCard("#notif-mention-{{ notif.mention.id }}", "{{ notif.mention.user.user.username }}")
+                                    </script>
+                                    <span class="text">mentioned you in a</span>
+                                    <a class="link" onclick="viewPost({{ notif.mention.id }})" href="#">post</a>
+                                    <span class="time">{{ notif.time }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

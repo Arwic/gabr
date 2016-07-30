@@ -1,0 +1,47 @@
+.icon {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-user:before {
+    content: "\f007";
+}
+
+.icon-list:before {
+    content: "\f03a";
+}
+
+.icon-help:before {
+    content: "\f128";
+}
+
+.icon-ad:before {
+    content: "\f155";
+}
+
+.icon-settings:before {
+    content: "\f013";
+}
+
+.icon-logout:before {
+    content: "\f08b";
+}
+
+.icon-home:before {
+    content: "\f015";
+}
+.icon-message:before {
+    content: "\f0e0";
+}
+
+.icon-notification:before {
+    content: "\f0f3";
+}
+
+.icon-postdetail:before {
+    content: "\f065";
+}

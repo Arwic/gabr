@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <title>Post | Gab</title>
+{% endblock %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            viewPost({{ post_id }});
+        });
+    </script>
+{% endblock %}

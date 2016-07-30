@@ -1,0 +1,20 @@
+#global-profile-card {
+    display: none;
+    position: absolute;
+    z-index: 2000;
+
+    animation: fadein 0.3s;
+}
+
+.b-hovercard {
+    .hovercard {
+        z-index: 100;
+        position: absolute;
+        display: none;
+    }
+
+    &:hover .hovercard {
+        display: block;
+        animation: fadein 0.3s;
+    }
+}

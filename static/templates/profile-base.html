@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+{% load staticfiles %}
+
+{% block header %}
+    <title>{{ target_user.display_name }} (@{{ target_user.user.username }}) | Gab</title>
+    {% block profile_header %} {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="b-profile-header">
+        <div class="banner">
+            <img class="image" src="{{ target_user.banner.url }}">
+        </div>
+        <div class="navbar">
+            {% if current_user != target_user %}
+                <div class="item right">
+                    <button id="follow-{{ target_user.user.username }}" class="button {% if is_following %}follow-button-true{% else %}follow-button-false{% endif %}" onclick="onFollowButton('{{ target_user.user.username }}')"></button>
+                </div>
+            {% endif %}
+            <div class="item right">
+                <a class="link" href="{% url "profile_lists" user_name=target_user.user.username %}">
+                    <div class="stat-button">
+                        <span class="label">Lists</span><br>
+                        <span class="value">{{ list_count }}</span>
+                    </div>
+                </a>
+            </div>
+            <div class="item right">
+                <a class="link" href="{% url "profile_likes" user_name=target_user.user.username %}">
+                    <div class="stat-button">
+                        <span class="label">Likes</span><br>
+                        <span class="value">{{ like_count }}</span>
+                    </div>
+                </a>
+            </div>
+            <div class="item right">
+                <a class="link" href="{% url "profile_followers" user_name=target_user.user.username %}">
+                    <div class="stat-button">
+                        <span class="label">Followers</span><br>
+                        <span class="value">{{ follower_count }}</span>
+                    </div>
+                </a>
+            </div>
+            <div class="item right">
+                <a class="link" href="{% url "profile_following" user_name=target_user.user.username %}">
+                    <div class="stat-button">
+                        <span class="label">Following</span><br>
+                        <span class="value">{{ follow_count }}</span>
+                    </div>
+                </a>
+            </div>
+            <div class="item right">
+                <a class="link" href="{% url "profile" user_name=target_user.user.username %}">
+                    <div class="stat-button">
+                        <span class="label">Posts</span><br>
+                        <span class="value">{{ post_count }}</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="b-table">
+        <div class="col width-3">
+            <div class="row">
+                <div class="b-profile-info">
+                    <div class="avatar">
+                        <img class="image" src="{{ target_user.avatar.url }}">
+                    </div>
+                    <div class="info">
+                        <div class="display-name">{{ target_user.display_name }}</div>
+                        <div class="user-name">{{ target_user.user.username }}</div>
+                        <div class="bio">{{ target_user.bio }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% block profile_content %}{% endblock %}
+        <div class="col width-3">
+            <div class="row">
+                {% include 'card-trends.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

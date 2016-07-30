@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+
+{% block header %}
+
+    <title>Settings | Gab</title>
+
+    <style>
+        .center {
+            display: block;
+            align-content: center;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+    <div class="center">
+        <form class="form-horizontal col-md-4" id="form" method="POST" action="{% url "settings" %}" enctype="multipart/form-data">{% csrf_token %}
+            <div class="form-group input-group">
+                <span class="input-group-addon">Name</span>
+                {{ form.display_name|add_class:'form-control' }}
+            </div>
+            <div class="form-group">
+                {{ form.avatar|add_class:'form-control' }}
+            </div>
+            <div class="form-group">
+                {{ form.banner|add_class:'form-control' }}
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon">Bio</span>
+                {{ form.bio|add_class:'form-control' }}
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon">Location</span>
+                {{ form.location|add_class:'form-control' }}
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon">Website</span>
+                {{ form.website|add_class:'form-control' }}
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon">Birthday</span>
+                {{ form.birthday|add_class:'form-control' }}
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon">Time Zone</span>
+                {{ form.time_zone|add_class:'form-control' }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+{% endblock %}

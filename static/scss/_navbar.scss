@@ -1,0 +1,67 @@
+.b-navbar {
+    width: 100vw;
+    height: 50px;
+    background-color: $col-background;
+    box-shadow: 2px 1px 2px $col-border;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    padding: 0 10% 0 10%;
+    display: inline-block;
+    font-weight: $font-regular;
+
+    .left {
+        float: left !important;
+    }
+
+    .right {
+        float: right !important;
+    }
+
+    .item {
+        margin: 10px;
+
+        .link {
+            font-size: 20px;
+            text-decoration: none !important;
+            color: $col-pri
+        }
+
+        .button {
+            border-radius: 5px;
+            background-color: $col-pri;
+            border-style: none;
+            padding: 5px 10px 5px 5px;
+            color: $col-background;
+            &:hover {
+                background-color: darken($col-pri, 10%);
+            }
+            &:active {
+                background-color: darken($col-pri, 15%);
+            }
+        }
+
+        .image-container {
+            width: 32px;
+            height: 32px;
+            overflow: hidden;
+            border-radius: 5px;
+
+            .image {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .text-input {
+            max-width: 250px;
+            padding: 2.5px 30px 2.5px 15px;
+            color: $col-text-sec;
+            background-color: $col-background;
+            border: 1px solid $col-border;
+            border-radius: 50px;
+        }
+    }
+}

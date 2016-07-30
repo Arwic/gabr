@@ -1,0 +1,23 @@
+.b-trends {
+    border: solid $col-border 1px;
+    border-radius: 5px;
+    background-color: $col-background;
+    margin: 5px;
+    padding-bottom: 20px;
+
+    .header {
+        margin: 20px;
+        font-size: 18px;
+    }
+
+    .body {
+        margin: 20px;
+        font-size: 13px;
+        font-weight: $font-bold;
+        color: $col-pri;
+
+        &:before {
+            content: "#";
+        }
+    }
+}

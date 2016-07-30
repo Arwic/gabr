@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+    <title>Welcome | Gab</title>
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 70px;
+            /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        }
+
+        .center-text
+        {
+            text-align: center;
+        }
+    </style>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="center-text container">
+        <h1>Gab - Microblogging</h1>
+        <hr class="divider">
+        <a href="/login/" class="btn btn-primary">Log in</a>
+        <a href="/signup/" class="btn btn-primary">Sign up</a>
+    </div>
+
+{% endblock %}
+
+</html>

@@ -1,0 +1,81 @@
+.b-feed-cap {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid $col-border;
+    background-color: $col-background;
+    border-bottom-style: none;
+    padding: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+
+    .text-input {
+        width: 90%;
+        border-radius: 5px;
+        border: 1px solid $col-border;
+        padding: 5px;
+        background-color: $col-background;
+        color: $col-text-sec;
+        text-align: left;
+        margin-left: 5px;
+        font-weight: $font-regular;
+    }
+
+    .avatar {
+        border-radius: 5px;
+        overflow: hidden;
+        width: 32px;
+        height: 32px;
+        float: left;
+        margin-right: 5px;
+
+        .image {
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
+.b-view-new-posts {
+    border: 1px solid $col-border;
+    background-color: $col-background;
+    border-bottom-style: none;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+    padding: 5px;
+    display: block;
+    text-decoration: none !important;
+
+    .body {
+        color: $col-pri;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.b-load-more-posts {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid $col-border;
+    background-color: $col-background;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 50px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    line-height: 30px;
+
+    .body {
+        color: $col-pri;
+        margin-top: 10px;
+        margin-bottom: -6px;
+    }
+}
+
+.feed-special-link {
+    text-decoration: none !important;
+}

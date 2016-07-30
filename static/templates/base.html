@@ -1,0 +1,222 @@
+{% load staticfiles %}
+{% load user_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Tim Ings <timothyjings@gmail.com>">
+
+    <link rel="shortcut icon" type="image/ong" href="{% static "favicon.ico" %}"/>
+
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/main.css" %}" rel="stylesheet">
+
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+    <!--<script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>-->
+    <script src="{% static "js/jquery-1.11.1.js" %}"></script>
+    <script src="{% static "js/tether.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/general.js" %}"></script>
+
+    <!-- Extended header -->
+    {% block header %} {% endblock %}
+</head>
+
+<!--<body background="{% static "img/backgrounds/diagmonds.png" %}">-->
+
+<!-- Navigation -->
+<nav class="b-navbar">
+    <!-- Left nav -->
+    <div class="item left">
+        <a class="link" href="/">
+            <span class="icon icon-home"></span>
+            Feed
+        </a>
+    </div>
+
+    {% if user.is_authenticated %}
+        <div class="item left">
+            <a class="link" href="{% url "messages" %}">
+                <span class="icon icon-message"></span>
+                Messages
+            </a>
+        </div>
+
+        <div class="item left">
+            <a class="link" href="{% url "notifications" %}">
+                <span class="icon icon-notification"></span>
+                <span id="nav-notifications" class="label label-pill label-danger"></span>
+                Notifications
+            </a>
+        </div>
+
+        <!-- Right nav -->
+        <div class="item right">
+            <button class="button" onclick="postTo()">
+                <span class="icon icon-post"></span>
+                New Post
+            </button>
+        </div>
+
+        <!-- User dropdown -->
+        <div class="item right">
+            <div class="dropdown">
+                <a href="#" data-toggle="dropdown">
+                    <div class="image-container">
+                        <img class="image" src="{{ current_user.avatar.url }}" />
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right fade-in">
+                    <a class="dropdown-item" href="{% url "profile" user_name=user.username %}">
+                        <span class="fa icon-user"></span>
+                        View profile
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url "profile_lists" user_name=user.username %}">
+                        <span class="fa icon-list"></span>
+                        Lists
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url "help" %}">
+                        <span class="fa icon-help"></span>
+                        Help
+                    </a>
+                    <a class="dropdown-item" href="{% url "advertising" %}">
+                        <span class="fa icon-ad"></span>
+                        Advertising
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url "settings" %}">
+                        <span class="fa icon-settings"></span>
+                        Settings
+                    </a>
+                    <a class="dropdown-item" href="{% url "logout" %}">
+                        <span class="fa icon-logout"></span>
+                        Log out
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search box -->
+        <div class="item right">
+            <input class="text-input" type="text" placeholder="Search">
+        </div>
+    {% endif %}
+</nav>
+
+{% if user.is_authenticated %}
+    <!-- Universal new post modal -->
+    <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel4">Compose Post</h4>
+                </div>
+                <div class="modal-footer">
+                    <form id="post-form" class="form-horizontal col-md-4" action="{% url "new-post" %}" method="post">{% csrf_token %}
+                        <span id="id_post_body">
+                            {{ post_form.body|add_class:'form-control' }}
+                        </span>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" form="post-form" class="btn btn-primary">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Universal view post modal -->
+    <div class="modal fade" id="modal-viewpost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+        <input type="hidden" id="modal-viewpost-username">
+        <div class="modal-dialog " role="document">
+            <input id="modal-viewpost-postid" type="hidden" />
+            <div class="b-post rounded-top">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <a id="modal-viewpost-postuser-link" href="#">
+                    <div class="avatar">
+                        <img id="modal-viewpost-postuser-avatar" class="image" src="" />
+                    </div>
+                    <span id="modal-viewpost-postuser-displayname" class="display-name"></span>
+                </a>
+                <span id="modal-viewpost-postuser-username" class="user-name" ></span>
+                <span id="modal-viewpost-post-time" class="time"></span>
+                <script>
+                    $("#modal-viewpost-postuser-link").mouseenter(function () {
+                        var left = $(this).position().left;
+                        var top = $(this).position().top;
+                        viewProfileCard($("#modal-viewpost-username").val(), top, left);
+                    });
+                    $("#modal-viewpost-postuser-link").mouseout(function() {
+                        hideProfileCard();
+                    });
+                </script>
+                <p id="modal-viewpost-post-body" class="post-text"></p>
+                <button onclick="onLikeButton(-1)" class="button" id="like-button" name="like-button" type="button">
+                    <span id="modal-viewpost-like" class="icon like-button-false"></span>
+                </button>
+                <button onclick="onRepostButton(-1)" class="button" id="repost-button" name="repost-button" type="button">
+                    <span id="modal-viewpost-repost" class="icon repost-button-false"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="b-profile-small" id="global-profile-card">
+    <div class="banner">
+        <img class="image" id="profile-card-banner" src="" />
+    </div>
+    <div>
+        <a id="profile-card-profile-link" href="#">
+            <div class="avatar">
+                <img class="image" id="profile-card-avatar" src="" />
+            </div>
+            <span class="display-name" id="profile-card-display-name"></span><br>
+            <span class="user-name" id="profile-card-user-name"></span>
+        </a>
+
+        <div class="bio" id="profile-card-bio"></div>
+
+        <div class="stats">
+            <a id="profile-card-profile-link-posts" href="#">
+                <div class="label">
+                    posts<br>
+                    <span class="value" id="profile-card-profile-post-count"></span>
+                </div>
+            </a>
+            <a id="profile-card-profile-link-following" href="#">
+                <div class="label">
+                    following<br>
+                    <span class="value" id="profile-card-profile-following-count"></span>
+                </div>
+            </a>
+            <a id="profile-card-profile-link-followers" href="#">
+                <div class="label">
+                    followers<br>
+                    <span class="value" id="profile-card-profile-follower-count"></span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Page Content -->
+
+{% block content %} {% endblock %}
+
+<!-- /.container -->
+
+</body>
+
+</html>

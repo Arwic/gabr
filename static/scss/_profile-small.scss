@@ -1,0 +1,91 @@
+.b-profile-small {
+    border: 1px solid $col-border;
+    border-radius: 5px;
+    background-color: $col-background;
+    width: 290px;
+    margin: 5px;
+
+    .display-name {
+        font-size: 18px;
+        margin-left: 110px;
+        font-weight: 600;
+        color: $col-text-pri;
+    }
+
+    .user-name {
+        font-size: 14px;
+        margin-left: 110px;
+        font-weight: 200;
+        color: $col-text-sec;
+
+        &:before {
+            content: "@";
+        }
+    }
+
+    .stats {
+        margin-bottom: 5px;
+        margin-top: 5px;
+
+        &:after {
+            display: table;
+            clear: both;
+            content: "";
+        }
+
+        .label {
+            display: inline;
+            float: left;
+            font-size: 8pt;
+            text-transform: uppercase;
+            margin-left: 20px;
+            font-weight: $font-regular;
+            width: 60px;
+            color: $col-text-sec;
+        }
+
+        .value {
+            font-size: 18px;
+            font-weight: 600;
+            color: $col-pri;
+        }
+    }
+
+    .banner {
+        float: top;
+        max-width: 300px;
+        height: 100px;
+        overflow: hidden;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+
+        .image {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .avatar {
+        float: top;
+        width: 80px;
+        height: 80px;
+        overflow: hidden;
+        margin-left: 20px;
+        transform: translateY(-40%);
+        position: absolute;
+        z-index: 1;
+        border-radius: 5px;
+
+        .image {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .bio {
+        font-size: 10pt;
+        font-weight: 200;
+        margin: 10px 20px 10px 20px;
+        color: #000000;
+    }
+}

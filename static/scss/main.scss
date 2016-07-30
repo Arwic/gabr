@@ -1,0 +1,37 @@
+$col-pri: #0084b4;
+$col-background: #ffffff;
+$col-border: #e1e8ed;
+$col-text-pri: #292f33;
+$col-text-sec: #8899a6;
+
+$font-light: 100;
+$font-regular: 400;
+$font-bold: 600;
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes slideup {
+    from { transform: translateY(30px); }
+    from { transform: translateY(0px); }
+}
+
+body {
+    padding-top: 55px;
+    background-color: #f5f8fa;
+}
+
+@import "_navbar";
+@import "_post";
+@import "_icons";
+@import "_table";
+@import "_feed";
+@import "_profile-small";
+@import "_hovercard";
+@import "_buttons";
+@import "_site-info";
+@import "_trends";
+@import "_notification";
+@import "_profile-full";

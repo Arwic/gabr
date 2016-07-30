@@ -1,0 +1,64 @@
+.b-notification {
+    border: 1px solid $col-border;
+    border-bottom-style: none;
+    background-color: $col-background;
+    padding: 10px;
+    float: left;
+    width: 100%;
+
+    .unread {
+        .new-label {
+            float: right;
+            border-radius: 25px;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: #c90000;
+            color: #ffffff;
+
+            &:before {
+                content: "NEW";
+            }
+        }
+    }
+
+    .avatar {
+        float: left;
+        border-radius: 5px;
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+        overflow: hidden;
+        .image {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .display-name {
+        font-size: 14px;
+        font-weight: $font-bold;
+        color: $col-text-pri;
+    }
+
+    .user-name {
+        font-size: 13px;
+        color: $col-text-sec;
+        &:before {
+            content: "@";
+        }
+    }
+
+    .time {
+        font-size: 13px;
+        color: $col-text-sec;
+        &:before {
+            content: "· ";
+        }
+    }
+
+    .body {
+        color: $col-text-pri;
+        font-weight: $font-regular;
+        font-size: 14px;
+    }
+}
