@@ -31,7 +31,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['.arwic.me']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -150,6 +149,8 @@ try:
 except ImportError as e:
     print('RUNNING IN PRODUCTION MODE')
 
+if not DEBUG:
+    SESSION_COOKIE_DOMAIN = ".arwic.me"
 
 proc = subprocess.Popen('git log -n 1 --pretty=format:"%H"', shell=True, stdout=subprocess.PIPE)
 CURRENT_COMMIT = proc.stdout.read()[:7].decode()
