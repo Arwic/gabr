@@ -4,4 +4,4 @@ sudo apt-get install python3 python3-pip python3-dev libpq-dev postgresql postgr
 sudo pip3 install virtualenv
 virtualenv gabrenv
 . gabrenv/bin/activate
-pip3 install django python-dateutil pillow gunicorn
+pip3 install django python-dateutil pillow gunicorn psycopg2
