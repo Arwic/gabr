@@ -1,0 +1,26 @@
+.b-login-container {
+    width: 800px;
+    margin: 0 auto;
+    text-align: center;
+
+    .form {
+        text-align: center;
+        margin: 0 auto;
+        width: 300px;
+    }
+
+    .button {
+        border-radius: 5px;
+        background-color: $col-pri;
+        border-style: none;
+        padding: 10px 10px 10px 10px;
+        color: $col-background;
+        text-decoration: none !important;
+        &:hover {
+            background-color: darken($col-pri, 10%);
+        }
+        &:active {
+            background-color: darken($col-pri, 15%);
+        }
+    }
+}

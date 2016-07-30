@@ -13,6 +13,18 @@ body {
   padding-top: 55px;
   background-color: #f5f8fa; }
 
+.button {
+  border-radius: 5px;
+  background-color: #0084b4;
+  border-style: none;
+  padding: 5px 10px 5px 10px;
+  color: #ffffff;
+  text-decoration: none !important; }
+  .button:hover {
+    background-color: #005f81; }
+  .button:active {
+    background-color: #004c68; }
+
 .b-navbar {
   width: 100vw;
   height: 50px;
@@ -542,5 +554,52 @@ body {
     font-weight: lighter;
     font-size: smaller;
     display: none; }
+
+.b-landing-container {
+  width: 800px;
+  margin: 0 auto;
+  text-align: center; }
+  .b-landing-container .button {
+    border-radius: 5px;
+    background-color: #0084b4;
+    border-style: none;
+    padding: 10px 10px 10px 10px;
+    color: #ffffff;
+    text-decoration: none !important; }
+    .b-landing-container .button:hover {
+      background-color: #005f81; }
+    .b-landing-container .button:active {
+      background-color: #004c68; }
+
+.b-login-container {
+  width: 800px;
+  margin: 0 auto;
+  text-align: center; }
+  .b-login-container .form {
+    text-align: center;
+    margin: 0 auto;
+    width: 300px; }
+  .b-login-container .button {
+    border-radius: 5px;
+    background-color: #0084b4;
+    border-style: none;
+    padding: 10px 10px 10px 10px;
+    color: #ffffff;
+    text-decoration: none !important; }
+    .b-login-container .button:hover {
+      background-color: #005f81; }
+    .b-login-container .button:active {
+      background-color: #004c68; }
+
+.b-signup-container {
+  width: 800px;
+  margin: 0 auto;
+  text-align: center; }
+  .b-signup-container .form {
+    text-align: center;
+    margin: 0 auto;
+    width: 300px; }
+  .b-signup-container .login-link {
+    font-size: small; }
 
 /*# sourceMappingURL=main.css.map */
