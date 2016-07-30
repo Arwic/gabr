@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from user.forms import SignupForm, LoginForm
+from gabr.forms import SignupForm, LoginForm
 
 
 def login(request):

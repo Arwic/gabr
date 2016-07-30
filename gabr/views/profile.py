@@ -4,8 +4,8 @@ from django.http import HttpResponse
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from user.models import UserProfile, Follow, Post, Like, Repost, Notification, Trend
-from user.forms import UserProfileForm, PostForm, SignupForm, MessageForm, LoginForm
+from gabr.models import UserProfile, Follow, Post, Like, Repost, Notification, Trend
+from gabr.forms import UserProfileForm, PostForm, SignupForm, MessageForm, LoginForm
 import json
 import datetime
 from dateutil import tz
@@ -30,7 +30,7 @@ def profile_posts(request, user_name):
     current_user = UserProfile.objects.get(user=request.user)
     target_user = get_object_or_404(UserProfile, user__username=user_name)
 
-    #posts = get_user_post_infos(current_user, target_user)
+    # posts = get_user_post_infos(current_user, target_user)
 
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
