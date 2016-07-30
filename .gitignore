@@ -111,6 +111,6 @@ tests/report/
 .sass-cache/*
 */.sass-cache/*
 media/*
-migrations/*
+*/migrations/*
 __private.*
 gabrenv/*
