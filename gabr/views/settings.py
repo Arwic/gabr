@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from user.forms import UserProfileForm, PostForm
-from user.models import UserProfile, Notification
+from gabr.forms import UserProfileForm, PostForm
+from gabr.models import UserProfile, Notification
 
 
 http_link_re = re.compile(r'://')

@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
-from user.forms import PostForm
-from user.models import UserProfile, Notification
+from gabr.forms import PostForm
+from gabr.models import UserProfile, Notification
 
 
 @login_required

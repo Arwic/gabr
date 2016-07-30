@@ -8,8 +8,8 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from user.forms import PostForm
-from user.models import UserProfile, Follow, Post, Like, Repost, Notification
+from gabr.forms import PostForm
+from gabr.models import UserProfile, Follow, Post, Like, Repost, Notification
 import re
 import gabr.settings
 

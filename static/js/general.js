@@ -422,6 +422,7 @@ function checkNewPosts()
     });
 }
 
-function loadOlderPosts(type, target) {
+function loadOlderPosts(type, target)
+{
     loadPosts(type, 50, target, 0, post_time_oldest);
 }
