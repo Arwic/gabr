@@ -7,37 +7,42 @@
     <div class="b-settings-container">
         <div class="settings-menu">
             <ul>
-                <a href="{% url "settings_profile" %}">
+                <a id="s-profile" href="{% url "settings_profile" %}">
                     <li>
                         Profile
                     </li>
                 </a>
-                <a href="{% url "settings_account" %}">
+                <a id="s-account" href="{% url "settings_account" %}">
                     <li>
                         Account
                     </li>
                 </a>
-                <a href="{% url "settings_notifications" %}">
+                <a id="s-password" href="{% url "settings_password" %}">
+                    <li>
+                        Password
+                    </li>
+                </a>
+                <a id="s-notifications" href="{% url "settings_notifications" %}">
                     <li>
                         Notifications
                     </li>
                 </a>
-                <a href="{% url "settings_blocked" %}">
+                <a id="s-blocked" href="{% url "settings_blocked" %}">
                     <li>
                         Blocked accounts
                     </li>
                 </a>
-                <a href="{% url "settings_payment" %}">
+                <a id="s-payment" href="{% url "settings_payment" %}">
                     <li>
                         Payment
                     </li>
                 </a>
-                <a href="{% url "settings_apps" %}">
+                <a id="s-apps" href="{% url "settings_apps" %}">
                     <li>
                         Connected apps
                     </li>
                 </a>
-                <a href="{% url "settings_data" %}">
+                <a id="s-data" href="{% url "settings_data" %}">
                     <li style="border: none; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
                         Your data
                     </li>

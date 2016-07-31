@@ -4,23 +4,20 @@
     <title>Log in | Gabr</title>
 {% endblock %}
 {% block content %}
-    <div class="b-login-container">
+    <div class="b-header">
         <a href="/" style="text-decoration: none !important;">
             <h1>Gabr</h1>
         </a>
         <h2>Log in</h2>
         <hr class="divider">
-        <form class="form" action="{% url "login" %}" method="post">{% csrf_token %}
-            <div class="form-group input-group">
-                <span class="input-group-addon">@</span>
-                {{ form.username|add_class_placeholder:"form-control`Username" }}
-            </div>
-            <div class="form-group">
-                {{ form.password|add_class_placeholder:"form-control`Password" }}
-            </div>
+    </div>
+    <div class="b-login-container">
+        <form class="form" method="POST" action="{% url "login" %}">{% csrf_token %}
+            <ul>
+                {{ form.as_ul }}
+            </ul>
             <button type="submit" class="button">Log in</button>
-            <br>
-            <a class="signup-link" href="{% url "signup" %}">Need an account? Sign up here.</a>
         </form>
+        <a class="signup-link" href="{% url "signup" %}">Need an account? Sign up here.</a>
     </div>
 {% endblock %}

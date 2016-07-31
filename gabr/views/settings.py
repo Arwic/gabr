@@ -45,7 +45,26 @@ def settings_account(request):
         'post_form': PostForm,
         'form': form,
     }
-    return render(request, 'settings-profile.html', context)
+    return render(request, 'settings-account.html', context)
+
+
+@login_required
+def settings_account(request):
+    current_user = get_object_or_404(UserProfile, user=request.user)
+    form = SettingsProfileForm(request.POST or None, request.FILES or None, instance=current_user)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        if http_link_re.search(instance.website) is None:
+            instance.website = "https://%s" % instance.website
+
+        instance.save()
+        return HttpResponseRedirect('/')
+    context = {
+        'current_user': current_user,
+        'post_form': PostForm,
+        'form': form,
+    }
+    return render(request, 'settings-account.html', context)
 
 
 @login_required

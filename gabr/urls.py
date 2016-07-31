@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
-from django.contrib import admin
+from django.contrib import admin, auth
+from django.contrib.auth.views import password_change, password_reset
 
 from django.conf import settings
 from gabr import views
@@ -27,6 +28,11 @@ urlpatterns = [
     url(r'^settings/$', views.settings.settings_profile, name='settings'),
     url(r'^settings/profile/$', views.settings.settings_profile, name='settings_profile'),
     url(r'^settings/account/$', views.settings.settings_account, name='settings_account'),
+    url(r'^settings/password/$', django.contrib.auth.views.password_change,
+        {
+            'template_name': 'settings-password.html',
+            'post_change_redirect': '/password-changed/',
+        }, name='settings_password'),
     url(r'^settings/notifications/$', views.settings.settings_notifications, name='settings_notifications'),
     url(r'^settings/blocked/$', views.settings.settings_blocked, name='settings_blocked'),
     url(r'^settings/payment/$', views.settings.settings_payment, name='settings_payment'),

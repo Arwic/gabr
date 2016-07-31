@@ -31,7 +31,7 @@ def signup(request):
         username = form.cleaned_data['username']
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
-        password2 = form.cleaned_data['password2']
+        password2 = form.cleaned_data["confirm_password"]
         if password == password2:
             user = User.objects.create_user(username, email, password)
             user.save()

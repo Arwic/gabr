@@ -3,6 +3,11 @@
 {% block settings-content %}
     <div class="header">
         <h1>Profile</h1>
+        <script>
+            $(document).ready(function() {
+                $("#s-profile").addClass("active");
+            });
+        </script>
     </div>
     <div class="body">
         <form class="form" id="form" method="POST" action="{% url "settings_profile" %}" enctype="multipart/form-data">{% csrf_token %}

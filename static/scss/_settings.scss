@@ -6,6 +6,23 @@
     .settings-menu {
         width: 295px;
         float: left;
+        
+        .active li {
+            background-color: darken($col-background, 2.5%);
+        }
+
+        a {
+            color: $col-pri;
+            text-decoration: none !important;
+
+            &:visited {
+                color: $col-pri;
+            }
+
+            &:hover {
+                color: darken($col-pri, 10%);
+            }
+        }
 
         ul {
             list-style: none;
@@ -15,6 +32,7 @@
             border-radius: 5px;
             border: 1px solid $col-border;
             background-color: $col-background;
+
             li {
                 padding: 10px;
                 border-top-right-radius: 5px;

@@ -136,7 +136,7 @@
                 <div class="modal-footer">
                     <form id="post-form" class="form-horizontal col-md-4" action="{% url "new-post" %}" method="post">{% csrf_token %}
                         <span id="id_post_body">
-                            {{ post_form.body|add_class:'form-control' }}
+                            {{ post_form.body }}
                         </span>
                     </form>
                 </div>

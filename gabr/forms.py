@@ -60,8 +60,8 @@ class SignupForm(forms.Form):
     username = forms.CharField()
     email = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
-    gender = forms.ChoiceField(choices=CHOICES_GENDER, widget=forms.RadioSelect())
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    gender = forms.ChoiceField(choices=CHOICES_GENDER)
 
 
 class PostForm(forms.ModelForm):

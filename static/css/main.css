@@ -575,6 +575,11 @@ body {
     .b-landing-container .button:active {
       background-color: #004c68; }
 
+.b-header {
+  width: 800px;
+  margin: 0 auto;
+  text-align: center; }
+
 .b-login-container {
   width: 800px;
   margin: 0 auto;
@@ -582,9 +587,31 @@ body {
   .b-login-container .form {
     text-align: center;
     margin: 0 auto;
-    width: 300px; }
+    width: 600px; }
+    .b-login-container .form ul {
+      list-style: none;
+      padding: 0;
+      margin: 0; }
+      .b-login-container .form ul li {
+        margin: 5px; }
+        .b-login-container .form ul li label {
+          margin: 0;
+          text-align: right;
+          width: 100px;
+          display: inline-block;
+          color: #292f33; }
+        .b-login-container .form ul li input {
+          border-radius: 5px;
+          border: 1px solid #e1e8ed;
+          padding: 5px;
+          width: 200px; }
   .b-login-container .signup-link {
     font-size: small; }
+
+.b-header {
+  width: 800px;
+  margin: 0 auto;
+  text-align: center; }
 
 .b-signup-container {
   width: 800px;
@@ -593,15 +620,29 @@ body {
   .b-signup-container .form {
     text-align: center;
     margin: 0 auto;
-    width: 300px; }
+    width: 600px; }
+    .b-signup-container .form ul {
+      list-style: none;
+      padding: 0;
+      margin: 0; }
+      .b-signup-container .form ul li {
+        margin: 5px; }
+        .b-signup-container .form ul li label {
+          margin: 0;
+          text-align: right;
+          width: 150px;
+          display: inline-block;
+          color: #292f33; }
+        .b-signup-container .form ul li input, .b-signup-container .form ul li select {
+          border-radius: 5px;
+          border: 1px solid #e1e8ed;
+          padding: 5px;
+          width: 200px;
+          height: 36px;
+          color: #292f33;
+          background-color: #ffffff; }
   .b-signup-container .login-link {
     font-size: small; }
-  .b-signup-container ul {
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px;
-    margin-left: 115px;
-    text-align: left; }
 
 .b-settings-container {
   width: 1000px;
@@ -610,6 +651,15 @@ body {
   .b-settings-container .settings-menu {
     width: 295px;
     float: left; }
+    .b-settings-container .settings-menu .active li {
+      background-color: #f9f9f9; }
+    .b-settings-container .settings-menu a {
+      color: #0084b4;
+      text-decoration: none !important; }
+      .b-settings-container .settings-menu a:visited {
+        color: #0084b4; }
+      .b-settings-container .settings-menu a:hover {
+        color: #005f81; }
     .b-settings-container .settings-menu ul {
       list-style: none;
       margin: 0px;
