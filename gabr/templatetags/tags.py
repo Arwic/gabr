@@ -39,3 +39,8 @@ def add_class(value, arg):
 def add_class_placeholder(value, arg):
     s = arg.split('`')
     return value.as_widget(attrs={'class': s[0], 'placeholder': s[1]})
+
+
+@register.filter
+def get_range(value):
+    return range(value)
