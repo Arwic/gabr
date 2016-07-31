@@ -13,9 +13,21 @@
             <img class="image" src="{{ target_user.banner.url }}">
         </div>
         <div class="navbar">
-            {% if current_user != target_user %}
+            {% if current_user != target_user and user.is_authenticated %}
                 <div class="item right">
-                    <button id="follow-{{ target_user.user.username }}" class="button {% if is_following %}follow-button-true{% else %}follow-button-false{% endif %}" onclick="onFollowButton('{{ target_user.user.username }}')"></button>
+                    <button id="follow-{{ target_user.user.username }}"
+                            class="button {% if is_following %}follow-button-true{% else %}follow-button-false{% endif %}"
+                            onclick="onFollowButton('{{ target_user.user.username }}')"></button>
+                </div>
+            {% elif not user.is_authenticated %}
+                <div class="item right">
+                    <form action="{% url "signup" %}">
+                        <button class="button" type="submit">Follow</button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="item right">
+                    <button id="follow-{{ target_user.user.username }}" class="button" style="visibility: hidden"></button>
                 </div>
             {% endif %}
             <div class="item right">

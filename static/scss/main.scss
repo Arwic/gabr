@@ -21,6 +21,10 @@ $font-bold: 600;
 body {
     padding-top: 55px;
     background-color: #f5f8fa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    color: #373a3c;
+    font-size: 1rem;
 }
 
 .button {
@@ -54,3 +58,4 @@ body {
 @import "_landing";
 @import "_login";
 @import "_signup";
+@import "_settings";

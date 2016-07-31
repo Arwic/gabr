@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load tags %}
+{% block header %}
+    <title>Settings | Gabr</title>
+{% endblock %}
+{% block content %}
+    <div class="b-settings-container">
+        <div class="settings-menu">
+            <ul>
+                <a href="{% url "settings_profile" %}">
+                    <li>
+                        Profile
+                    </li>
+                </a>
+                <a href="{% url "settings_account" %}">
+                    <li>
+                        Account
+                    </li>
+                </a>
+                <a href="{% url "settings_notifications" %}">
+                    <li>
+                        Notifications
+                    </li>
+                </a>
+                <a href="{% url "settings_blocked" %}">
+                    <li>
+                        Blocked accounts
+                    </li>
+                </a>
+                <a href="{% url "settings_payment" %}">
+                    <li>
+                        Payment
+                    </li>
+                </a>
+                <a href="{% url "settings_apps" %}">
+                    <li>
+                        Connected apps
+                    </li>
+                </a>
+                <a href="{% url "settings_data" %}">
+                    <li style="border: none; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                        Your data
+                    </li>
+                </a>
+            </ul>
+        </div>
+        <div class="settings-content">
+            {% block settings-content %} {% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,14 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from django.contrib import auth
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from gabr.models import UserProfile, Follow, Post, Like, Repost, Notification, Trend
-from gabr.forms import UserProfileForm, PostForm, SignupForm, MessageForm, LoginForm
+from gabr.forms import PostForm, SignupForm, MessageForm, LoginForm
 import json
-import datetime
-from dateutil import tz
 
 
 def is_following(follower_profile, subject_profile):
@@ -27,21 +22,18 @@ def get_stats(user_profile):
 
 
 def profile_posts(request, user_name):
-    current_user = UserProfile.objects.get(user=request.user)
+    if request.user.is_authenticated():
+        current_user = get_object_or_404(UserProfile, user=request.user)
     target_user = get_object_or_404(UserProfile, user__username=user_name)
-
-    # posts = get_user_post_infos(current_user, target_user)
-
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
 
     context = {
-        'current_user': current_user,
-        'unread_notif_count': current_user.unread_notification_count(),
+        'current_user': None,
         'post_form': PostForm,
         'target_user': target_user,
-        'is_following': is_following(current_user, target_user),
+        'is_following': False,
         'post_count': post_count,
         'follow_count': follow_count,
         'follower_count': follower_count,
@@ -49,50 +41,75 @@ def profile_posts(request, user_name):
         'list_count': list_count,
     }
 
+    if request.user.is_authenticated():
+        context['current_user'] = current_user
+        context['is_following'] = is_following(current_user, target_user)
+
     return render(request, 'profile-posts.html', context)
 
 
 def profile_following(request, user_name):
-    current_user = UserProfile.objects.get(user=request.user)
+    if request.user.is_authenticated():
+        current_user = get_object_or_404(UserProfile, user=request.user)
     target_user = get_object_or_404(UserProfile, user__username=user_name)
-
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
 
     follows = []
     for follow in Follow.objects.filter(follower=target_user):
-        post_count, follow_count, follower_count = follow.subject.stats()
-        follows.append([follow.subject, post_count, follow_count, follower_count])
+        pc, fc, flc = follow.subject.stats()
+        follows.append([follow.subject, pc, fc, flc])
 
     context = {
-        'current_user': current_user,
-        'unread_notif_count': current_user.unread_notification_count(),
+        'current_user': None,
         'post_form': PostForm,
         'target_user': target_user,
-        'follows': follows,
-        'is_following': is_following(current_user, target_user),
+        'is_following': False,
         'post_count': post_count,
         'follow_count': follow_count,
         'follower_count': follower_count,
         'like_count': like_count,
         'list_count': list_count,
+        'follows': follows,
     }
+
+    if request.user.is_authenticated():
+        context['current_user'] = current_user
+        context['is_following'] = is_following(current_user, target_user)
 
     return render(request, 'profile-following.html', context)
 
 
 def profile_followers(request, user_name):
-    current_user = UserProfile.objects.get(user=request.user)
+    if request.user.is_authenticated():
+        current_user = get_object_or_404(UserProfile, user=request.user)
     target_user = get_object_or_404(UserProfile, user__username=user_name)
+    post_count, follow_count, follower_count = target_user.stats()
+    like_count = len(Like.objects.filter(user=target_user))
+    list_count = 0  # TODO: implements lists
+
+    followers = []
+    for follow in Follow.objects.filter(subject=target_user):
+        pc, fc, flc = follow.follower.stats()
+        followers.append([follow.follower, pc, fc, flc])
 
     context = {
-        'current_user': current_user,
-        'unread_notif_count': current_user.unread_notification_count(),
+        'current_user': None,
         'post_form': PostForm,
         'target_user': target_user,
-        'is_following': is_following(current_user, target_user),
+        'is_following': False,
+        'post_count': post_count,
+        'follow_count': follow_count,
+        'follower_count': follower_count,
+        'like_count': like_count,
+        'list_count': list_count,
+        'followers': followers,
     }
+
+    if request.user.is_authenticated():
+        context['current_user'] = current_user
+        context['is_following'] = is_following(current_user, target_user)
 
     return render(request, 'profile-followers.html', context)
 
@@ -137,6 +154,8 @@ def ajax_follow(request):
     try:
         user = get_object_or_404(UserProfile, user=request.user)
         target = get_object_or_404(UserProfile, user__username=target_username)
+        if user == target:
+            return HttpResponse('')
     except UserProfile.DoesNotExist:
         return HttpResponse('')
     # get follow data

@@ -5,7 +5,9 @@
 {% endblock %}
 {% block content %}
     <div class="b-signup-container">
-        <h1>Gabr</h1>
+        <a href="/" style="text-decoration: none !important;">
+            <h1>Gabr</h1>
+        </a>
         <h2>Sign up</h2>
         <hr class="divider">
         <form id="form" name="form" class="form" action="{% url "signup" %}" method="post">{% csrf_token %}
@@ -27,6 +29,6 @@
             </div>
             <button type="submit" class="button">Sign up</button>
         </form>
-        <a class="login-link" href="{% url "login" %}">Already have an account?</a>
+        <a class="login-link" href="{% url "login" %}">Already have an account? Log in here.</a>
     </div>
 {% endblock %}

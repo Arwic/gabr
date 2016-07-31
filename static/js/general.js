@@ -181,15 +181,19 @@ function registerHoverCard(element_id, user_name)
 }
 function linkifyPostBody(postBody)
 {
-    // replace hash tags
-    postBody.innerHTML = postBody.innerHTML.replace(/(^|)#(\w+)/g,
+    try {
+        // replace hash tags
+        postBody.innerHTML = postBody.innerHTML.replace(/(^|)#(\w+)/g,
             function (s) {
                 return '<a href="/tag/' + s.replace(/#/,'') + '">' + s + '</a>';
             });
+    }
+    catch (err) {}
 
-    // replace mentions
-    var mentions = [];
-    postBody.innerHTML = postBody.innerHTML.replace(/(^|)@(\w+)/g,
+    try {
+        // replace mentions
+        var mentions = [];
+        postBody.innerHTML = postBody.innerHTML.replace(/(^|)@(\w+)/g,
             function (s) {
                 var username = s.replace(/@/,'');
                 var id = guid();
@@ -199,9 +203,11 @@ function linkifyPostBody(postBody)
                 });
                 return '<a id="' + id + '" href="/user/' + username + '">' + s + '</a>';
             });
-    // register hover cards
-    for (var i = 0; i < mentions.length; i++)
-        registerHoverCard('#' + mentions[i].link_id, mentions[i].username);
+        // register hover cards
+        for (var i = 0; i < mentions.length; i++)
+            registerHoverCard('#' + mentions[i].link_id, mentions[i].username);
+    }
+    catch (err) {}
 }
 
 function viewPost(post_id)
