@@ -11,7 +11,11 @@
     transform: translateY(0px); } }
 body {
   padding-top: 55px;
-  background-color: #f5f8fa; }
+  background-color: #f5f8fa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  color: #373a3c;
+  font-size: 1rem; }
 
 .button {
   border-radius: 5px;
@@ -579,17 +583,8 @@ body {
     text-align: center;
     margin: 0 auto;
     width: 300px; }
-  .b-login-container .button {
-    border-radius: 5px;
-    background-color: #0084b4;
-    border-style: none;
-    padding: 10px 10px 10px 10px;
-    color: #ffffff;
-    text-decoration: none !important; }
-    .b-login-container .button:hover {
-      background-color: #005f81; }
-    .b-login-container .button:active {
-      background-color: #004c68; }
+  .b-login-container .signup-link {
+    font-size: small; }
 
 .b-signup-container {
   width: 800px;
@@ -601,5 +596,11 @@ body {
     width: 300px; }
   .b-signup-container .login-link {
     font-size: small; }
+  .b-signup-container ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 115px;
+    text-align: left; }
 
 /*# sourceMappingURL=main.css.map */

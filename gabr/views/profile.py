@@ -27,27 +27,31 @@ def get_stats(user_profile):
 
 
 def profile_posts(request, user_name):
-    current_user = UserProfile.objects.get(user=request.user)
+    if request.user.is_authenticated():
+        current_user = get_object_or_404(UserProfile, user=request.user)
     target_user = get_object_or_404(UserProfile, user__username=user_name)
-
-    # posts = get_user_post_infos(current_user, target_user)
 
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
 
     context = {
-        'current_user': current_user,
-        'unread_notif_count': current_user.unread_notification_count(),
+        'current_user': None,
+        'unread_notif_count': 0,
         'post_form': PostForm,
         'target_user': target_user,
-        'is_following': is_following(current_user, target_user),
+        'is_following': False,
         'post_count': post_count,
         'follow_count': follow_count,
         'follower_count': follower_count,
         'like_count': like_count,
         'list_count': list_count,
     }
+
+    if request.user.is_authenticated():
+        context['current_user'] = current_user
+        context['is_following'] = is_following(current_user, target_user)
+        context['unread_notif_count'] = current_user.unread_notification_count()
 
     return render(request, 'profile-posts.html', context)
 
@@ -137,6 +141,8 @@ def ajax_follow(request):
     try:
         user = get_object_or_404(UserProfile, user=request.user)
         target = get_object_or_404(UserProfile, user__username=target_username)
+        if user == target:
+            return HttpResponse('')
     except UserProfile.DoesNotExist:
         return HttpResponse('')
     # get follow data

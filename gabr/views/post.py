@@ -50,7 +50,10 @@ class PostInfo:
             self.post = post.post
         else:
             self.post = post
-        user_tz = tz.gettz(current_user.time_zone)
+        if self.current_user is not None:
+            user_tz = tz.gettz(current_user.time_zone)
+        else:
+            user_tz = tz.gettz('Etc/GMT0')
         self.user_time = format_time(self.post.time.astimezone(user_tz), datetime.now(tz=user_tz))
 
     def json(self):
@@ -71,8 +74,12 @@ class PostInfo:
         post_json['post']['id'] = self.post.id
         post_json['post']['body'] = self.post.body
         post_json['post']['time'] = str(self.user_time)
-        post_json['post']['liked'] = self.current_user.liked(self.post)
-        post_json['post']['reposted'] = self.current_user.reposted(self.post)
+        post_json['post']['liked'] = False
+        if self.current_user is not None:
+            post_json['post']['liked'] = self.current_user.liked(self.post)
+        post_json['post']['reposted'] = False
+        if self.current_user is not None:
+            post_json['post']['reposted'] = self.current_user.reposted(self.post)
         return post_json
 
 
@@ -108,9 +115,9 @@ def get_profile_posts(current_user, target_user, time_oldest, time_newest):
 
 
 def feed(request):
-    try:
-        current_user = UserProfile.objects.get(user=request.user)
-    except:
+    if request.user.is_authenticated():
+        current_user = get_object_or_404(UserProfile, user=request.user)
+    else:
         return render(request, 'landing.html')
     current_user_post_count, current_user_follow_count, current_user_follower_count = current_user.stats()
     context = {
@@ -124,7 +131,6 @@ def feed(request):
     return render(request, 'feed.html', context)
 
 
-@login_required
 def ajax_load_posts(request):
     if not request.is_ajax():
         return HttpResponse('')
@@ -134,12 +140,11 @@ def ajax_load_posts(request):
     time_oldest = datetime.fromtimestamp(int(request.POST['time-oldest']))
     time_newest = datetime.fromtimestamp(int(request.POST['time-newest']))
     request_type = request.POST['type']
-    try:
-        current_user = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
-        return HttpResponse('')
     posts = []
-    if request_type == 'feed':
+    current_user = None
+    if request.user.is_authenticated():
+        current_user = get_object_or_404(UserProfile, user=request.user)
+    if request_type == 'feed' and request.user.is_authenticated():
         posts = get_feed_posts(current_user, time_oldest, time_newest)
     elif request_type == 'profile':
         target_user = get_object_or_404(UserProfile, user__username=request.POST['target'])
@@ -161,16 +166,15 @@ def ajax_load_posts(request):
 
 
 def view_post(request, post_id):
-    try:
+    current_user = None
+    if request.user.is_authenticated():
         current_user = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
-        return render(request, 'landing.html')
-    current_user_post_count, current_user_follow_count, current_user_follower_count = current_user.stats()
+    #current_user_post_count, current_user_follow_count, current_user_follower_count = current_user.stats()
     context = {
         'current_user': current_user,
-        'current_user_post_count': current_user_post_count,
-        'current_user_follow_count': current_user_follow_count,
-        'current_user_follower_count': current_user_follower_count,
+     #   'current_user_post_count': current_user_post_count,
+      #  'current_user_follow_count': current_user_follow_count,
+       # 'current_user_follower_count': current_user_follower_count,
         'post_form': PostForm,
         'post_id': post_id,
     }
@@ -260,12 +264,13 @@ def ajax_repost(request):
     return HttpResponse(json.dumps(response))
 
 
-@login_required
 def ajax_post(request):
     # check if the request is ajax
     if not request.is_ajax():
         return HttpResponse('')
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = None
+    if request.user.is_authenticated():
+        current_user = get_object_or_404(UserProfile, user=request.user)
     # get post data
     post_id = request.POST['post_id']
     try:
@@ -280,11 +285,16 @@ def ajax_post(request):
             'post_count': post_count,
             'following_count': following_count,
             'follower_count': follower_count,
-            'time': format_time(post.time, datetime.now(tz=tz.gettz(current_user.time_zone))),
+            'time': format_time(post.time, datetime.now(tz=tz.gettz('Etc/GMT0'))),
             'body': post.body,
-            'has_liked': current_user.liked(post),
-            'has_reposted': current_user.reposted(post),
+            'has_liked': False,
+            'has_reposted': False,
         }
+
+        if request.user.is_authenticated():
+            response['time'] = format_time(post.time, datetime.now(tz=tz.gettz(current_user.time_zone)));
+            response['has_liked'] = current_user.liked(post)
+            response['has_reposted'] = current_user.reposted(post)
     except Post.DoesNotExist:
         return HttpResponse('')
     return HttpResponse(json.dumps(response))

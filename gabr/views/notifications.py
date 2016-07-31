@@ -32,13 +32,13 @@ def notifications(request):
 def ajax_load_notification_count(request):
     if not request.is_ajax():
         return HttpResponse('')
-    try:
+    if request.user.is_authenticated():
         current_user = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
-        return HttpResponse('')
-
-    response = {
-        'count': Notification.objects.filter(user=current_user, read=False).count()
-    }
-
+        response = {
+            'count': Notification.objects.filter(user=current_user, read=False).count()
+        }
+    else:
+        response = {
+            'count': 0
+        }
     return HttpResponse(json.dumps(json.dumps(response)))

@@ -5,7 +5,9 @@
 {% endblock %}
 {% block content %}
     <div class="b-login-container">
-        <h1>Gabr</h1>
+        <a href="/" style="text-decoration: none !important;">
+            <h1>Gabr</h1>
+        </a>
         <h2>Log in</h2>
         <hr class="divider">
         <form class="form" action="{% url "login" %}" method="post">{% csrf_token %}
@@ -17,6 +19,8 @@
                 {{ form.password|add_class_placeholder:"form-control`Password" }}
             </div>
             <button type="submit" class="button">Log in</button>
+            <br>
+            <a class="signup-link" href="{% url "signup" %}">Need an account? Sign up here.</a>
         </form>
     </div>
 {% endblock %}
