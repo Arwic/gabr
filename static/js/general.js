@@ -62,7 +62,8 @@ function getCookie(cookieName)
     return "";
 }
 
-function onLikeButton(post_id) {
+function onLikeButton(post_id)
+{
     var post_modal = post_id == -1;
     if (post_modal)
     {
@@ -87,7 +88,8 @@ function onLikeButton(post_id) {
     });
 };
 
-function onRepostButton(post_id) {
+function onRepostButton(post_id)
+{
     var post_modal = post_id == -1;
     if (post_modal)
     {
@@ -110,9 +112,10 @@ function onRepostButton(post_id) {
             }
         }
     });
-};
+}
 
-function onFollowButton(target_username) {
+function onFollowButton(target_username)
+{
     $.ajax({
         url: "/ajax/follow/",
         type: "POST",
@@ -126,42 +129,11 @@ function onFollowButton(target_username) {
     });
 }
 
-function postTo(user) {
+function postTo(user)
+{
     if (user != null)
         $("#id_post_body").children().first().val("@" + user + " ");
     $("#new-post-modal").modal();
-}
-
-function viewPost(post_id) {
-    $.ajax({
-        url: "/ajax/post/",
-        type: "POST",
-        data: {
-            "post_id": post_id,
-        },
-        dataType: "json",
-        success: function (data) {
-            $("#modal-viewpost-postid").val(post_id);
-
-            $("#modal-viewpost-postuser-avatar").attr("src", data["avatar_url"]);
-            $("#modal-viewpost-postuser-link").attr("href", "/user/" + data["user_name"]);
-            $("#modal-viewpost-postuser-displayname").text(data["display_name"]);
-            $("#modal-viewpost-postuser-username").text(data["user_name"]);
-            $("#modal-viewpost-post-time").text(data["time"]);
-            $("#modal-viewpost-post-body").text(data["body"]);
-            $("#modal-viewpost-username").val(data["user_name"]);
-
-            var modal_like = $("#modal-viewpost-like");
-            modal_like.toggleClass("like-button-true", data["has_liked"]);
-            modal_like.toggleClass("like-button-false", !data["has_liked"]);
-
-            var modal_repost = $("#modal-viewpost-repost");
-            modal_repost.toggleClass("repost-button-true", data["has_reposted"]);
-            modal_repost.toggleClass("repost-button-false", !data["has_reposted"]);
-
-            $("#modal-viewpost").modal();
-        }
-    });
 }
 
 function viewProfileCard(user_name, top, left)
@@ -170,7 +142,7 @@ function viewProfileCard(user_name, top, left)
         url: "/ajax/user/",
         type: "POST",
         data: {
-            "user_name": user_name,
+            "user_name": user_name
         },
         dataType: "json",
         success: function (data) {
@@ -205,6 +177,65 @@ function registerHoverCard(element_id, user_name)
         }, delay);
     }, function () {
         clearTimeout(timer);
+    });
+}
+function linkifyPostBody(postBody)
+{
+    // replace hash tags
+    postBody.innerHTML = postBody.innerHTML.replace(/(^|)#(\w+)/g,
+            function (s) {
+                return '<a href="/tag/' + s.replace(/#/,'') + '">' + s + '</a>';
+            });
+
+    // replace mentions
+    var mentions = [];
+    postBody.innerHTML = postBody.innerHTML.replace(/(^|)@(\w+)/g,
+            function (s) {
+                var username = s.replace(/@/,'');
+                var id = guid();
+                mentions.push({
+                    "username": username,
+                    "link_id": id
+                });
+                return '<a id="' + id + '" href="/user/' + username + '">' + s + '</a>';
+            });
+    // register hover cards
+    for (var i = 0; i < mentions.length; i++)
+        registerHoverCard('#' + mentions[i].link_id, mentions[i].username);
+}
+
+function viewPost(post_id)
+{
+    $.ajax({
+        url: "/ajax/post/",
+        type: "POST",
+        data: {
+            "post_id": post_id
+        },
+        dataType: "json",
+        success: function (data) {
+            $("#modal-viewpost-postid").val(post_id);
+
+            $("#modal-viewpost-postuser-avatar").attr("src", data["avatar_url"]);
+            $("#modal-viewpost-postuser-link").attr("href", "/user/" + data["user_name"]);
+            $("#modal-viewpost-postuser-displayname").text(data["display_name"]);
+            $("#modal-viewpost-postuser-username").text(data["user_name"]);
+            $("#modal-viewpost-post-time").text(data["time"]);
+            var p_body = $("#modal-viewpost-post-body");
+            p_body.text(data["body"]);
+            linkifyPostBody(p_body[0]);
+            $("#modal-viewpost-username").val(data["user_name"]);
+
+            var modal_like = $("#modal-viewpost-like");
+            modal_like.toggleClass("like-button-true", data["has_liked"]);
+            modal_like.toggleClass("like-button-false", !data["has_liked"]);
+
+            var modal_repost = $("#modal-viewpost-repost");
+            modal_repost.toggleClass("repost-button-true", data["has_reposted"]);
+            modal_repost.toggleClass("repost-button-false", !data["has_reposted"]);
+
+            $("#modal-viewpost").modal();
+        }
     });
 }
 
@@ -273,18 +304,8 @@ function writePost(post_json)
     // Post body
     var p_body = document.createElement("p");
     div_post.appendChild(p_body);
-
-    // replace hash tags
-    p_body.innerHTML = post_json["post"]["body"].replace(/(^|)#(\w+)/g,
-            function (s) {
-                return '<a href="/tag/' + s.replace(/#/,'') + '">' + s + '</a>';
-            });
-
-    // replace mentions
-    p_body.innerHTML = p_body.innerHTML.replace(/(^|)@(\w+)/g,
-            function (s) {
-                return '<a href="/user/' + s.replace(/@/,'') + '">' + s + '</a>';
-            });
+    p_body.appendChild(document.createTextNode(post_json["post"]["body"]));
+    linkifyPostBody(p_body);
 
     // Like button
     var button_like = document.createElement("button");
