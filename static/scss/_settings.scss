@@ -1,0 +1,111 @@
+.b-settings-container {
+    width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+
+    .settings-menu {
+        width: 295px;
+        float: left;
+
+        ul {
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+            text-align: left;
+            border-radius: 5px;
+            border: 1px solid $col-border;
+            background-color: $col-background;
+            li {
+                padding: 10px;
+                border-top-right-radius: 5px;
+                border-top-left-radius: 5px;
+                border-bottom: 1px solid $col-border;
+                background-color: $col-background;
+            }
+        }
+    }
+
+    .settings-content {
+        width: 600px;
+        margin-left: 300px;
+
+        .form {
+            text-align: center;
+            margin: 0 auto;
+            width: 550px;
+
+            ul {
+                list-style: none;
+
+                li {
+                    height: 42px;
+                }
+            }
+
+            img {
+                border-radius: 5px;
+                border: 1px solid $col-border;
+                max-width: 40px;
+                max-height: 40px;
+            }
+
+            label {
+                width: 120px;
+                color: $col-text-pri;
+                margin-right: 10px;
+                text-align: right;
+                margin-top: 10px;
+            }
+
+            label[class="file"] {
+                border-radius: 5px;
+                padding: 5px;
+                width: 255px;
+                max-width: 70%;
+                text-align: left;
+                margin: 0;
+                vertical-align: middle;
+
+                input[type="file"] {
+                    display: none;
+                }
+            }
+
+            input {
+                border-radius: 5px;
+                border: 1px solid $col-border;
+                padding: 5px;
+                width: 300px;
+                max-width: 70%;
+            }
+        }
+    }
+
+    .header {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border: 1px solid $col-border;
+        background-color: $col-background;
+    }
+
+    .body {
+        border: 1px solid $col-border;
+        border-top: none;
+        border-bottom: none;
+        background-color: $col-background;
+        padding: 10px;
+    }
+
+    .footer {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: 1px solid $col-border;
+        background-color: $col-background;
+        min-height: 50px;
+        padding: 10px;
+    }
+
+    .button {
+        background-color: $col-pri;
+    }
+}

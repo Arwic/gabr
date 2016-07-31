@@ -1,14 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from django.contrib import auth
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from gabr.models import UserProfile, Follow, Post, Like, Repost, Notification, Trend
-from gabr.forms import UserProfileForm, PostForm, SignupForm, MessageForm, LoginForm
+from gabr.forms import PostForm, SignupForm, MessageForm, LoginForm
 import json
-import datetime
-from dateutil import tz
 
 
 def is_following(follower_profile, subject_profile):

@@ -169,12 +169,8 @@ def view_post(request, post_id):
     current_user = None
     if request.user.is_authenticated():
         current_user = UserProfile.objects.get(user=request.user)
-    #current_user_post_count, current_user_follow_count, current_user_follower_count = current_user.stats()
     context = {
         'current_user': current_user,
-     #   'current_user_post_count': current_user_post_count,
-      #  'current_user_follow_count': current_user_follow_count,
-       # 'current_user_follower_count': current_user_follower_count,
         'post_form': PostForm,
         'post_id': post_id,
     }

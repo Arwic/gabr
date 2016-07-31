@@ -26,7 +26,16 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=30, blank=True, default='')
     website = models.CharField(max_length=100, blank=True, default='')
     birthday = models.DateField(default=datetime.date(1970, 1, 1), blank=True)
-    time_zone = models.CharField(default='Etc/GMT0', max_length=64)
+    time_zone = models.CharField(max_length=100, blank=True, default='Etc/GMT0')
+    language = models.CharField(default='English', max_length=64)
+    country = models.CharField(default='US', max_length=2)
+    show_nsfw = models.BooleanField(default=False)
+    email_notif_like = models.BooleanField(default=True)
+    email_notif_mention = models.BooleanField(default=True)
+    email_notif_repost = models.BooleanField(default=True)
+    email_notif_follow = models.BooleanField(default=True)
+    email_notif_message = models.BooleanField(default=True)
+    email_newsletter = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.username
@@ -60,6 +69,23 @@ def create_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
+
+
+class Report(models.Model):
+    reporter = models.ForeignKey(UserProfile, related_name='report_user_reporter', on_delete=models.CASCADE)
+    subject = models.ForeignKey(UserProfile, related_name='report_user_subject', on_delete=models.CASCADE)
+    message = models.CharField(default='', max_length=512)
+
+    def __str__(self):
+        return '@%s was reported by @%s: "%s"' % (self.subject.user.username, self.reporter.user.username, self.message)
+
+
+class Block(models.Model):
+    blocker = models.ForeignKey(UserProfile, related_name='block_user_blocker', on_delete=models.CASCADE)
+    subject = models.ForeignKey(UserProfile, related_name='block_user_subject', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '@%s is blocking @%s' % (self.blocker.user.username, self.subject.user.username)
 
 
 class Post(models.Model):

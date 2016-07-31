@@ -20,16 +20,16 @@ class PictureWidget(widgets.Widget):
 
 class PictureSelectorWidget(widgets.ClearableFileInput):
     def render(self, name, value, attrs=None):
-        html = '<img src="{}" width="64" /> ' \
+        html = '<img src="{}" /> ' \
                '<label class="file">' \
-               '<input type="file" id="file" name="{}" accept="image/gif,image/jpeg,image/jpg,image/png">' \
+               '<input type="file" name="{}" accept="image/gif,image/jpeg,image/jpg,image/png">' \
                '<span class="file-custom"></span>' \
                '</label>'\
                     .format(value.url, attrs['id'][3:])
         return mark_safe(html)
 
 
-class UserProfileForm(forms.ModelForm):
+class SettingsProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = [
@@ -40,11 +40,11 @@ class UserProfileForm(forms.ModelForm):
             'location',
             'website',
             'birthday',
-            'time_zone',
         ]
         widgets = {
             'avatar': PictureSelectorWidget,
             'banner': PictureSelectorWidget,
+            'birthday': widgets.DateInput(attrs={'type': 'date'}),
         }
 
 
