@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load tags %}
+{% block header %}
+    <title>Log in | Gabr</title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script>
+        function onReCaptchaSuccess(response) {
+            $('#captcha-form').submit();
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="b-header">
+        <a href="/" style="text-decoration: none !important;">
+            <h1>Gabr</h1>
+        </a>
+        <h2>Log in</h2>
+        <hr class="divider">
+    </div>
+    <div class="b-login-container">
+        <h5>Your account has been locked due to excessive login attempts.</h5>
+        <h5>To unlock it, complete the reCAPTCHA below</h5>
+        <style>
+            /* already defined in bootstrap4 */
+            #captcha {
+                text-align: center;
+            }
+            .g-recaptcha {
+                display: inline-block;
+            }
+            label {
+                display: none;
+            }
+        </style>
+        <div id="captcha">
+            <form id="captcha-form" class="form" action="" method="POST">{% csrf_token %}
+                {{ form.as_p }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^user/(?P<user_name>[^/]+)/lists/$', views.profile.profile_lists, name='profile_lists'),
     url(r'^user/(?P<user_name>[^/]+)/$', views.profile.profile_posts, name='profile'),
     url(r'^login/$', views.auth.login, name='login'),
+    url(r'^login/locked/$', views.auth.login_locked, name='login_locked'),
     url(r'^logout/$', views.auth.logout, name='logout'),
     url(r'^signup/$', views.auth.signup, name='signup'),
     url(r'^new-post/$', views.post.new_post, name='new-post'),

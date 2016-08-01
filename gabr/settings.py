@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'axes',
+    'nocaptcha_recaptcha',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -142,6 +144,15 @@ MEDIA_ROOT = '/var/www/gabr/media/'
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/login/'
+
+AXES_LOGIN_FAILURE_LIMIT = 3
+AXES_LOCK_OUT_AT_FAILURE = True
+AXES_USE_USER_AGENT = False
+AXES_LOCKOUT_URL = '/login/locked/'
+AXES_VERBOSE = True
+
+NORECAPTCHA_SITE_KEY = '6Le9fyYTAAAAAJyV9aH19zRV0Tg-5vlBET8QGDkW'
+NORECAPTCHA_SECRET_KEY = '6Le9fyYTAAAAALyN6GW3whDmKeWOQuy5OqU7xVaT'
 
 try:
     from .local_settings import *
