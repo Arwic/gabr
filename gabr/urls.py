@@ -31,8 +31,9 @@ urlpatterns = [
     url(r'^settings/password/$', django.contrib.auth.views.password_change,
         {
             'template_name': 'settings-password.html',
-            'post_change_redirect': '/password-changed/',
+            'post_change_redirect': 'settings_password_success',
         }, name='settings_password'),
+    url(r'^settings/password/success$', views.settings.settings_password_success, name='settings_password_success'),
     url(r'^settings/notifications/$', views.settings.settings_notifications, name='settings_notifications'),
     url(r'^settings/blocked/$', views.settings.settings_blocked, name='settings_blocked'),
     url(r'^settings/payment/$', views.settings.settings_payment, name='settings_payment'),

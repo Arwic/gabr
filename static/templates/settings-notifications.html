@@ -2,19 +2,21 @@
 {% load tags %}
 {% block settings-content %}
     <div class="header">
-        <h1>Account</h1>
+        <h1>Notifications</h1>
         <script>
             $(document).ready(function() {
-                $("#s-account").addClass("active");
+                $("#s-notifications").addClass("active");
             });
         </script>
     </div>
     <div class="body">
-        <form class="form" id="form" method="POST" action="{% url "settings_account" %}">{% csrf_token %}
-            <ul>
-                {{ form.as_ul }}
-            </ul>
-        </form>
+        <div class="notifications-pane">
+            <form class="form" id="form" method="POST" action="{% url "settings_notifications" %}">{% csrf_token %}
+                <ul>
+                    {{ form.as_ul }}
+                </ul>
+            </form>
+        </div>
     </div>
     <div class="footer">
         <button form="form" type="submit" class="button">Save changes</button>

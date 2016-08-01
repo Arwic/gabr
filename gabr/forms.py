@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import widgets
 from django.utils.safestring import mark_safe
-from .models import UserProfile, Post, Message
+from .models import UserProfile, Post, Message, User
 
 
 class PostWidget(widgets.Textarea):
@@ -53,7 +53,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-CHOICES_GENDER = [(0, 'Male'), (1, 'Female')]
+CHOICES_GENDER = [(0, 'Male'), (1, 'Female'), (2, 'Degenerate')]
 
 
 class SignupForm(forms.Form):
@@ -81,4 +81,27 @@ class MessageForm(forms.ModelForm):
         fields = [
             'target',
             'body',
+        ]
+
+
+class SettingsAccountForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+        ]
+
+
+class SettingsNotificationsForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'email_newsletter',
+            'email_notif_follow',
+            'email_notif_like',
+            'email_notif_mention',
+            'email_notif_message',
+            'email_notif_repost',
         ]

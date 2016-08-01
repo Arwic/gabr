@@ -31,7 +31,7 @@
             <span id="like-{{ post_info.2.id }}" class="icon like-button-false"></span>
         {% endif %}
     </button>
-    <button onclick="onRepostButton({{ post_info.2.id }})" class="button" id="repost-button" name="repost-button" type="button">
+    <button onclick="onRepostButton({{ post_info.2.id }})" class="post-action-button" id="repost-button" name="repost-button" type="button">
         {% has_reposted user post_info.2 as var_has_reposted %}
         {% if var_has_reposted %}
             <span id="repost-{{ post_info.2.id }}" class="icon repost-button-true"></span>

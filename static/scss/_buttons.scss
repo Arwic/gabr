@@ -27,3 +27,23 @@
 .follow-button-true:before {
     content: "Unfollow";
 }
+
+.button {
+    border-radius: 5px !important;
+    background-color: $col-pri !important;
+    border: 1px solid $col-button-border;
+    padding: 5px 15px 5px 10px !important;
+    color: $col-background !important;
+    text-decoration: none !important;
+
+    &:hover {
+        background-color: darken($col-pri, 10%) !important;
+    }
+    &:active {
+        background-color: darken($col-pri, 15%) !important;
+    }
+
+    &:disabled {
+        background-color: lighten($col-pri, 50%) !important;
+    }
+}

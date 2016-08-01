@@ -1,12 +1,7 @@
 .b-settings-container {
-    width: 1000px;
-    margin: 0 auto;
-    text-align: center;
+    .menu {
+        margin: 5px;
 
-    .settings-menu {
-        width: 295px;
-        float: left;
-        
         .active li {
             background-color: darken($col-background, 2.5%);
         }
@@ -43,21 +38,29 @@
         }
     }
 
-    .settings-content {
-        width: 600px;
-        margin-left: 300px;
+    .content {
+        margin: 5px;
+        text-align: center;
 
         .form {
-            text-align: center;
-            margin: 0 auto;
-            width: 550px;
+
+            label[for="id_new_password2"] {
+                transform: translate(0px, 10px);
+            }
+
+            span[class="helptext"] {
+                display: none;
+            }
+
+            .errorlist {
+                display: block;
+                color: darkred;
+            }
 
             ul {
                 list-style: none;
-
-                li {
-                    height: 42px;
-                }
+                padding: 0;
+                margin: 0;
             }
 
             img {
@@ -78,7 +81,7 @@
             label[class="file"] {
                 border-radius: 5px;
                 padding: 5px;
-                width: 255px;
+                width: 205px;
                 max-width: 70%;
                 text-align: left;
                 margin: 0;
@@ -89,12 +92,20 @@
                 }
             }
 
+            .notifications-pane label {
+                text-align: left !important;
+                width: 200px !important;
+            }
+
             input {
                 border-radius: 5px;
                 border: 1px solid $col-border;
                 padding: 5px;
-                width: 300px;
-                max-width: 70%;
+                width: 250px;
+            }
+
+            input[type="checkbox"] {
+                width: auto;
             }
         }
     }
@@ -123,7 +134,14 @@
         padding: 10px;
     }
 
-    .button {
-        background-color: $col-pri;
+    h1 {
+        margin: 5px;
+        color: $col-pri;
+    }
+
+    #success-text {
+        color: $col-text-pri;
+        margin-bottom: 100px;
+        margin-top: 100px;
     }
 }
