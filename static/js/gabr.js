@@ -300,7 +300,7 @@ function writePost(post_json)
     // Post user username
     var span_username = document.createElement("span");
     div_post.appendChild(span_username);
-    span_username.setAttribute("class", "user-name");
+    span_username.setAttribute("class", "username");
     span_username.appendChild(document.createTextNode(post_json["post-user"]["username"]));
     // Post time
     var span_time = document.createElement("span");
@@ -317,7 +317,7 @@ function writePost(post_json)
     var button_like = document.createElement("button");
     div_post.appendChild(button_like);
     button_like.setAttribute("onclick", "onLikeButton(" + post_json["post"]["id"] + ")");
-    button_like.setAttribute("class", "button");
+    button_like.setAttribute("class", "post-action-button");
     var span_like_icon = document.createElement("span");
     button_like.appendChild(span_like_icon);
     if (post_json["post"]["liked"])
@@ -329,7 +329,7 @@ function writePost(post_json)
     var button_repost = document.createElement("button");
     div_post.appendChild(button_repost);
     button_repost.setAttribute("onclick", "onRepostButton(" + post_json["post"]["id"] + ")");
-    button_repost.setAttribute("class", "button");
+    button_repost.setAttribute("class", "post-action-button");
     var span_repost_icon = document.createElement("span");
     button_repost.appendChild(span_repost_icon);
     span_repost_icon.setAttribute("class", "icon repost-button-false");
@@ -338,7 +338,7 @@ function writePost(post_json)
     var button_expand = document.createElement("button");
     div_post.appendChild(button_expand);
     button_expand.setAttribute("onclick", "viewPost(" + post_json["post"]["id"] + ")");
-    button_expand.setAttribute("class", "button");
+    button_expand.setAttribute("class", "post-action-button");
     var span_expand_icon = document.createElement("span");
     button_expand.appendChild(span_expand_icon);
     span_expand_icon.setAttribute("class", "icon icon-postdetail");

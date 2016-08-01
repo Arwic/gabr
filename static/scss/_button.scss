@@ -1,0 +1,17 @@
+.button {
+    border-radius: $border-radius !important;
+    background-color: $col-pri !important;
+    border-style: none !important;
+    padding: 0.25rem 1rem 0.25rem 1rem !important;
+    color: $col-background !important;
+    text-decoration: none !important;
+    min-width: 5rem;
+
+    &:hover {
+        background-color: darken($col-pri, 10%) !important;
+    }
+
+    &:active {
+        background-color: darken($col-pri, 15%) !important;
+    }
+}

@@ -1,22 +1,52 @@
 .b-post {
-    border: 1px solid $col-border;
+    border: $border-size $border-style $col-border;
     border-bottom-style: none;
     background-color: $col-background;
-    padding: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
+    padding: $padding;
+    margin-left: $margin;
+    margin-right: $margin;
     animation: fadein 0.5s;
+
+    .like-button-true:before {
+        content: "\f004";
+        color: #ac2925;
+        transition: color 0.2s;
+    }
+
+    .like-button-false:before {
+        content: "\f004";
+        transition: color 0.2s;
+    }
+
+    .repost-button-true:before {
+        content: "\f079";
+        color: #5cb85c;
+        transition: color 0.2s;
+    }
+
+    .repost-button-false:before {
+        content: "\f079";
+        transition: color 0.2s;
+    }
+
+    .follow-button-false:before {
+        content: "Follow";
+    }
+
+    .follow-button-true:before {
+        content: "Unfollow";
+    }
 
     .avatar {
         display: inline;
         float: left;
-        border-radius: 5px;
+        border-radius: $border-radius;
         width: 48px;
         height: 48px;
-        margin-right: 10px;
+        margin-right: 1rem;
         overflow: hidden;
         .image {
-            border-radius: 5px;
+            border-radius: $border-radius;
             width: 100%;
             height: auto;
         }
@@ -28,7 +58,7 @@
         color: $col-text-pri;
     }
 
-    .user-name {
+    .username {
         font-size: 13px;
         color: $col-text-sec;
         &:before {
@@ -60,9 +90,8 @@
         color: $col-text-sec;
         font-size: 14px;
     }
-}
 
-.post-action-button {
+    .post-action-button {
         display: inline;
         border: none;
         background-color: transparent;
@@ -83,6 +112,7 @@
             color: $col-text-sec;
         }
     }
+}
 
 .rounded-top {
     border-top-left-radius: 5px;

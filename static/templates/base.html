@@ -10,16 +10,16 @@
 
     <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}"/>
 
-    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet">
-    <link href="{% static "css/main.css" %}" rel="stylesheet">
+    <link href="{% static "css/gabr.css" %}" rel="stylesheet">
 
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
     <!--<script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>-->
     <script src="{% static "js/jquery-1.11.1.js" %}"></script>
     <script src="{% static "js/tether.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/general.js" %}"></script>
+    <script src="{% static "js/gabr.js" %}"></script>
 
     <!-- Extended header -->
     {% block header %} {% endblock %}
@@ -164,7 +164,7 @@
                 </div>
                 <span id="modal-viewpost-postuser-displayname" class="display-name"></span>
             </a>
-            <span id="modal-viewpost-postuser-username" class="user-name" ></span>
+            <span id="modal-viewpost-postuser-username" class="username" ></span>
             <span id="modal-viewpost-post-time" class="time"></span>
             <script>
                 $("#modal-viewpost-postuser-link").mouseenter(function () {
@@ -177,10 +177,10 @@
                 });
             </script>
             <p id="modal-viewpost-post-body" class="post-text"></p>
-            <button onclick="onLikeButton(-1)" class="button" id="like-button" name="like-button" type="button">
+            <button onclick="onLikeButton(-1)" class="post-action-button" id="like-button" name="like-button" type="button">
                 <span id="modal-viewpost-like" class="icon like-button-false"></span>
             </button>
-            <button onclick="onRepostButton(-1)" class="button" id="repost-button" name="repost-button" type="button">
+            <button onclick="onRepostButton(-1)" class="post-action-button" id="repost-button" name="repost-button" type="button">
                 <span id="modal-viewpost-repost" class="icon repost-button-false"></span>
             </button>
         </div>
@@ -197,7 +197,7 @@
                 <img class="image" id="profile-card-avatar" src="" />
             </div>
             <span class="display-name" id="profile-card-display-name"></span><br>
-            <span class="user-name" id="profile-card-user-name"></span>
+            <span class="username" id="profile-card-user-name"></span>
         </a>
 
         <div class="bio" id="profile-card-bio"></div>

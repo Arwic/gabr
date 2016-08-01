@@ -18,16 +18,29 @@ body {
   font-size: 1rem; }
 
 .button {
+  border-radius: 5px !important;
+  background-color: #0084b4 !important;
+  border-style: none !important;
+  padding: 0.25rem 1rem 0.25rem 1rem !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  min-width: 5rem; }
+  .button:hover {
+    background-color: #005f81 !important; }
+  .button:active {
+    background-color: #004c68 !important; }
+
+.textbox {
   border-radius: 5px;
-  background-color: #0084b4;
+  background-color: #ffffff;
   border-style: none;
   padding: 5px 10px 5px 10px;
-  color: #ffffff;
+  color: #373a3c;
   text-decoration: none !important; }
-  .button:hover {
-    background-color: #005f81; }
-  .button:active {
-    background-color: #004c68; }
+  .textbox:hover {
+    background-color: #e6e6e6; }
+  .textbox:active {
+    background-color: #d9d9d9; }
 
 .b-navbar {
   width: 100vw;
@@ -41,7 +54,7 @@ body {
   z-index: 1000;
   padding: 0 10% 0 10%;
   display: inline-block;
-  font-weight: 400; }
+  font-weight: normal; }
   .b-navbar .left {
     float: left !important; }
   .b-navbar .right {
@@ -52,6 +65,8 @@ body {
       font-size: 20px;
       text-decoration: none !important;
       color: #0084b4; }
+      .b-navbar .item .link:hover {
+        color: #005f81; }
     .b-navbar .item .image-container {
       width: 32px;
       height: 32px;
@@ -66,23 +81,41 @@ body {
       color: #8899a6;
       background-color: #ffffff;
       border: 1px solid #e1e8ed;
-      border-radius: 50px; }
+      border-radius: 1000rem; }
 
 .b-post {
   border: 1px solid #e1e8ed;
   border-bottom-style: none;
   background-color: #ffffff;
-  padding: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
+  padding: 1rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
   animation: fadein 0.5s; }
+  .b-post .like-button-true:before {
+    content: "\f004";
+    color: #ac2925;
+    transition: color 0.2s; }
+  .b-post .like-button-false:before {
+    content: "\f004";
+    transition: color 0.2s; }
+  .b-post .repost-button-true:before {
+    content: "\f079";
+    color: #5cb85c;
+    transition: color 0.2s; }
+  .b-post .repost-button-false:before {
+    content: "\f079";
+    transition: color 0.2s; }
+  .b-post .follow-button-false:before {
+    content: "Follow"; }
+  .b-post .follow-button-true:before {
+    content: "Unfollow"; }
   .b-post .avatar {
     display: inline;
     float: left;
     border-radius: 5px;
     width: 48px;
     height: 48px;
-    margin-right: 10px;
+    margin-right: 1rem;
     overflow: hidden; }
     .b-post .avatar .image {
       border-radius: 5px;
@@ -91,11 +124,11 @@ body {
   .b-post .display-name {
     font-size: 14px;
     font-weight: 600;
-    color: #292f33; }
-  .b-post .user-name {
+    color: #373a3c; }
+  .b-post .username {
     font-size: 13px;
     color: #8899a6; }
-    .b-post .user-name:before {
+    .b-post .username:before {
       content: " @"; }
   .b-post .time {
     font-size: 13px;
@@ -105,7 +138,7 @@ body {
   .b-post .body {
     word-wrap: break-word;
     margin-left: 60px;
-    color: #292f33;
+    color: #373a3c;
     font-weight: 400;
     font-size: 14px; }
   .b-post .repost-icon {
@@ -113,17 +146,7 @@ body {
   .b-post .repost-display-name {
     color: #8899a6;
     font-size: 14px; }
-
-.post-action-button {
-  display: inline;
-  border: none;
-  background-color: transparent;
-  padding: 0;
-  margin: 0 20px 0 20px;
-  width: 30px;
-  height: 30px;
-  color: #8899a6; }
-  .post-action-button:hover {
+  .b-post .post-action-button {
     display: inline;
     border: none;
     background-color: transparent;
@@ -132,6 +155,15 @@ body {
     width: 30px;
     height: 30px;
     color: #8899a6; }
+    .b-post .post-action-button:hover {
+      display: inline;
+      border: none;
+      background-color: transparent;
+      padding: 0;
+      margin: 0 20px 0 20px;
+      width: 30px;
+      height: 30px;
+      color: #8899a6; }
 
 .rounded-top {
   border-top-left-radius: 5px;
@@ -141,9 +173,118 @@ body {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px; }
 
+.b-table {
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center; }
+  .b-table .col {
+    position: relative; }
+    .b-table .col .row {
+      width: 100%;
+      margin: 0; }
+  .b-table .width-1 {
+    width: 1/12%; }
+  .b-table .width-2 {
+    width: 2/12%; }
+  .b-table .width-3 {
+    width: 3/12%; }
+  .b-table .width-4 {
+    width: 4/12%; }
+  .b-table .width-5 {
+    width: 5/12%; }
+  .b-table .width-6 {
+    width: 6/12%; }
+  .b-table .width-7 {
+    width: 7/12%; }
+  .b-table .width-8 {
+    width: 8/12%; }
+  .b-table .width-9 {
+    width: 9/12%; }
+  .b-table .width-10 {
+    width: 10/12%; }
+  .b-table .width-11 {
+    width: 11/12%; }
+  .b-table .width-12 {
+    width: 12/12%; }
+
+.debuginfo {
+  position: fixed;
+  bottom: 0;
+  right: 0; }
+  .debuginfo .icon:hover + .content {
+    display: inline-block; }
+  .debuginfo .content {
+    font-weight: lighter;
+    font-size: smaller;
+    display: none; }
+
+.b-feed-cap {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid #e1e8ed;
+  background-color: #ffffff;
+  border-bottom-style: none;
+  padding: 1rem;
+  margin: 0.25rem;
+  margin-bottom: 0;
+  min-width: 600px; }
+  .b-feed-cap .text-input {
+    width: 92%;
+    border-radius: 5px;
+    border: 1px solid #e1e8ed;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    background-color: #ffffff;
+    color: #8899a6;
+    text-align: left;
+    margin-left: 0.25rem;
+    font-weight: normal; }
+  .b-feed-cap .avatar {
+    border-radius: 5px;
+    overflow: hidden;
+    width: 32px;
+    height: 32px;
+    float: left;
+    margin-right: 0.25rem; }
+    .b-feed-cap .avatar .image {
+      width: 100%;
+      height: auto; }
+
+.b-view-new-posts {
+  border: 1px solid #e1e8ed;
+  background-color: #ffffff;
+  border-bottom-style: none;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  text-align: center;
+  padding: 1rem;
+  display: block;
+  text-decoration: none !important; }
+  .b-view-new-posts .body {
+    color: #0084b4; }
+
+.hidden {
+  display: none; }
+
+.b-load-more-posts {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid #e1e8ed;
+  background-color: #ffffff;
+  margin: 0 0.25rem 50px 0.25rem;
+  text-align: center;
+  display: block;
+  cursor: pointer; }
+  .b-load-more-posts .body {
+    color: #0084b4;
+    margin-top: 1rem; }
+
+.feed-special-link {
+  text-decoration: none !important; }
+
 .icon {
   display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
+  font: normal normal normal 14px FontAwesome;
   font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
@@ -188,98 +329,31 @@ body {
     position: relative; }
     .b-table .col .row {
       width: 100%;
-      margin: 0px; }
+      margin: 0; }
   .b-table .width-1 {
-    width: 100px; }
+    width: 1/12%; }
   .b-table .width-2 {
-    width: 200px; }
+    width: 2/12%; }
   .b-table .width-3 {
-    width: 300px; }
+    width: 3/12%; }
   .b-table .width-4 {
-    width: 400px; }
+    width: 4/12%; }
   .b-table .width-5 {
-    width: 500px; }
+    width: 5/12%; }
   .b-table .width-6 {
-    width: 600px; }
+    width: 6/12%; }
   .b-table .width-7 {
-    width: 700px; }
+    width: 7/12%; }
   .b-table .width-8 {
-    width: 800px; }
+    width: 8/12%; }
   .b-table .width-9 {
-    width: 900px; }
+    width: 9/12%; }
   .b-table .width-10 {
-    width: 1000px; }
+    width: 10/12%; }
   .b-table .width-11 {
-    width: 1100px; }
+    width: 11/12%; }
   .b-table .width-12 {
-    width: 1200px; }
-
-.b-feed-cap {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border: 1px solid #e1e8ed;
-  background-color: #ffffff;
-  border-bottom-style: none;
-  padding: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 5px; }
-  .b-feed-cap .text-input {
-    width: 90%;
-    border-radius: 5px;
-    border: 1px solid #e1e8ed;
-    padding: 5px;
-    background-color: #ffffff;
-    color: #8899a6;
-    text-align: left;
-    margin-left: 5px;
-    font-weight: 400; }
-  .b-feed-cap .avatar {
-    border-radius: 5px;
-    overflow: hidden;
-    width: 32px;
-    height: 32px;
-    float: left;
-    margin-right: 5px; }
-    .b-feed-cap .avatar .image {
-      width: 100%;
-      height: auto; }
-
-.b-view-new-posts {
-  border: 1px solid #e1e8ed;
-  background-color: #ffffff;
-  border-bottom-style: none;
-  margin-left: 5px;
-  margin-right: 5px;
-  text-align: center;
-  padding: 5px;
-  display: block;
-  text-decoration: none !important; }
-  .b-view-new-posts .body {
-    color: #0084b4; }
-
-.hidden {
-  display: none; }
-
-.b-load-more-posts {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border: 1px solid #e1e8ed;
-  background-color: #ffffff;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 50px;
-  text-align: center;
-  display: block;
-  cursor: pointer;
-  line-height: 30px; }
-  .b-load-more-posts .body {
-    color: #0084b4;
-    margin-top: 10px;
-    margin-bottom: -6px; }
-
-.feed-special-link {
-  text-decoration: none !important; }
+    width: 12/12%; }
 
 .b-profile-small {
   border: 1px solid #e1e8ed;
@@ -291,13 +365,13 @@ body {
     font-size: 18px;
     margin-left: 110px;
     font-weight: 600;
-    color: #292f33; }
-  .b-profile-small .user-name {
+    color: #373a3c; }
+  .b-profile-small .username {
     font-size: 14px;
     margin-left: 110px;
     font-weight: 200;
     color: #8899a6; }
-    .b-profile-small .user-name:before {
+    .b-profile-small .username:before {
       content: "@"; }
   .b-profile-small .stats {
     margin-bottom: 5px;
@@ -348,6 +422,80 @@ body {
     margin: 10px 20px 10px 20px;
     color: #000000; }
 
+.b-profile-header .banner {
+  float: top;
+  width: 100vw;
+  height: 400px;
+  overflow: hidden;
+  margin-top: -5px; }
+  .b-profile-header .banner .image {
+    width: 100%;
+    height: auto; }
+.b-profile-header .navbar {
+  width: 100vw;
+  height: 60px;
+  background-color: #ffffff;
+  box-shadow: 2px 1px 2px #e1e8ed;
+  z-index: 2;
+  padding: 0 10% 0 10%;
+  font-weight: 400;
+  display: block; }
+  .b-profile-header .navbar .left {
+    float: left !important; }
+  .b-profile-header .navbar .right {
+    float: right !important; }
+  .b-profile-header .navbar .item {
+    margin: 10px;
+    align-content: center;
+    text-align: center; }
+    .b-profile-header .navbar .item .link {
+      font-size: 20px;
+      text-decoration: none !important;
+      color: #0084b4; }
+    .b-profile-header .navbar .item .stat-button {
+      line-height: 1; }
+      .b-profile-header .navbar .item .stat-button .label {
+        font-size: 10px;
+        float: right;
+        text-transform: uppercase;
+        font-weight: 400;
+        width: 60px;
+        color: #373a3c; }
+      .b-profile-header .navbar .item .stat-button .value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #0084b4; }
+
+.b-profile-info .avatar {
+  float: top;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  transform: translateY(-70%);
+  position: absolute;
+  z-index: 3;
+  border-radius: 5px; }
+  .b-profile-info .avatar .image {
+    width: 100%;
+    height: auto; }
+.b-profile-info .info {
+  padding: 70px 15px 15px 15px; }
+  .b-profile-info .info .display-name {
+    font-size: 22px;
+    font-weight: 600;
+    color: #373a3c; }
+  .b-profile-info .info .username {
+    font-size: 18px;
+    font-weight: 200;
+    color: #8899a6; }
+    .b-profile-info .info .username:before {
+      content: "@"; }
+  .b-profile-info .info .bio {
+    margin-top: 10px;
+    font-size: 10pt;
+    font-weight: 200;
+    color: #373a3c; }
+
 #global-profile-card {
   display: none;
   position: absolute;
@@ -361,44 +509,6 @@ body {
 .b-hovercard:hover .hovercard {
   display: block;
   animation: fadein 0.3s; }
-
-.like-button-true:before {
-  content: "\f004";
-  color: #ac2925;
-  transition: color 0.2s; }
-
-.like-button-false:before {
-  content: "\f004";
-  transition: color 0.2s; }
-
-.repost-button-true:before {
-  content: "\f079";
-  color: #5cb85c;
-  transition: color 0.2s; }
-
-.repost-button-false:before {
-  content: "\f079";
-  transition: color 0.2s; }
-
-.follow-button-false:before {
-  content: "Follow"; }
-
-.follow-button-true:before {
-  content: "Unfollow"; }
-
-.button {
-  border-radius: 5px !important;
-  background-color: #0084b4 !important;
-  border: 1px solid #ffffff;
-  padding: 5px 15px 5px 10px !important;
-  color: #ffffff !important;
-  text-decoration: none !important; }
-  .button:hover {
-    background-color: #005f81 !important; }
-  .button:active {
-    background-color: #004c68 !important; }
-  .button:disabled {
-    background-color: #b4ebff !important; }
 
 .b-site-info {
   border: solid #e1e8ed 1px;
@@ -460,11 +570,11 @@ body {
   .b-notification .display-name {
     font-size: 14px;
     font-weight: 600;
-    color: #292f33; }
-  .b-notification .user-name {
+    color: #373a3c; }
+  .b-notification .username {
     font-size: 13px;
     color: #8899a6; }
-    .b-notification .user-name:before {
+    .b-notification .username:before {
       content: "@"; }
   .b-notification .time {
     font-size: 13px;
@@ -472,141 +582,49 @@ body {
     .b-notification .time:before {
       content: "· "; }
   .b-notification .body {
-    color: #292f33;
+    color: #373a3c;
     font-weight: 400;
     font-size: 14px; }
 
-.b-profile-header .banner {
-  float: top;
-  width: 100vw;
-  height: 400px;
-  overflow: hidden;
-  margin-top: -5px; }
-  .b-profile-header .banner .image {
-    width: 100%;
-    height: auto; }
-.b-profile-header .navbar {
-  width: 100vw;
-  height: 60px;
-  background-color: #ffffff;
-  box-shadow: 2px 1px 2px #e1e8ed;
-  z-index: 2;
-  padding: 0 10% 0 10%;
-  font-weight: 400;
-  display: block; }
-  .b-profile-header .navbar .left {
-    float: left !important; }
-  .b-profile-header .navbar .right {
-    float: right !important; }
-  .b-profile-header .navbar .item {
-    margin: 10px;
-    align-content: center;
-    text-align: center; }
-    .b-profile-header .navbar .item .link {
-      font-size: 20px;
-      text-decoration: none !important;
-      color: #0084b4; }
-    .b-profile-header .navbar .item .stat-button {
-      line-height: 1; }
-      .b-profile-header .navbar .item .stat-button .label {
-        font-size: 10px;
-        float: right;
-        text-transform: uppercase;
-        font-weight: 400;
-        width: 60px;
-        color: #292f33; }
-      .b-profile-header .navbar .item .stat-button .value {
-        font-size: 18px;
-        font-weight: 600;
-        color: #0084b4; }
-
-.b-profile-info .avatar {
-  float: top;
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  transform: translateY(-70%);
-  position: absolute;
-  z-index: 3;
-  border-radius: 5px; }
-  .b-profile-info .avatar .image {
-    width: 100%;
-    height: auto; }
-.b-profile-info .info {
-  padding: 70px 15px 15px 15px; }
-  .b-profile-info .info .display-name {
-    font-size: 22px;
-    font-weight: 600;
-    color: #292f33; }
-  .b-profile-info .info .user-name {
-    font-size: 18px;
-    font-weight: 200;
-    color: #8899a6; }
-    .b-profile-info .info .user-name:before {
-      content: "@"; }
-  .b-profile-info .info .bio {
-    margin-top: 10px;
-    font-size: 10pt;
-    font-weight: 200;
-    color: #292f33; }
-
-.debuginfo {
-  position: fixed;
-  bottom: 0;
-  right: 0; }
-  .debuginfo .icon:hover + .content {
-    display: inline-block; }
-  .debuginfo .content {
-    font-weight: lighter;
-    font-size: smaller;
-    display: none; }
-
 .b-landing-container {
-  width: 800px;
+  min-width: 30rem;
+  width: 40vw;
   margin: 0 auto;
   text-align: center; }
-  .b-landing-container .button {
-    border-radius: 5px;
-    background-color: #0084b4;
-    border-style: none;
-    padding: 10px 10px 10px 10px;
-    color: #ffffff;
-    text-decoration: none !important; }
-    .b-landing-container .button:hover {
-      background-color: #005f81; }
-    .b-landing-container .button:active {
-      background-color: #004c68; }
 
 .b-header {
-  width: 800px;
+  min-width: 30rem;
+  width: 40vw;
   margin: 0 auto;
   text-align: center; }
 
 .b-login-container {
-  width: 800px;
+  width: 20rem;
   margin: 0 auto;
   text-align: center; }
   .b-login-container .form {
     text-align: center;
     margin: 0 auto;
-    width: 600px; }
+    padding: 0;
+    width: 75%; }
     .b-login-container .form ul {
       list-style: none;
       padding: 0;
-      margin: 0; }
+      margin: 0;
+      width: 100%; }
       .b-login-container .form ul li {
-        margin: 5px; }
+        margin: 0.25rem; }
         .b-login-container .form ul li label {
           margin: 0;
           text-align: right;
-          width: 100px;
+          width: 20%;
           display: inline-block;
-          color: #292f33; }
+          color: #373a3c; }
         .b-login-container .form ul li input {
           border-radius: 5px;
           border: 1px solid #e1e8ed;
           padding: 5px;
-          width: 200px; }
+          width: 70%; }
   .b-login-container .signup-link {
     font-size: small; }
 
@@ -634,14 +652,14 @@ body {
           text-align: right;
           width: 150px;
           display: inline-block;
-          color: #292f33; }
+          color: #373a3c; }
         .b-signup-container .form ul li input, .b-signup-container .form ul li select {
           border-radius: 5px;
           border: 1px solid #e1e8ed;
           padding: 5px;
           width: 200px;
           height: 36px;
-          color: #292f33;
+          color: #373a3c;
           background-color: #ffffff; }
   .b-signup-container .login-link {
     font-size: small; }
@@ -692,7 +710,7 @@ body {
     max-height: 40px; }
   .b-settings-container .content .form label {
     width: 120px;
-    color: #292f33;
+    color: #373a3c;
     margin-right: 10px;
     text-align: right;
     margin-top: 10px; }
@@ -738,8 +756,8 @@ body {
   margin: 5px;
   color: #0084b4; }
 .b-settings-container #success-text {
-  color: #292f33;
+  color: #373a3c;
   margin-bottom: 100px;
   margin-top: 100px; }
 
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=gabr.css.map */

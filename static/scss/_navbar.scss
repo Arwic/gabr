@@ -10,7 +10,7 @@
     z-index: 1000;
     padding: 0 10% 0 10%;
     display: inline-block;
-    font-weight: $font-regular;
+    font-weight: normal;
 
     .left {
         float: left !important;
@@ -26,14 +26,18 @@
         .link {
             font-size: 20px;
             text-decoration: none !important;
-            color: $col-pri
+            color: $col-pri;
+
+            &:hover {
+                color: darken($col-pri, 10%);
+            }
         }
 
         .image-container {
             width: 32px;
             height: 32px;
             overflow: hidden;
-            border-radius: 5px;
+            border-radius: $border-radius;
 
             .image {
                 width: 100%;
@@ -47,7 +51,7 @@
             color: $col-text-sec;
             background-color: $col-background;
             border: 1px solid $col-border;
-            border-radius: 50px;
+            border-radius: 1000rem;
         }
     }
 }
