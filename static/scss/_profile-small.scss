@@ -1,21 +1,24 @@
 .b-profile-small {
-    border: 1px solid $col-border;
-    border-radius: 5px;
+    border: $border-size $border-style $col-border;
+    border-radius: $border-radius;
     background-color: $col-background;
-    width: 290px;
-    margin: 5px;
+    width: 18.4375rem;
+    margin: $margin;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1;
 
     .display-name {
-        font-size: 18px;
-        margin-left: 110px;
-        font-weight: 600;
+        font-size: 0.875rem;
+        margin-left: 5.75rem;
+        font-weight: bold;
         color: $col-text-pri;
     }
 
     .username {
-        font-size: 14px;
-        margin-left: 110px;
-        font-weight: 200;
+        font-size: 0.75rem;
+        margin-left: 5.75rem;
+        font-weight: normal;
         color: $col-text-sec;
 
         &:before {
@@ -24,8 +27,9 @@
     }
 
     .stats {
-        margin-bottom: 5px;
-        margin-top: 5px;
+        margin-bottom: $margin;
+        margin-top: $margin;
+        margin-left: 0;
 
         &:after {
             display: table;
@@ -36,28 +40,28 @@
         .label {
             display: inline;
             float: left;
-            font-size: 8pt;
+            margin: 0;
+            width: 33%;
+            font-size: 0.5rem;
             text-transform: uppercase;
-            margin-left: 20px;
-            font-weight: $font-regular;
-            width: 60px;
+            font-weight: normal;
             color: $col-text-sec;
         }
 
         .value {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 1.25rem;
+            font-weight: bold;
             color: $col-pri;
         }
     }
 
     .banner {
         float: top;
-        max-width: 300px;
-        height: 100px;
+        max-width: 18.75rem;
+        height: 6.25rem;
         overflow: hidden;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
 
         .image {
             width: 100%;
@@ -67,14 +71,15 @@
 
     .avatar {
         float: top;
-        width: 80px;
-        height: 80px;
+        width: 4.5rem;
+        height: 4.5rem;
         overflow: hidden;
-        margin-left: 20px;
-        transform: translateY(-40%);
+        margin-left: 0.625rem;
+        transform: translateY(-50%);
         position: absolute;
         z-index: 1;
-        border-radius: 5px;
+        border-radius: $border-radius;
+        border: $border-avatar-size * 0.55 $border-style $col-background;
 
         .image {
             width: 100%;
@@ -83,9 +88,10 @@
     }
 
     .bio {
-        font-size: 10pt;
-        font-weight: 200;
-        margin: 10px 20px 10px 20px;
-        color: #000000;
+        line-height: 1.5;
+        margin: 0.625rem;
+        font-size: 0.75rem;
+        font-weight: normal;
+        color: $col-text-pri;
     }
 }

@@ -268,11 +268,11 @@ function writePost(post_json)
         // Repost icon
         var span_repost_icon = document.createElement("span");
         a_repost_link.appendChild(span_repost_icon);
-        span_repost_icon.setAttribute("class", "icon repost-icon");
+        span_repost_icon.setAttribute("class", "icon icon-repost");
         // Repost display name
         var span_repost_displayname = document.createElement("span");
         a_repost_link.appendChild(span_repost_displayname);
-        span_repost_displayname.setAttribute("class", "display-name");
+        span_repost_displayname.setAttribute("class", "repost-display-name");
         span_repost_displayname.appendChild(document.createTextNode(post_json["repost-user"]["displayname"] + " Reposted"));
         a_repost_link.appendChild(document.createElement("br"));
         registerHoverCard("#" + repost_guid, post_json["repost-user"]["username"]);
@@ -310,12 +310,17 @@ function writePost(post_json)
     // Post body
     var p_body = document.createElement("p");
     div_post.appendChild(p_body);
+    p_body.setAttribute("class", "body");
     p_body.appendChild(document.createTextNode(post_json["post"]["body"]));
     linkifyPostBody(p_body);
 
+    var div_actions = document.createElement("div");
+    div_post.appendChild(div_actions);
+    div_actions.setAttribute("class", "post-action-button-container");
+
     // Like button
     var button_like = document.createElement("button");
-    div_post.appendChild(button_like);
+    div_actions.appendChild(button_like);
     button_like.setAttribute("onclick", "onLikeButton(" + post_json["post"]["id"] + ")");
     button_like.setAttribute("class", "post-action-button");
     var span_like_icon = document.createElement("span");
@@ -327,16 +332,19 @@ function writePost(post_json)
     span_like_icon.setAttribute("id", "like-" + post_json["post"]["id"]);
     // Repost button
     var button_repost = document.createElement("button");
-    div_post.appendChild(button_repost);
+    div_actions.appendChild(button_repost);
     button_repost.setAttribute("onclick", "onRepostButton(" + post_json["post"]["id"] + ")");
     button_repost.setAttribute("class", "post-action-button");
     var span_repost_icon = document.createElement("span");
     button_repost.appendChild(span_repost_icon);
-    span_repost_icon.setAttribute("class", "icon repost-button-false");
     span_repost_icon.setAttribute("id", "repost-" + post_json["post"]["id"]);
+    if (post_json["post"]["reposted"])
+        span_repost_icon.setAttribute("class", "icon repost-button-true");
+    else
+        span_repost_icon    .setAttribute("class", "icon repost-button-false");
     // Expand button
     var button_expand = document.createElement("button");
-    div_post.appendChild(button_expand);
+    div_actions.appendChild(button_expand);
     button_expand.setAttribute("onclick", "viewPost(" + post_json["post"]["id"] + ")");
     button_expand.setAttribute("class", "post-action-button");
     var span_expand_icon = document.createElement("span");

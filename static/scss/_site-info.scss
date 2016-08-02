@@ -1,12 +1,12 @@
 .b-site-info {
-    border: solid $col-border 1px;
-    border-radius: 5px;
+    border: $border-size $border-style $col-border;
+    border-radius: $border-radius;
     background-color: $col-background;
-    max-width: 300px;
+    max-width: 18.75rem;
     color: $col-text-sec;
-    margin: 5px;
-    padding: 20px;
-    font-size: 12px;
+    margin: $margin;
+    padding: 1.25rem;
+    font-size: 0.75rem;
 
     .link {
         color: $col-text-sec;

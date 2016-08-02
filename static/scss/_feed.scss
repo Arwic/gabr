@@ -7,8 +7,7 @@
     padding: $padding;
     margin: $margin;
     margin-bottom: 0;
-
-    min-width: 600px; // TODO: fix this
+    width: 35rem;
 
     .text-input {
         width: 92%;
@@ -25,8 +24,8 @@
     .avatar {
         border-radius: $border-radius;
         overflow: hidden;
-        width: 32px;
-        height: 32px;
+        width: 2rem;
+        height: 2rem;
         float: left;
         margin-right: $margin;
 
@@ -62,7 +61,8 @@
     border-bottom-right-radius: $border-radius;
     border: $border-size $border-style $col-border;
     background-color: $col-background;
-    margin: 0 $margin 50px $margin;
+    margin: $margin;
+    margin-top: 0;
     text-align: center;
     display: block;
     cursor: pointer;
@@ -73,6 +73,6 @@
     }
 }
 
-.feed-special-link {
+.feed-action-button {
     text-decoration: none !important;
 }

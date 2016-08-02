@@ -6,7 +6,6 @@
 }
 
 .b-login-container {
-    width: 20rem;
     margin: 0 auto;
     text-align: center;
 
@@ -19,8 +18,8 @@
         ul {
             list-style: none;
             padding: 0;
-            margin: 0;
-            width: 100%;
+            margin: auto;
+            width: 30%;
 
             li {
                 margin: $margin;
@@ -28,16 +27,16 @@
                 label {
                     margin: 0;
                     text-align: right;
-                    width: 20%;
                     display: inline-block;
                     color: $col-text-pri;
+                    width: 30%;
                 }
 
                 input {
                     border-radius: $border-radius;
                     border: $border-size $border-style $col-border;
-                    padding: 5px;
-                    width: 70%;
+                    padding: 0.3125rem;
+                    width: 60%;
                 }
             }
         }

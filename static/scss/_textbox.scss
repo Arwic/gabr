@@ -1,8 +1,8 @@
 .textbox {
-    border-radius: 5px;
+    border-radius: $border-radius;
     background-color: $col-background;
     border-style: none;
-    padding: 5px 10px 5px 10px;
+    padding: 0.3125rem 0.625rem 0.3125rem 0.625rem;
     color: $col-text-pri;
     text-decoration: none !important;
 

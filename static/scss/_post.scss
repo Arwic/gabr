@@ -6,6 +6,11 @@
     margin-left: $margin;
     margin-right: $margin;
     animation: fadein 0.5s;
+    width: 35rem;
+
+    &:hover {
+        background-color: $col-body-background;
+    }
 
     .like-button-true:before {
         content: "\f004";
@@ -41,10 +46,10 @@
         display: inline;
         float: left;
         border-radius: $border-radius;
-        width: 48px;
-        height: 48px;
+        width: 3rem;
         margin-right: 1rem;
         overflow: hidden;
+
         .image {
             border-radius: $border-radius;
             width: 100%;
@@ -53,22 +58,24 @@
     }
 
     .display-name {
-        font-size: 14px;
+        font-size: 0.875rem;
         font-weight: $font-bold;
         color: $col-text-pri;
     }
 
     .username {
-        font-size: 13px;
+        font-size: 0.9rem;
         color: $col-text-sec;
+
         &:before {
             content: " @";
         }
     }
 
     .time {
-        font-size: 13px;
+        font-size: 0.9rem;
         color: $col-text-sec;
+
         &:before {
             content: " · ";
         }
@@ -76,50 +83,44 @@
 
     .body {
         word-wrap: break-word;
-        margin-left: 60px;
+        margin-left: 4rem;
         color: $col-text-pri;
-        font-weight: $font-regular;
-        font-size: 14px;
+        font-weight: normal;
+        font-size: 0.9rem;
     }
 
-    .repost-icon {
-        color: #00c800;
+    .icon-repost {
+        color: $col-text-sec;
     }
 
     .repost-display-name {
         color: $col-text-sec;
-        font-size: 14px;
+        font-size: 0.9rem;
+        margin-left: 0.25rem;
     }
 
-    .post-action-button {
-        display: inline;
-        border: none;
-        background-color: transparent;
-        padding: 0;
-        margin: 0 20px 0 20px;
-        width: 30px;
-        height: 30px;
-        color: $col-text-sec;
+    .post-action-button-container {
+        margin-left: 4rem;
 
-        &:hover {
+        .post-action-button {
             display: inline;
             border: none;
             background-color: transparent;
             padding: 0;
-            margin: 0 20px 0 20px;
-            width: 30px;
-            height: 30px;
+            margin-right: 2rem;
+            width: 2rem;
+            height: 2rem;
             color: $col-text-sec;
         }
     }
 }
 
 .rounded-top {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
 }
 
 .rounded-bottom {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
 }
