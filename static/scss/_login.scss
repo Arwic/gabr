@@ -1,28 +1,27 @@
 .b-header {
-    min-width: 30rem;
-    width: 40vw;
+    width: 50rem;
     margin: 0 auto;
     text-align: center;
 }
 
 .b-login-container {
+    width: 50rem;
     margin: 0 auto;
     text-align: center;
 
     .form {
         text-align: center;
         margin: 0 auto;
-        padding: 0;
-        width: 75%;
+        width: 37.5rem;
 
         ul {
             list-style: none;
             padding: 0;
+            width: 80%;
             margin: auto;
-            width: 30%;
 
             li {
-                margin: $margin;
+                margin: 0.3125rem;
 
                 label {
                     margin: 0;
@@ -32,11 +31,14 @@
                     width: 30%;
                 }
 
-                input {
+                input, select {
+                    width: 40%;
                     border-radius: $border-radius;
                     border: $border-size $border-style $col-border;
                     padding: 0.3125rem;
-                    width: 60%;
+                    height: 2.25rem;
+                    color: $col-text-pri;
+                    background-color: $col-background;
                 }
             }
         }

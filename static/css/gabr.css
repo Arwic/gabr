@@ -634,37 +634,39 @@ body {
   text-align: center; }
 
 .b-header {
-  min-width: 30rem;
-  width: 40vw;
+  width: 50rem;
   margin: 0 auto;
   text-align: center; }
 
 .b-login-container {
+  width: 50rem;
   margin: 0 auto;
   text-align: center; }
   .b-login-container .form {
     text-align: center;
     margin: 0 auto;
-    padding: 0;
-    width: 75%; }
+    width: 37.5rem; }
     .b-login-container .form ul {
       list-style: none;
       padding: 0;
-      margin: auto;
-      width: 30%; }
+      width: 80%;
+      margin: auto; }
       .b-login-container .form ul li {
-        margin: 0.25rem; }
+        margin: 0.3125rem; }
         .b-login-container .form ul li label {
           margin: 0;
           text-align: right;
           display: inline-block;
           color: #373a3c;
           width: 30%; }
-        .b-login-container .form ul li input {
+        .b-login-container .form ul li input, .b-login-container .form ul li select {
+          width: 40%;
           border-radius: 0.3125rem;
           border: 0.0625rem solid #e1e8ed;
           padding: 0.3125rem;
-          width: 60%; }
+          height: 2.25rem;
+          color: #373a3c;
+          background-color: #ffffff; }
   .b-login-container .signup-link {
     font-size: small; }
 
@@ -695,7 +697,7 @@ body {
           color: #373a3c;
           width: 30%; }
         .b-signup-container .form ul li input, .b-signup-container .form ul li select {
-          width: 60%;
+          width: 40%;
           border-radius: 0.3125rem;
           border: 0.0625rem solid #e1e8ed;
           padding: 0.3125rem;
