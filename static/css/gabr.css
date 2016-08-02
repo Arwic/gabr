@@ -709,7 +709,7 @@ body {
 
 .b-settings-container .menu {
   margin: 0.25rem;
-  width: 100%; }
+  width: 18.75rem; }
   .b-settings-container .menu .active li {
     background-color: #f9f9f9; }
   .b-settings-container .menu a {
@@ -735,7 +735,8 @@ body {
       background-color: #ffffff; }
 .b-settings-container .content {
   margin: 0.25rem;
-  text-align: center; }
+  text-align: center;
+  width: 37.5rem; }
   .b-settings-container .content .form label[for="id_new_password2"] {
     transform: translate(0, 0.625rem); }
   .b-settings-container .content .form span[class="helptext"] {
@@ -769,9 +770,10 @@ body {
     vertical-align: middle; }
     .b-settings-container .content .form label[class="file"] input[type="file"] {
       display: none; }
-  .b-settings-container .content .form .notifications-pane label {
-    text-align: left !important;
-    width: 12.5rem !important; }
+  .b-settings-container .content .form #notifications-pane label {
+    width: 50%; }
+  .b-settings-container .content .form #notifications-pane input {
+    width: 30%; }
   .b-settings-container .content .form input {
     border-radius: 0.3125rem;
     border: 0.0625rem solid #e1e8ed;

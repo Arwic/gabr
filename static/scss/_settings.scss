@@ -1,7 +1,7 @@
 .b-settings-container {
     .menu {
         margin: $margin;
-        width: 100%;
+        width: 18.75rem;
 
         .active li {
             background-color: darken($col-background, 2.5%);
@@ -42,6 +42,7 @@
     .content {
         margin: $margin;
         text-align: center;
+        width: 37.5rem;
 
         .form {
 
@@ -94,9 +95,15 @@
                 }
             }
 
-            .notifications-pane label {
-                text-align: left !important;
-                width: 12.5rem !important;
+            #notifications-pane {
+
+                label {
+                    width: 50%
+                }
+
+                input {
+                    width: 30%;
+                }
             }
 
             input {

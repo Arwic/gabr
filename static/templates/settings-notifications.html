@@ -10,13 +10,13 @@
         </script>
     </div>
     <div class="body">
-        <div class="notifications-pane">
-            <form class="form" id="form" method="POST" action="{% url "settings_notifications" %}">{% csrf_token %}
+        <form class="form" id="form" method="POST" action="{% url "settings_notifications" %}">{% csrf_token %}
+            <div id="notifications-pane">
                 <ul>
                     {{ form.as_ul }}
                 </ul>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
     <div class="footer">
         <button form="form" type="submit" class="button">Save changes</button>
