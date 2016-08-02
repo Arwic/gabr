@@ -1,6 +1,8 @@
 from django.conf.urls import include, url
 from django.contrib import admin, auth
 from django.contrib.auth.views import password_change, password_reset
+from django.utils.functional import curry
+from django.views.defaults import page_not_found, permission_denied, server_error
 
 from django.conf import settings
 from gabr import views
@@ -51,6 +53,10 @@ urlpatterns = [
     url(r'^ajax/load-trends/$', views.trends.ajax_load_trends, name='ajax-load-trends'),
     url(r'^ajax/check-posts/$', views.post.ajax_check_posts, name='ajax-check-posts'),
 ]
+
+handler500 = curry(server_error, template_name='500.html')
+handler404 = curry(page_not_found, template_name='404.html')
+handler403 = curry(permission_denied, template_name='403.html')
 
 if settings.DEBUG:
     urlpatterns += [
