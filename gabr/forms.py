@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import widgets
 from django.utils.safestring import mark_safe
-from .models import UserProfile, Post, Message
+from .models import UserProfile, Post, Message, User
+from nocaptcha_recaptcha.fields import NoReCaptchaField
 
 
 class PostWidget(widgets.Textarea):
@@ -60,8 +61,11 @@ class SignupForm(forms.Form):
     username = forms.CharField()
     email = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
-    gender = forms.ChoiceField(choices=CHOICES_GENDER, widget=forms.RadioSelect())
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    display_name = forms.CharField()
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+    gender = forms.ChoiceField(choices=CHOICES_GENDER)
 
 
 class PostForm(forms.ModelForm):
@@ -82,3 +86,30 @@ class MessageForm(forms.ModelForm):
             'target',
             'body',
         ]
+
+
+class SettingsAccountForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+        ]
+
+
+class SettingsNotificationsForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'email_newsletter',
+            'email_notif_follow',
+            'email_notif_like',
+            'email_notif_mention',
+            'email_notif_message',
+            'email_notif_repost',
+        ]
+
+
+class AxesCaptchaForm(forms.Form):
+    captcha = NoReCaptchaField(gtag_attrs={'data-callback': 'onReCaptchaSuccess'})

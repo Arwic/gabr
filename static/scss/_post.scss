@@ -1,44 +1,81 @@
 .b-post {
-    border: 1px solid $col-border;
+    border: $border-size $border-style $col-border;
     border-bottom-style: none;
     background-color: $col-background;
-    padding: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
+    padding: $padding;
+    margin-left: $margin;
+    margin-right: $margin;
     animation: fadein 0.5s;
+    width: 35rem;
+
+    &:hover {
+        background-color: $col-body-background;
+    }
+
+    .like-button-true:before {
+        content: "\f004";
+        color: #ac2925;
+        transition: color 0.2s;
+    }
+
+    .like-button-false:before {
+        content: "\f004";
+        transition: color 0.2s;
+    }
+
+    .repost-button-true:before {
+        content: "\f079";
+        color: #5cb85c;
+        transition: color 0.2s;
+    }
+
+    .repost-button-false:before {
+        content: "\f079";
+        transition: color 0.2s;
+    }
+
+    .follow-button-false:before {
+        content: "Follow";
+    }
+
+    .follow-button-true:before {
+        content: "Unfollow";
+    }
 
     .avatar {
         display: inline;
         float: left;
-        border-radius: 5px;
-        width: 48px;
-        height: 48px;
-        margin-right: 10px;
+        border-radius: $border-radius;
+        width: 3rem;
+        margin-right: 1rem;
         overflow: hidden;
+
         .image {
-            border-radius: 5px;
+            border-radius: $border-radius;
             width: 100%;
             height: auto;
         }
     }
 
     .display-name {
-        font-size: 14px;
+        font-size: 0.875rem;
         font-weight: $font-bold;
         color: $col-text-pri;
     }
 
-    .user-name {
-        font-size: 13px;
+    .username {
+        font-size: 0.9rem;
         color: $col-text-sec;
+
         &:before {
             content: " @";
         }
     }
 
     .time {
-        font-size: 13px;
+        font-size: 0.9rem;
         color: $col-text-sec;
+
         &:before {
             content: " · ";
         }
@@ -46,39 +83,44 @@
 
     .body {
         word-wrap: break-word;
-        margin-left: 60px;
+        margin-left: 4rem;
         color: $col-text-pri;
-        font-weight: $font-regular;
-        font-size: 14px;
+        font-weight: normal;
+        font-size: 0.9rem;
     }
 
-    .repost-icon {
-        color: #00c800;
+    .icon-repost {
+        color: $col-text-sec;
     }
 
     .repost-display-name {
         color: $col-text-sec;
-        font-size: 14px;
+        font-size: 0.9rem;
+        margin-left: 0.25rem;
     }
 
-    .button {
-        display: inline;
-        border: none;
-        background-color: transparent;
-        padding: 0;
-        margin: 0 20px 0 20px;
-        width: 30px;
-        height: 30px;
-        color: $col-text-sec;
+    .post-action-button-container {
+        margin-left: 4rem;
+
+        .post-action-button {
+            display: inline;
+            border: none;
+            background-color: transparent;
+            padding: 0;
+            margin-right: 2rem;
+            width: 2rem;
+            height: 2rem;
+            color: $col-text-sec;
+        }
     }
 }
 
 .rounded-top {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
 }
 
 .rounded-bottom {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
 }

@@ -1,0 +1,16 @@
+.textbox {
+    border-radius: $border-radius;
+    background-color: $col-background;
+    border-style: none;
+    padding: 0.3125rem 0.625rem 0.3125rem 0.625rem;
+    color: $col-text-pri;
+    text-decoration: none !important;
+
+    &:hover {
+        background-color: darken($col-background, 10%);
+    }
+
+    &:active {
+        background-color: darken($col-background, 15%);
+    }
+}

@@ -2,9 +2,9 @@
     .banner {
         float: top;
         width: 100vw;
-        height: 400px;
+        height: 60vh;
         overflow: hidden;
-        margin-top: -5px;
+        margin-top: -3.5rem;
 
         .image {
             width: 100%;
@@ -14,12 +14,12 @@
 
     .navbar {
         width: 100vw;
-        height: 60px;
+        height: 3.5rem;
         background-color: $col-background;
         box-shadow: 2px 1px 2px $col-border;
         z-index: 2;
         padding: 0 10% 0 10%;
-        font-weight: $font-regular;
+        font-weight: normal;
         display: block;
 
         .left {
@@ -31,48 +31,66 @@
         }
 
         .item {
-            margin: 10px;
+            height: 100%;
             align-content: center;
             text-align: center;
 
+            .follow-button-false {
+                width: 7rem;
+                height: 2.5rem;
+                margin: 0.5rem;
+
+                &::before {
+                    content: 'Follow';
+                }
+            }
+
+            .follow-button-true {
+                width: 7rem;
+                height: 2.5rem;
+                margin: 0.5rem;
+
+                &::before {
+                    content: 'Following';
+                }
+
+                &:hover {
+                    background-color: darkred !important;
+
+                    &::before {
+                        content: 'Unfollow';
+                    }
+                }
+            }
+
             .link {
-                font-size: 20px;
+                font-size: 1rem;
                 text-decoration: none !important;
                 color: $col-pri;
             }
 
             .stat-button {
                 line-height: 1;
+                height: 100%;
+                padding-top: 0.5rem;
+
+                &:hover {
+                    background-color: $col-body-background;
+                    transition: background-color 0.3s;
+                }
 
                 .label {
-                    font-size: 10px;
-                    float: right;
+                    font-size: 0.6rem;
                     text-transform: uppercase;
-                    font-weight: $font-regular;
-                    width: 60px;
-                    color: $col-text-pri;
+                    font-weight: normal;
+                    width: 5rem;
+                    color: $col-text-sec;
                 }
 
                 .value {
-                    font-size: 18px;
+                    font-size: 1.1rem;
                     font-weight: $font-bold;
                     color: $col-pri;
-                }
-            }
-
-            .button {
-                border-radius: 5px;
-                background-color: $col-pri;
-                border-style: none;
-                padding: 5px 10px 5px 5px;
-                color: $col-background;
-                width: 100px;
-                height: 40px;
-                &:hover {
-                    background-color: darken($col-pri, 10%);
-                }
-                &:active {
-                    background-color: darken($col-pri, 15%);
                 }
             }
         }
@@ -80,15 +98,19 @@
 }
 
 .b-profile-info {
+    width: 19rem;
+
     .avatar {
+        border: $border-avatar-size $border-style $col-background;
+        box-shadow: 1px 1px 1px #cdcdcd;
+        border-radius: $border-avatar-radius;
         float: top;
-        width: 200px;
-        height: 200px;
+        width: 13rem;
+        height: 13rem;
         overflow: hidden;
         transform: translateY(-70%);
         position: absolute;
         z-index: 3;
-        border-radius: 5px;
 
         .image {
             width: 100%;
@@ -97,17 +119,18 @@
     }
 
     .info {
-        padding: 70px 15px 15px 15px;
+        padding: 4.3rem 1rem 1rem 0;
 
         .display-name {
-            font-size: 22px;
+            overflow: auto;
+            font-size: 1.2rem;
             font-weight: 600;
             color: $col-text-pri;
         }
 
-        .user-name {
-            font-size: 18px;
-            font-weight: 200;
+        .username {
+            font-size: 0.9rem;
+            font-weight: normal;
             color: $col-text-sec;
 
             &:before {
@@ -116,9 +139,8 @@
         }
 
         .bio {
-            margin-top: 10px;
-            font-size: 10pt;
-            font-weight: 200;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
             color: $col-text-pri;
         }
     }

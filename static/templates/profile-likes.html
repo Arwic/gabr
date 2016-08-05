@@ -4,7 +4,7 @@
 {% block profile_header %}
     <title>{{ target_user.display_name }} (@{{ target_user.user.username }}) | Gabr</title>
     <script>
-        loadPosts("profile-posts", 50, "{{ target_user.user.username }}");
+        loadPosts("profile-likes", 50, "{{ target_user.user.username }}");
     </script>
 {% endblock %}
 
@@ -13,7 +13,6 @@
         <div class="row">
             <div class="b-feed-cap">
                 <div class="body">
-                    <p>Posts | Posts & replies | Media</p>
                 </div>
             </div>
         </div>

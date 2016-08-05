@@ -1,23 +1,50 @@
+.b-header {
+    width: 50rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .b-signup-container {
-    width: 800px;
+    width: 50rem;
     margin: 0 auto;
     text-align: center;
 
     .form {
         text-align: center;
         margin: 0 auto;
-        width: 300px;
+        width: 37.5rem;
+
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 80%;
+            margin: auto;
+
+            li {
+                margin: 0.3125rem;
+
+                label {
+                    margin: 0;
+                    text-align: right;
+                    display: inline-block;
+                    color: $col-text-pri;
+                    width: 30%;
+                }
+
+                input, select {
+                    width: 40%;
+                    border-radius: $border-radius;
+                    border: $border-size $border-style $col-border;
+                    padding: 0.3125rem;
+                    height: 2.25rem;
+                    color: $col-text-pri;
+                    background-color: $col-background;
+                }
+            }
+        }
     }
 
     .login-link {
         font-size: small;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0px;
-        margin: 0px;
-        margin-left: 115px;
-        text-align: left;
     }
 }

@@ -1,12 +1,22 @@
 $col-pri: #0084b4;
+$col-body-background: #f5f8fa;
 $col-background: #ffffff;
 $col-border: #e1e8ed;
-$col-text-pri: #292f33;
+$col-text-pri: #373a3c;
 $col-text-sec: #8899a6;
+$col-text-error: #7c2527;
 
 $font-light: 100;
 $font-regular: 400;
 $font-bold: 600;
+
+$border-radius: 0.3125rem;
+$border-avatar-radius: 0.625rem;
+$border-avatar-size: 0.3125rem;
+$border-size: 0.0625rem;
+$border-style: solid;
+$padding: 0.625rem;
+$margin: 0.25rem;
 
 @keyframes fadein {
     from { opacity: 0; }
@@ -19,42 +29,30 @@ $font-bold: 600;
 }
 
 body {
-    padding-top: 55px;
-    background-color: #f5f8fa;
+    padding-top: 3.5rem;
+    background-color: $col-body-background;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 1.5;
-    color: #373a3c;
+    color: $col-text-pri;
     font-size: 1rem;
+    margin-bottom: 10rem;
 }
 
-.button {
-    border-radius: 5px;
-    background-color: $col-pri;
-    border-style: none;
-    padding: 5px 10px 5px 10px;
-    color: $col-background;
-    text-decoration: none !important;
-    &:hover {
-        background-color: darken($col-pri, 10%);
-    }
-    &:active {
-        background-color: darken($col-pri, 15%);
-    }
-}
-
+@import "_button";
+@import "_textbox";
 @import "_navbar";
 @import "_post";
+@import "_table";
+@import "_debuginfo";
+@import "_feed";
 @import "_icons";
 @import "_table";
-@import "_feed";
 @import "_profile-small";
+@import "_profile-full";
 @import "_hovercard";
-@import "_buttons";
 @import "_site-info";
 @import "_trends";
 @import "_notification";
-@import "_profile-full";
-@import "_debuginfo";
 @import "_landing";
 @import "_login";
 @import "_signup";

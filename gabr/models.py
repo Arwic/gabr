@@ -23,6 +23,7 @@ class UserProfile(models.Model):
     avatar = models.ImageField(upload_to=PathAndRename('avatars/'), default='/static/img/profile-default.png')
     banner = models.ImageField(upload_to=PathAndRename('banners/'), default='/static/img/banner-default.png')
     bio = models.CharField(max_length=160, blank=True, default='')
+    gender = models.CharField(default='Male', max_length=6)
     location = models.CharField(max_length=30, blank=True, default='')
     website = models.CharField(max_length=100, blank=True, default='')
     birthday = models.DateField(default=datetime.date(1970, 1, 1), blank=True)
@@ -92,6 +93,7 @@ class Post(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     body = models.CharField(max_length=140)
     time = models.DateTimeField(default=datetime.datetime.utcnow)
+    parent = models.ForeignKey('self', null=True, blank=True, default=None)
 
     def __str__(self):
         return '@%s on %s says "%s"' % (self.user, self.time, self.body[:20])

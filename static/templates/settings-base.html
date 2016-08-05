@@ -5,47 +5,67 @@
 {% endblock %}
 {% block content %}
     <div class="b-settings-container">
-        <div class="settings-menu">
-            <ul>
-                <a href="{% url "settings_profile" %}">
-                    <li>
-                        Profile
-                    </li>
-                </a>
-                <a href="{% url "settings_account" %}">
-                    <li>
-                        Account
-                    </li>
-                </a>
-                <a href="{% url "settings_notifications" %}">
-                    <li>
-                        Notifications
-                    </li>
-                </a>
-                <a href="{% url "settings_blocked" %}">
-                    <li>
-                        Blocked accounts
-                    </li>
-                </a>
-                <a href="{% url "settings_payment" %}">
-                    <li>
-                        Payment
-                    </li>
-                </a>
-                <a href="{% url "settings_apps" %}">
-                    <li>
-                        Connected apps
-                    </li>
-                </a>
-                <a href="{% url "settings_data" %}">
-                    <li style="border: none; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                        Your data
-                    </li>
-                </a>
-            </ul>
-        </div>
-        <div class="settings-content">
-            {% block settings-content %} {% endblock %}
+        <div class="b-table">
+            <div class="col width-3">
+                <div class="row">
+                    <div class="menu">
+                        <ul>
+                            <a id="s-profile" href="{% url "settings_profile" %}">
+                                <li>
+                                    Profile
+                                </li>
+                            </a>
+                            <a id="s-account" href="{% url "settings_account" %}">
+                                <li>
+                                    Account
+                                </li>
+                            </a>
+                            <a id="s-password" href="{% url "settings_password" %}">
+                                <li>
+                                    Password
+                                </li>
+                            </a>
+                            <a id="s-notifications" href="{% url "settings_notifications" %}">
+                                <li>
+                                    Notifications
+                                </li>
+                            </a>
+                            <a id="s-blocked" href="{% url "settings_blocked" %}">
+                                <li>
+                                    Blocked accounts
+                                </li>
+                            </a>
+                            <a id="s-payment" href="{% url "settings_payment" %}">
+                                <li>
+                                    Payment
+                                </li>
+                            </a>
+                            <a id="s-apps" href="{% url "settings_apps" %}">
+                                <li>
+                                    Connected apps
+                                </li>
+                            </a>
+                            <a id="s-data" href="{% url "settings_data" %}">
+                                <li style="border: none; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                                    Your data
+                                </li>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col width-7">
+                <div class="row">
+                    <div class="content">
+                        {% block settings-content %} {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div class="col width-3">
+                <div class="row">
+                    {% include 'card-site-info.html' %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

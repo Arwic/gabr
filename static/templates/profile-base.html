@@ -81,7 +81,7 @@
                     </div>
                     <div class="info">
                         <div class="display-name">{{ target_user.display_name }}</div>
-                        <div class="user-name">{{ target_user.user.username }}</div>
+                        <div class="username">{{ target_user.user.username }}</div>
                         <div class="bio">{{ target_user.bio }}</div>
                     </div>
                 </div>
@@ -91,6 +91,9 @@
         <div class="col width-3">
             <div class="row">
                 {% include 'card-trends.html' %}
+            </div>
+            <div class="row">
+                {% include 'card-site-info.html' %}
             </div>
         </div>
     </div>

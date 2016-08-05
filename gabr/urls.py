@@ -1,5 +1,8 @@
 from django.conf.urls import include, url
-from django.contrib import admin
+from django.contrib import admin, auth
+from django.contrib.auth.views import password_change, password_reset
+from django.utils.functional import curry
+from django.views.defaults import page_not_found, permission_denied, server_error
 
 from django.conf import settings
 from gabr import views
@@ -15,6 +18,7 @@ urlpatterns = [
     url(r'^user/(?P<user_name>[^/]+)/lists/$', views.profile.profile_lists, name='profile_lists'),
     url(r'^user/(?P<user_name>[^/]+)/$', views.profile.profile_posts, name='profile'),
     url(r'^login/$', views.auth.login, name='login'),
+    url(r'^login/locked/$', views.auth.login_locked, name='login_locked'),
     url(r'^logout/$', views.auth.logout, name='logout'),
     url(r'^signup/$', views.auth.signup, name='signup'),
     url(r'^new-post/$', views.post.new_post, name='new-post'),
@@ -27,6 +31,12 @@ urlpatterns = [
     url(r'^settings/$', views.settings.settings_profile, name='settings'),
     url(r'^settings/profile/$', views.settings.settings_profile, name='settings_profile'),
     url(r'^settings/account/$', views.settings.settings_account, name='settings_account'),
+    url(r'^settings/password/$', django.contrib.auth.views.password_change,
+        {
+            'template_name': 'settings-password.html',
+            'post_change_redirect': 'settings_password_success',
+        }, name='settings_password'),
+    url(r'^settings/password/success$', views.settings.settings_password_success, name='settings_password_success'),
     url(r'^settings/notifications/$', views.settings.settings_notifications, name='settings_notifications'),
     url(r'^settings/blocked/$', views.settings.settings_blocked, name='settings_blocked'),
     url(r'^settings/payment/$', views.settings.settings_payment, name='settings_payment'),
@@ -43,6 +53,10 @@ urlpatterns = [
     url(r'^ajax/load-trends/$', views.trends.ajax_load_trends, name='ajax-load-trends'),
     url(r'^ajax/check-posts/$', views.post.ajax_check_posts, name='ajax-check-posts'),
 ]
+
+handler500 = curry(server_error, template_name='500.html')
+handler404 = curry(page_not_found, template_name='404.html')
+handler403 = curry(permission_denied, template_name='403.html')
 
 if settings.DEBUG:
     urlpatterns += [

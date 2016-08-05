@@ -1,33 +1,33 @@
 .b-feed-cap {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border: 1px solid $col-border;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    border: $border-size $border-style $col-border;
     background-color: $col-background;
     border-bottom-style: none;
-    padding: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
+    padding: $padding;
+    margin: $margin;
+    margin-bottom: 0;
+    width: 35rem;
 
     .text-input {
-        width: 90%;
-        border-radius: 5px;
-        border: 1px solid $col-border;
-        padding: 5px;
+        width: 92%;
+        border-radius: $border-radius;
+        border: $border-size $border-style $col-border;
+        padding: 0.25rem 1rem 0.25rem 1rem;
         background-color: $col-background;
         color: $col-text-sec;
         text-align: left;
-        margin-left: 5px;
-        font-weight: $font-regular;
+        margin-left: $margin;
+        font-weight: normal;
     }
 
     .avatar {
-        border-radius: 5px;
+        border-radius: $border-radius;
         overflow: hidden;
-        width: 32px;
-        height: 32px;
+        width: 2rem;
+        height: 2rem;
         float: left;
-        margin-right: 5px;
+        margin-right: $margin;
 
         .image {
             width: 100%;
@@ -37,13 +37,13 @@
 }
 
 .b-view-new-posts {
-    border: 1px solid $col-border;
+    border: $border-size $border-style $col-border;
     background-color: $col-background;
     border-bottom-style: none;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: $margin;
+    margin-right: $margin;
     text-align: center;
-    padding: 5px;
+    padding: $padding;
     display: block;
     text-decoration: none !important;
 
@@ -57,25 +57,22 @@
 }
 
 .b-load-more-posts {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border: 1px solid $col-border;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    border: $border-size $border-style $col-border;
     background-color: $col-background;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 50px;
+    margin: $margin;
+    margin-top: 0;
     text-align: center;
     display: block;
     cursor: pointer;
-    line-height: 30px;
 
     .body {
         color: $col-pri;
-        margin-top: 10px;
-        margin-bottom: -6px;
+        margin-top: 1rem;
     }
 }
 
-.feed-special-link {
+.feed-action-button {
     text-decoration: none !important;
 }

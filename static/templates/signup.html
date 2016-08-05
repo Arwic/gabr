@@ -4,29 +4,18 @@
     <title>Sign up | Gabr</title>
 {% endblock %}
 {% block content %}
-    <div class="b-signup-container">
+    <div class="b-header">
         <a href="/" style="text-decoration: none !important;">
             <h1>Gabr</h1>
         </a>
         <h2>Sign up</h2>
         <hr class="divider">
-        <form id="form" name="form" class="form" action="{% url "signup" %}" method="post">{% csrf_token %}
-            <div class="form-group input-group">
-                <span class="input-group-addon">@</span>
-                {{ form.username|add_class_placeholder:"form-control`Username" }}
-            </div>
-            <div class="form-group">
-                {{ form.email|add_class_placeholder:"form-control`Email" }}
-            </div>
-            <div class="form-group">
-                {{ form.password|add_class_placeholder:"form-control`Password" }}
-            </div>
-            <div class="form-group">
-                {{ form.password2|add_class_placeholder:"form-control`Confirm password" }}
-            </div>
-            <div class="form-group">
-                {{ form.gender }}
-            </div>
+    </div>
+    <div class="b-signup-container">
+        <form class="form" action="{% url "signup" %}" method="POST">{% csrf_token %}
+            <ul>
+                {{ form.as_ul }}
+            </ul>
             <button type="submit" class="button">Sign up</button>
         </form>
         <a class="login-link" href="{% url "login" %}">Already have an account? Log in here.</a>

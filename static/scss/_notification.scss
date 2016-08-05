@@ -1,17 +1,18 @@
 .b-notification {
-    border: 1px solid $col-border;
+    border: $border-size $border-style $col-border;
     border-bottom-style: none;
     background-color: $col-background;
-    padding: 10px;
+    padding: 1rem;
     float: left;
-    width: 100%;
+    max-width: 50rem;
+    width: 35rem;
 
     .unread {
         .new-label {
             float: right;
-            border-radius: 25px;
-            padding-left: 10px;
-            padding-right: 10px;
+            border-radius: 1000rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
             background-color: #c90000;
             color: #ffffff;
 
@@ -23,10 +24,10 @@
 
     .avatar {
         float: left;
-        border-radius: 5px;
-        width: 32px;
-        height: 32px;
-        margin-right: 10px;
+        border-radius: $border-radius;
+        width: 2rem;
+        height: 2rem;
+        margin-right: 0.5rem;
         overflow: hidden;
         .image {
             width: 100%;
@@ -35,21 +36,13 @@
     }
 
     .display-name {
-        font-size: 14px;
+        font-size: 0.9rem;
         font-weight: $font-bold;
         color: $col-text-pri;
     }
 
-    .user-name {
-        font-size: 13px;
-        color: $col-text-sec;
-        &:before {
-            content: "@";
-        }
-    }
-
     .time {
-        font-size: 13px;
+        font-size: 0.8rem;
         color: $col-text-sec;
         &:before {
             content: "· ";
@@ -59,6 +52,11 @@
     .body {
         color: $col-text-pri;
         font-weight: $font-regular;
-        font-size: 14px;
+        font-size: 0.9rem;
+    }
+
+    .message {
+        margin-left: 2.5rem;
+        font-size: 0.9rem;
     }
 }

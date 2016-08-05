@@ -115,16 +115,28 @@ def profile_followers(request, user_name):
 
 
 def profile_likes(request, user_name):
-    current_user = UserProfile.objects.get(user=request.user)
+    if request.user.is_authenticated():
+        current_user = get_object_or_404(UserProfile, user=request.user)
     target_user = get_object_or_404(UserProfile, user__username=user_name)
+    post_count, follow_count, follower_count = target_user.stats()
+    like_count = len(Like.objects.filter(user=target_user))
+    list_count = 0  # TODO: implements lists
 
     context = {
-        'current_user': current_user,
-        'unread_notif_count': current_user.unread_notification_count(),
+        'current_user': None,
         'post_form': PostForm,
         'target_user': target_user,
-        'is_following': is_following(current_user, target_user),
+        'is_following': False,
+        'post_count': post_count,
+        'follow_count': follow_count,
+        'follower_count': follower_count,
+        'like_count': like_count,
+        'list_count': list_count,
     }
+
+    if request.user.is_authenticated():
+        context['current_user'] = current_user
+        context['is_following'] = is_following(current_user, target_user)
 
     return render(request, 'profile-likes.html', context)
 
@@ -135,7 +147,6 @@ def profile_lists(request, user_name):
 
     context = {
         'current_user': current_user,
-        'unread_notif_count': current_user.unread_notification_count(),
         'post_form': PostForm,
         'target_user': target_user,
         'is_following': is_following(current_user, target_user),

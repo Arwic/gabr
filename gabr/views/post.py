@@ -114,6 +114,14 @@ def get_profile_posts(current_user, target_user, time_oldest, time_newest):
     return posts
 
 
+def get_profile_likes(current_user, target_user, time_oldest, time_newest):
+    posts = []
+    for like in Like.objects.filter(user=target_user, time__gt=time_oldest, time__lt=time_newest) \
+            .order_by('-time'):
+        posts.append(PostInfo(False, like.post, current_user))
+    return posts
+
+
 def feed(request):
     if request.user.is_authenticated():
         current_user = get_object_or_404(UserProfile, user=request.user)
@@ -146,9 +154,12 @@ def ajax_load_posts(request):
         current_user = get_object_or_404(UserProfile, user=request.user)
     if request_type == 'feed' and request.user.is_authenticated():
         posts = get_feed_posts(current_user, time_oldest, time_newest)
-    elif request_type == 'profile':
+    elif request_type == 'profile-posts':
         target_user = get_object_or_404(UserProfile, user__username=request.POST['target'])
         posts = get_profile_posts(current_user, target_user, time_oldest, time_newest)
+    elif request_type == 'profile-likes':
+        target_user = get_object_or_404(UserProfile, user__username=request.POST['target'])
+        posts = get_profile_likes(current_user, target_user, time_oldest, time_newest)
     posts.sort(key=lambda p: p.sort_time, reverse=True)
     posts = posts[:post_count]  # limit posts
     response = {}

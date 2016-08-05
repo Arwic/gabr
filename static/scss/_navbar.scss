@@ -1,6 +1,6 @@
 .b-navbar {
     width: 100vw;
-    height: 50px;
+    height: 3rem;
     background-color: $col-background;
     box-shadow: 2px 1px 2px $col-border;
     position: fixed;
@@ -10,58 +10,56 @@
     z-index: 1000;
     padding: 0 10% 0 10%;
     display: inline-block;
-    font-weight: $font-regular;
+    font-weight: normal;
 
-    .left {
-        float: left !important;
-    }
+    .item-container {
+        min-width: 52rem;
+        width: 100%;
+        height: 100%;
 
-    .right {
-        float: right !important;
-    }
-
-    .item {
-        margin: 10px;
-
-        .link {
-            font-size: 20px;
-            text-decoration: none !important;
-            color: $col-pri
+        .left {
+            float: left !important;
         }
 
-        .button {
-            border-radius: 5px;
-            background-color: $col-pri;
-            border-style: none;
-            padding: 5px 10px 5px 5px;
-            color: $col-background;
-            &:hover {
-                background-color: darken($col-pri, 10%);
-            }
-            &:active {
-                background-color: darken($col-pri, 15%);
-            }
+        .right {
+            float: right !important;
         }
 
-        .image-container {
-            width: 32px;
-            height: 32px;
-            overflow: hidden;
-            border-radius: 5px;
+        .item {
+            margin: 0.5rem;
 
-            .image {
-                width: 100%;
-                height: auto;
+            .link {
+                font-size: 1.25rem;
+                text-decoration: none !important;
+                color: $col-pri;
+
+                &:hover {
+                    color: darken($col-pri, 10%);
+                }
             }
-        }
 
-        .text-input {
-            max-width: 250px;
-            padding: 2.5px 30px 2.5px 15px;
-            color: $col-text-sec;
-            background-color: $col-background;
-            border: 1px solid $col-border;
-            border-radius: 50px;
+            .image-container {
+                width: 2rem;
+                height: 2rem;
+                overflow: hidden;
+                border-radius: $border-radius;
+
+                .image {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+
+            .text-input {
+                height: 2rem;
+                max-width: 15rem;
+                padding: 0.25rem 1rem 0.25rem 1rem;
+                color: $col-text-sec;
+                background-color: $col-background;
+                border: $border-size $border-style $col-border;
+                border-radius: 1000rem;
+            }
         }
     }
 }
+
