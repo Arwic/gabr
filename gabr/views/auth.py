@@ -52,7 +52,6 @@ def login_locked(request):
     return render(request, 'login_locked.html', context)
 
 
-
 @login_required
 def logout(request):
     auth.logout(request)
