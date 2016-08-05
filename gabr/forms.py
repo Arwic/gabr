@@ -54,7 +54,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-CHOICES_GENDER = [(0, 'Male'), (1, 'Female'), (2, 'Degenerate')]
+CHOICES_GENDER = [(0, 'Male'), (1, 'Female')]
 
 
 class SignupForm(forms.Form):
