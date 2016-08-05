@@ -54,7 +54,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-CHOICES_GENDER = [(0, 'Male'), (1, 'Female'), (2, 'Degenerate')]
+CHOICES_GENDER = [(0, 'Male'), (1, 'Female')]
 
 
 class SignupForm(forms.Form):
@@ -62,8 +62,10 @@ class SignupForm(forms.Form):
     email = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
+    display_name = forms.CharField()
+    first_name = forms.CharField()
+    last_name = forms.CharField()
     gender = forms.ChoiceField(choices=CHOICES_GENDER)
-    captcha = NoReCaptchaField()
 
 
 class PostForm(forms.ModelForm):

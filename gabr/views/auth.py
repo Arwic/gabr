@@ -2,10 +2,11 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from axes.utils import reset
 from django.core.urlresolvers import reverse_lazy
 from axes.decorators import watch_login
+from gabr.models import UserProfile
 
 
 from gabr.forms import SignupForm, LoginForm, AxesCaptchaForm
@@ -64,8 +65,18 @@ def signup(request):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         password2 = form.cleaned_data["confirm_password"]
+        display_name = form.cleaned_data["display_name"]
+        first_name = form.cleaned_data["first_name"]
+        last_name = form.cleaned_data["last_name"]
+        gender = form.cleaned_data["gender"]
         if password == password2:
             user = User.objects.create_user(username, email, password)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+            user = get_object_or_404(UserProfile, user=user)
+            user.display_name = display_name
+            user.gender = gender
             user.save()
             return HttpResponseRedirect('/')
     context = {
