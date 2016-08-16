@@ -410,8 +410,9 @@ body {
       font-weight: bold;
       color: #0084b4; }
   .b-profile-small .banner {
-    float: top;
-    max-width: 18.75rem;
+    display: flex;
+    align-items: center;
+    width: 18.75rem;
     height: 6.25rem;
     overflow: hidden;
     border-top-left-radius: 0.3125rem;

@@ -56,8 +56,10 @@
     }
 
     .banner {
-        float: top;
-        max-width: 18.75rem;
+        display: flex;
+        align-items: center;
+        //float: top;
+        width: 18.75rem;
         height: 6.25rem;
         overflow: hidden;
         border-top-left-radius: $border-radius;
