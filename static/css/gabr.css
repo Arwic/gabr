@@ -441,7 +441,8 @@ body {
     color: #373a3c; }
 
 .b-profile-header .banner {
-  float: top;
+  display: flex;
+  align-items: center;
   width: 100vw;
   height: 60vh;
   overflow: hidden;
