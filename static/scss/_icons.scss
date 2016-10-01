@@ -15,6 +15,14 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-report:before {
+    content: "\f024";
+}
+
+.icon-block:before {
+    content: "\f05e";
+}
+
 .icon-user:before {
     content: "\f007";
 }

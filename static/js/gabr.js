@@ -240,6 +240,10 @@ function viewPost(post_id)
             modal_repost.toggleClass("repost-button-true", data["has_reposted"]);
             modal_repost.toggleClass("repost-button-false", !data["has_reposted"]);
 
+            for (reply in data["replies"]) {
+                alert("reply from " + reply["user_name"])
+            }
+
             $("#modal-viewpost").modal();
         }
     });

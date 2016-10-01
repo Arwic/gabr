@@ -162,7 +162,6 @@ except ImportError as e:
 
 if not DEBUG:
     SESSION_COOKIE_DOMAIN = ".arwic.me"
-
 proc = subprocess.Popen('git log -n 1 --pretty=format:"%H"', shell=True, stdout=subprocess.PIPE)
 CURRENT_COMMIT = proc.stdout.read()[:7].decode()
 print('COMMIT =', CURRENT_COMMIT)

@@ -24,7 +24,7 @@ def get_stats(user_profile):
 def profile_posts(request, user_name):
     if request.user.is_authenticated():
         current_user = get_object_or_404(UserProfile, user=request.user)
-    target_user = get_object_or_404(UserProfile, user__username=user_name)
+    target_user = get_object_or_404(UserProfile, user__username=str.lower(user_name))
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
@@ -51,7 +51,7 @@ def profile_posts(request, user_name):
 def profile_following(request, user_name):
     if request.user.is_authenticated():
         current_user = get_object_or_404(UserProfile, user=request.user)
-    target_user = get_object_or_404(UserProfile, user__username=user_name)
+    target_user = get_object_or_404(UserProfile, user__username=str.lower(user_name))
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
@@ -84,7 +84,7 @@ def profile_following(request, user_name):
 def profile_followers(request, user_name):
     if request.user.is_authenticated():
         current_user = get_object_or_404(UserProfile, user=request.user)
-    target_user = get_object_or_404(UserProfile, user__username=user_name)
+    target_user = get_object_or_404(UserProfile, user__username=str.lower(user_name))
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
@@ -117,7 +117,7 @@ def profile_followers(request, user_name):
 def profile_likes(request, user_name):
     if request.user.is_authenticated():
         current_user = get_object_or_404(UserProfile, user=request.user)
-    target_user = get_object_or_404(UserProfile, user__username=user_name)
+    target_user = get_object_or_404(UserProfile, user__username=str.lower(user_name))
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
@@ -143,7 +143,7 @@ def profile_likes(request, user_name):
 
 def profile_lists(request, user_name):
     current_user = UserProfile.objects.get(user=request.user)
-    target_user = get_object_or_404(UserProfile, user__username=user_name)
+    target_user = get_object_or_404(UserProfile, user__username=str.lower(user_name))
 
     context = {
         'current_user': current_user,
@@ -161,10 +161,10 @@ def ajax_follow(request):
     if not request.is_ajax():
         return HttpResponse('')
     # get user data
-    target_username = request.POST['user_name']
+    target_username = str.lower(request.POST['user_name'])
     try:
         user = get_object_or_404(UserProfile, user=request.user)
-        target = get_object_or_404(UserProfile, user__username=target_username)
+        target = get_object_or_404(UserProfile, user__username=str.lower(target_username))
         if user == target:
             return HttpResponse('')
     except UserProfile.DoesNotExist:
@@ -176,14 +176,14 @@ def ajax_follow(request):
         follow.delete()
         response = {
             'follow': False,
-            'user_name': target_username,
+            'user_name': str.lower(target_username),
         }
     except Follow.DoesNotExist:
         # we are not following them yet, lets follow
         follow = Follow.objects.create(follower=user, subject=target)
         response = {
             'follow': True,
-            'user_name': target_username,
+            'user_name': str.lower(target_username),
         }
     return HttpResponse(json.dumps(response))
 
@@ -194,7 +194,7 @@ def ajax_user(request):
         return HttpResponse('')
     # get post data
     try:
-        user_profile = get_object_or_404(UserProfile, user__username=request.POST['user_name'])
+        user_profile = get_object_or_404(UserProfile, user__username=str.lower(request.POST['user_name']))
         post_count, following_count, follower_count = user_profile.stats()
         post_info = {
             'display_name': user_profile.display_name,

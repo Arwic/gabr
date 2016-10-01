@@ -20,7 +20,7 @@ username_regex = re.compile('@(?P<username>[^\s]+)')
 def check_tags(post):
     tags = username_regex.findall(post.body)
     for username in tags:
-        tagged_user = UserProfile.objects.filter(user__username=username).first()
+        tagged_user = UserProfile.objects.filter(user__username=str.lower(username)).first()
         if tagged_user is None:
             print('user not found')
             continue
@@ -62,12 +62,12 @@ class PostInfo:
         if self.is_repost:
             post_json['repost-user'] = {}
             post_json['repost-user']['id'] = self.repost_user.id
-            post_json['repost-user']['username'] = self.repost_user.user.username
+            post_json['repost-user']['username'] = self.repost_user.user_name
             post_json['repost-user']['displayname'] = self.repost_user.display_name
         post_json['post-user'] = {}
         post_json['post-user']['id'] = self.post.user.user.id
         post_json['post-user']['avatar'] = self.post.user.avatar.url
-        post_json['post-user']['username'] = self.post.user.user.username
+        post_json['post-user']['username'] = self.post.user.user_name
         post_json['post-user']['displayname'] = self.post.user.display_name
 
         post_json['post'] = {}
@@ -155,10 +155,10 @@ def ajax_load_posts(request):
     if request_type == 'feed' and request.user.is_authenticated():
         posts = get_feed_posts(current_user, time_oldest, time_newest)
     elif request_type == 'profile-posts':
-        target_user = get_object_or_404(UserProfile, user__username=request.POST['target'])
+        target_user = get_object_or_404(UserProfile, user__username=str.lower(request.POST['target']))
         posts = get_profile_posts(current_user, target_user, time_oldest, time_newest)
     elif request_type == 'profile-likes':
-        target_user = get_object_or_404(UserProfile, user__username=request.POST['target'])
+        target_user = get_object_or_404(UserProfile, user__username=str.lower(request.POST['target']))
         posts = get_profile_likes(current_user, target_user, time_oldest, time_newest)
     posts.sort(key=lambda p: p.sort_time, reverse=True)
     posts = posts[:post_count]  # limit posts
@@ -284,19 +284,33 @@ def ajax_post(request):
         post = Post.objects.get(id=post_id)
         post_count, following_count, follower_count = post.user.stats()
         response = {
-            'user_name': post.user.user.username,
+            'user_name': post.user.user_name,
             'display_name': post.user.display_name,
             'avatar_url': post.user.avatar.url,
             'banner_url': post.user.banner.url,
-            'bio': post.user.bio,
-            'post_count': post_count,
-            'following_count': following_count,
-            'follower_count': follower_count,
             'time': format_time(post.time, datetime.now(tz=tz.gettz('Etc/GMT0'))),
             'body': post.body,
             'has_liked': False,
             'has_reposted': False,
         }
+
+        # get replies
+        reply_models = Post.objects.filter(parent=post)
+        replies = []
+
+        for reply in reply_models:
+            replies.append({
+                'user_name': reply.user.user_name,
+                'display_name': reply.user.display_name,
+                'avatar_url': reply.user.avatar.url,
+                'banner_url': reply.user.banner.url,
+                'time': format_time(post.time, datetime.now(tz=tz.gettz('Etc/GMT0'))),
+                'body': reply.body,
+                'has_liked': False,
+                'has_reposted': False,
+            })
+
+        response['replies'] = replies
 
         if request.user.is_authenticated():
             response['time'] = format_time(post.time, datetime.now(tz=tz.gettz(current_user.time_zone)));

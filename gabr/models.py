@@ -19,6 +19,7 @@ class PathAndRename(object):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
+    user_name = models.CharField(max_length=20, default='')
     display_name = models.CharField(max_length=20, default='')
     avatar = models.ImageField(upload_to=PathAndRename('avatars/'), default='/static/img/profile-default.png')
     banner = models.ImageField(upload_to=PathAndRename('banners/'), default='/static/img/banner-default.png')
@@ -39,7 +40,7 @@ class UserProfile(models.Model):
     email_newsletter = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user_name
 
     def stats(self):
         post_count = Post.objects.filter(user=self).count()
@@ -78,7 +79,7 @@ class Report(models.Model):
     message = models.CharField(default='', max_length=512)
 
     def __str__(self):
-        return '@%s was reported by @%s: "%s"' % (self.subject.user.username, self.reporter.user.username, self.message)
+        return '@%s was reported by @%s: "%s"' % (self.subject.user_name, self.reporter.user_name, self.message)
 
 
 class Block(models.Model):
@@ -86,7 +87,7 @@ class Block(models.Model):
     subject = models.ForeignKey(UserProfile, related_name='block_user_subject', on_delete=models.CASCADE)
 
     def __str__(self):
-        return '@%s is blocking @%s' % (self.blocker.user.username, self.subject.user.username)
+        return '@%s is blocking @%s' % (self.blocker.user_name, self.subject.user_name)
 
 
 class Post(models.Model):

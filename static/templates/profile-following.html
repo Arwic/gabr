@@ -7,15 +7,17 @@
     <div class="col width-6">
         {% for follow in follows %}
             {% with follow.0 as card_user %}
-                {% with follow.1 as card_user_post_count %}
-                    {% with follow.2 as card_user_follow_count %}
-                        {% with follow.3 as card_user_follower_count %}
-                            <div class="row">
-                                {% include "card-profile-small.html" %}
-                            </div>
-                        {% endwith %}
-                    {% endwith %}
-                {% endwith %}
+            {% with follow.1 as card_user_post_count %}
+            {% with follow.2 as card_user_follow_count %}
+            {% with follow.3 as card_user_follower_count %}
+                <div class="row" style="display: flex;">
+                    {% include "card-profile-small.html" %}
+                    {% include "card-profile-small.html" %}
+                    <!-- TODO: multiple cards per line; maybe have odds and evens in sep cols -->
+                </div>
+            {% endwith %}
+            {% endwith %}
+            {% endwith %}
             {% endwith %}
         {% endfor %}
     </div>
