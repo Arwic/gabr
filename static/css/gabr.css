@@ -338,6 +338,9 @@ body {
 .icon-repost:before {
   content: "\f079"; }
 
+.icon-reply:before {
+  content: "\f112"; }
+
 .b-table {
   max-width: 100%;
   width: 100%;

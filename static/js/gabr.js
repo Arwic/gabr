@@ -358,6 +358,15 @@ function writePost(post_json)
     div_post.appendChild(div_actions);
     div_actions.setAttribute("class", "post-action-button-container");
 
+    // Reply button
+    var button_reply = document.createElement("button");
+    div_actions.appendChild(button_reply);
+    //button_reply.setAttribute("onclick", "onLikeButton(" + post_json["post"]["id"] + ")");
+    button_reply.setAttribute("class", "post-action-button");
+    var span_reply_icon = document.createElement("span");
+    button_reply.appendChild(span_reply_icon);
+    span_reply_icon.setAttribute("class", "icon icon-reply");
+    //span_reply_icon.setAttribute("id", "like-" + post_json["post"]["id"]);
     // Like button
     var button_like = document.createElement("button");
     div_actions.appendChild(button_like);
