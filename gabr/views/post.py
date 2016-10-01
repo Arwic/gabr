@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from gabr.forms import PostForm
-from gabr.models import UserProfile, Follow, Post, Like, Repost, Notification
+from gabr.models import UserProfile, Follow, Post, Like, Repost, Notification, Block, Report
 import re
 import gabr.settings
 
@@ -331,5 +331,29 @@ def ajax_check_posts(request):
     posts = get_feed_posts(current_user, time_oldest, time_newest)
     response = {
         'count': len(posts),
+    }
+    return HttpResponse(json.dumps(response))
+
+
+@login_required
+def ajax_block_user(request):
+    if not request.is_ajax():
+        return HttpResponse('')
+    current_user = get_object_or_404(UserProfile, user=request.user)
+    target_user = get_object_or_404(UserProfile, user_name=str.lower(request.POST['target']))
+    Block.objects.create(blocker=current_user, subject=target_user)
+    response = {
+    }
+    return HttpResponse(json.dumps(response))
+
+
+@login_required
+def ajax_report_user(request):
+    if not request.is_ajax():
+        return HttpResponse('')
+    current_user = get_object_or_404(UserProfile, user=request.user)
+    target_user = get_object_or_404(UserProfile, user_name=str.lower(request.POST['target']))
+    Report.objects.create(reporter=current_user, subject=target_user, message="NYI")
+    response = {
     }
     return HttpResponse(json.dumps(response))

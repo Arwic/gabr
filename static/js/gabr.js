@@ -249,6 +249,42 @@ function viewPost(post_id)
     });
 }
 
+function report(target_user_name)
+{
+    $.ajax({
+        url: "/ajax/report-user/",
+        type: "POST",
+        data: {
+            "target": target_user_name
+        },
+        dataType: "json",
+        success: function (data) {
+            console.log("Successfully reported " + target_user_name)
+        },
+        error: function () {
+            console.log("Failed to report " + target_user_name)
+        }
+    });
+}
+
+function block(target_user_name)
+{
+    $.ajax({
+        url: "/ajax/block-user/",
+        type: "POST",
+        data: {
+            "target": target_user_name
+        },
+        dataType: "json",
+        success: function (data) {
+            console.log("Successfully blocked " + target_user_name)
+        },
+        error: function () {
+            console.log("Failed to block " + target_user_name)
+        }
+    });
+}
+
 function writePost(post_json)
 {
     // Parent div

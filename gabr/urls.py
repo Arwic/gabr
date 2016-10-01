@@ -52,6 +52,8 @@ urlpatterns = [
         name='ajax-load-notification-count'),
     url(r'^ajax/load-trends/$', views.trends.ajax_load_trends, name='ajax-load-trends'),
     url(r'^ajax/check-posts/$', views.post.ajax_check_posts, name='ajax-check-posts'),
+    url(r'^ajax/report-user/$', views.post.ajax_report_user, name='ajax-report-user'),
+    url(r'^ajax/block-user/$', views.post.ajax_block_user, name='ajax-block-user'),
 ]
 
 handler500 = curry(server_error, template_name='500.html')
