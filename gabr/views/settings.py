@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from gabr.forms import PostForm, SettingsProfileForm, SettingsAccountForm, SettingsNotificationsForm
-from gabr.models import UserProfile, Notification
+from gabr.models import UserProfile, Notification, Block
 
 
 http_link_re = re.compile(r'://')
@@ -73,16 +73,18 @@ def settings_notifications(request):
 @login_required
 def settings_blocked(request):
     current_user = get_object_or_404(UserProfile, user=request.user)
-    form = SettingsProfileForm(request.POST or None, instance=current_user)
-    if form.is_valid():
-        form.save(commit=True)
-        return HttpResponseRedirect('/settings/blocked/')
+    # get all blocked accounts
+    blocks = Block.objects.filter(blocker=current_user)
+    blocked_users = []
+    for block in blocks:
+        pc, fc, flc = block.subject.stats()
+        blocked_users.append([block.subject, pc, fc, flc])
     context = {
+        'blocked_users': blocked_users,
         'current_user': current_user,
         'post_form': PostForm,
-        'form': form,
     }
-    return render(request, 'settings-profile.html', context)
+    return render(request, 'settings-blocked.html', context)
 
 
 @login_required

@@ -1,0 +1,29 @@
+{% extends 'settings-base.html' %}
+{% load tags %}
+{% block settings-content %}
+    <div class="header">
+        <h1>Blocked Users</h1>
+        <script>
+            $(document).ready(function() {
+                $("#s-blocked").addClass("active");
+            });
+        </script>
+    </div>
+    <div class="body">
+        <div class="col width-6">
+            {% for blocked_user in blocked_users %}
+                {% with blocked_user.0 as card_user %}
+                {% with blocked_user.1 as card_user_post_count %}
+                {% with blocked_user.2 as card_user_follow_count %}
+                {% with blocked_user.3 as card_user_follower_count %}
+                    {% include "card-profile-small.html" %}
+                {% endwith %}
+                {% endwith %}
+                {% endwith %}
+                {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="footer">
+    </div>
+{% endblock %}

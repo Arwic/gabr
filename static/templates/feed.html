@@ -17,13 +17,13 @@
         <div class="col with-3">
             <div class="row">
                 {% with current_user as card_user %}
-                    {% with current_user_post_count as card_user_post_count %}
-                        {% with current_user_follow_count as card_user_follow_count %}
-                            {% with current_user_follower_count as card_user_follower_count %}
-                                {% include "card-profile-small.html" %}
-                            {% endwith %}
-                        {% endwith %}
-                    {% endwith %}
+                {% with current_user_post_count as card_user_post_count %}
+                {% with current_user_follow_count as card_user_follow_count %}
+                {% with current_user_follower_count as card_user_follower_count %}
+                    {% include "card-profile-small.html" %}
+                {% endwith %}
+                {% endwith %}
+                {% endwith %}
                 {% endwith %}
             </div>
             <div class="row">

@@ -11,6 +11,23 @@
             </div>
             <span class="display-name">{{ card_user.display_name }}</span><br>
             <span class="username">{{ card_user.user_name }}</span>
+            {% if card_user != current_user %}
+                <div class="dropdown">
+                    <button class="more-options-button" data-toggle="dropdown">
+                        <span class="icon icon-settings"></span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right fade-in">
+                        <a class="dropdown-item" onclick="block({{ target_user.username }})">
+                            <span class="icon icon-block"></span>
+                            Block
+                        </a>
+                        <a class="dropdown-item" href="{% url "profile_lists" user_name=user.username %}">
+                            <span class="icon icon-report"></span>
+                            Report
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </a>
 
         <div class="bio">{{ card_user.bio }}</div>
