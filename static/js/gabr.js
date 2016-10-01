@@ -478,8 +478,8 @@ function checkNewPosts()
         },
         dataType: "json",
         success: function (data) {
+            var view_new_posts = $("#view-new-posts");
             if (data["count"] != 0) {
-                var view_new_posts = $("#view-new-posts");
                 if (data["count"] == 1)
                     view_new_posts.text("View 1 new post");
                 else
