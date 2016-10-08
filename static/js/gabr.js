@@ -372,7 +372,7 @@ function writePost(post_json, parent_selector)
     // Reply button
     var button_reply = document.createElement("button");
     div_actions.appendChild(button_reply);
-    button_reply.setAttribute("onclick", "onReplyButton('" + post_json["post"]["user_name"] + "', " + post_json["post"]["id"] + ")");
+    button_reply.setAttribute("onclick", "$('#view-post-close').click(); onReplyButton('" + post_json["post"]["user_name"] + "', " + post_json["post"]["id"] + ")");
     button_reply.setAttribute("class", "post-action-button");
     var span_reply_icon = document.createElement("span");
     button_reply.appendChild(span_reply_icon);
