@@ -124,8 +124,8 @@
     </div>
 </nav>
 
+<!-- Universal new post modal -->
 {% if user.is_authenticated %}
-    <!-- Universal new post modal -->
     <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
         <div class="modal-dialog " role="document">
             <div class="modal-content">
@@ -137,9 +137,8 @@
                 </div>
                 <div class="modal-footer">
                     <form id="post-form" class="form-horizontal col-md-4" action="{% url "new-post" %}" method="post">{% csrf_token %}
-                        <span id="id_post_body">
-                            {{ post_form.body }}
-                        </span>
+                        {{ post_form.body }}
+                        {{ post_form.parent }}
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -187,6 +186,10 @@
                     <span id="modal-viewpost-repost" class="icon repost-button-false"></span>
                 </button>
             </div>
+        </div>
+        <div id="modal-viewpost-replies">
+        </div>
+        <div class="b-post rounded-bottom" style="height: 2rem;">
         </div>
     </div>
 </div>

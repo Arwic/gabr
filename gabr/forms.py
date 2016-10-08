@@ -26,7 +26,13 @@ class PictureSelectorWidget(widgets.ClearableFileInput):
                '<input type="file" name="{}" accept="image/gif,image/jpeg,image/jpg,image/png">' \
                '<span class="file-custom"></span>' \
                '</label>'\
-                    .format(value.url, attrs['id'][3:])
+                    .format(value.url, name)
+        return mark_safe(html)
+
+
+class HiddenWidget(widgets.Widget):
+    def render(self, name, value, attrs=None):
+        html = '<input type="hidden" name="{}"/>'.format(name)
         return mark_safe(html)
 
 
@@ -73,9 +79,11 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = [
             'body',
+            'parent',
         ]
         widgets = {
             'body': PostWidget,
+            'parent': forms.HiddenInput,
         }
 
 

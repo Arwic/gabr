@@ -114,6 +114,13 @@ function onRepostButton(post_id)
     });
 }
 
+function onReplyButton(user, post)
+{
+    $("#post-form textarea[name='body']").val("@" + user + " ");
+    $("#post-form input[name='parent']").val(post);
+    $("#new-post-modal").modal();
+}
+
 function onFollowButton(target_username)
 {
     $.ajax({
@@ -132,7 +139,8 @@ function onFollowButton(target_username)
 function postTo(user)
 {
     if (user != null)
-        $("#id_post_body").children().first().val("@" + user + " ");
+        $("#post-form textarea[name='body']").val("@" + user + " ");
+    $("#post-form input[name='parent']").val("");
     $("#new-post-modal").modal();
 }
 
@@ -179,6 +187,7 @@ function registerHoverCard(element_id, user_name)
         clearTimeout(timer);
     });
 }
+
 function linkifyPostBody(postBody)
 {
     try {
@@ -240,8 +249,10 @@ function viewPost(post_id)
             modal_repost.toggleClass("repost-button-true", data["has_reposted"]);
             modal_repost.toggleClass("repost-button-false", !data["has_reposted"]);
 
-            for (reply in data["replies"]) {
-                alert("reply from " + reply["user_name"])
+            $("#modal-viewpost-replies").empty();
+
+            for (var i = 0; i < data["replies"].length; i++) {
+                writePost(data["replies"][i], "#modal-viewpost-replies");
             }
 
             $("#modal-viewpost").modal();
@@ -285,10 +296,12 @@ function block(target_user_name)
     });
 }
 
-function writePost(post_json)
+function writePost(post_json, parent_selector)
 {
     // Parent div
-    var div_parent = $("#posts");
+    if (parent_selector == null)
+        parent_selector = "#posts"
+    var div_parent = $(parent_selector);
     // Row
     var div_row = document.createElement("div");
     div_parent.append(div_row);
@@ -353,20 +366,17 @@ function writePost(post_json)
     p_body.setAttribute("class", "body");
     p_body.appendChild(document.createTextNode(post_json["post"]["body"]));
     linkifyPostBody(p_body);
-
     var div_actions = document.createElement("div");
     div_post.appendChild(div_actions);
     div_actions.setAttribute("class", "post-action-button-container");
-
     // Reply button
     var button_reply = document.createElement("button");
     div_actions.appendChild(button_reply);
-    //button_reply.setAttribute("onclick", "onLikeButton(" + post_json["post"]["id"] + ")");
+    button_reply.setAttribute("onclick", "onReplyButton('" + post_json["post"]["user_name"] + "', " + post_json["post"]["id"] + ")");
     button_reply.setAttribute("class", "post-action-button");
     var span_reply_icon = document.createElement("span");
     button_reply.appendChild(span_reply_icon);
     span_reply_icon.setAttribute("class", "icon icon-reply");
-    //span_reply_icon.setAttribute("id", "like-" + post_json["post"]["id"]);
     // Like button
     var button_like = document.createElement("button");
     div_actions.appendChild(button_like);

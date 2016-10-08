@@ -75,6 +75,7 @@ class PostInfo:
         post_json['post']['body'] = self.post.body
         post_json['post']['time'] = str(self.user_time)
         post_json['post']['liked'] = False
+        post_json['post']['user_name'] = self.post.user.user_name
         if self.current_user is not None:
             post_json['post']['liked'] = self.current_user.liked(self.post)
         post_json['post']['reposted'] = False
@@ -195,6 +196,16 @@ def new_post(request):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.user = current_user
+        try:
+            print("trying to get parent post")
+            parent_id = request.POST["new-post-modal-reply-target"]
+            print("parent post id = " + parent_id)
+            instance.parent = get_object_or_404(Post, id=parent_id)
+        except:
+            print("\n\nFAILED TO GET PARENT POST\n\n")
+            for key in request.POST.items():
+                print(key)
+            pass
         instance.save()
         check_tags(instance)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -299,16 +310,8 @@ def ajax_post(request):
         replies = []
 
         for reply in reply_models:
-            replies.append({
-                'user_name': reply.user.user_name,
-                'display_name': reply.user.display_name,
-                'avatar_url': reply.user.avatar.url,
-                'banner_url': reply.user.banner.url,
-                'time': format_time(post.time, datetime.now(tz=tz.gettz('Etc/GMT0'))),
-                'body': reply.body,
-                'has_liked': False,
-                'has_reposted': False,
-            })
+            post_info = PostInfo(False, reply, current_user)
+            replies.append(post_info.json())
 
         response['replies'] = replies
 
