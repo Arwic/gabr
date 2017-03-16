@@ -14,7 +14,7 @@ import os
 import subprocess
 import datetime
 
-from .__private import db_user_pass, secret_key
+from .__private import db_user_pass, secret_key, norecaptcha_site_key, norecaptcha_secret_key
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -151,8 +151,8 @@ AXES_USE_USER_AGENT = False
 AXES_LOCKOUT_URL = '/login/locked/'
 AXES_VERBOSE = True
 
-NORECAPTCHA_SITE_KEY = '6Le9fyYTAAAAAJyV9aH19zRV0Tg-5vlBET8QGDkW'
-NORECAPTCHA_SECRET_KEY = '6Le9fyYTAAAAALyN6GW3whDmKeWOQuy5OqU7xVaT'
+NORECAPTCHA_SITE_KEY = norecaptcha_site_key
+NORECAPTCHA_SECRET_KEY = norecaptcha_secret_key
 
 try:
     from .local_settings import *
