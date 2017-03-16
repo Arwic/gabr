@@ -28,13 +28,13 @@ def post(request):
 
 
 @login_required
-def unread_notification_count(request):
+def unread_notif_count(request):
     if not request.is_ajax():
         return HttpResponse('')
     try:
-        notification_count = get_object_or_404(Profile, user=request.user).get_unread_notification_count()
+        notif_count = get_object_or_404(Profile, user=request.user).get_unread_notif_count()
         response = {
-            'count': notification_count
+            'count': notif_count
         }
         return HttpResponse(json.dumps(response))
     except:

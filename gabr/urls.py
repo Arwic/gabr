@@ -47,36 +47,33 @@ urlpatterns = [
     # articles
     url(r'^help/$', views.post.feed, name='help'),
     url(r'^advertising/$', views.post.feed, name='advertising'),
-    # ajax
-    url(r'^ajax/load-posts/$', views.post.ajax_load_posts, name='ajax-load-posts'),
-    url(r'^ajax/check-posts/$', views.post.ajax_check_posts, name='ajax-check-posts'),
-    url(r'^ajax/report-user/$', views.post.ajax_report_user, name='ajax-report-user'),
-    url(r'^ajax/block-user/$', views.post.ajax_block_user, name='ajax-block-user'),
-
-    # ajax action, allows the user to do something
-    url(r'^ajax/action/new-post/$', views.ajax_action.new_post, name='ajax-action-new-post'),
-    url(r'^ajax/action/like-post/$', views.ajax_action.like_post, name='ajax-action-like-post'),
-    url(r'^ajax/action/follow-user/$', views.ajax_action.follow_user, name='ajax-action-follow-user'),
-    url(r'^ajax/action/report-user/$', views.ajax_action.report_user, name='ajax-action-report-user'),
-    url(r'^ajax/action/report-post/$', views.ajax_action.report_post, name='ajax-action-report-post'),
-    url(r'^ajax/action/block-user/$', views.ajax_action.block_user, name='ajax-action-block-user'),
+    # global forms
+    url(r'^form/new-post/$', views.ajax_command.new_post, name='form-new-post'),
+    # ajax command, allows the user to do something
+    url(r'^ajax/command/like-post/$', views.ajax_command.like_post, name='ajax-action-like-post'),
+    url(r'^ajax/command/follow-user/$', views.ajax_command.follow_user, name='ajax-action-follow-user'),
+    url(r'^ajax/command/report-user/$', views.ajax_command.report_user, name='ajax-action-report-user'),
+    url(r'^ajax/command/report-post/$', views.ajax_command.report_post, name='ajax-action-report-post'),
+    url(r'^ajax/command/block-user/$', views.ajax_command.block_user, name='ajax-action-block-user'),
     # ajax get, gets a single item
     url(r'^ajax/get/user/$', views.ajax_get.user, name='ajax-get-user'),
     url(r'^ajax/get/post/$', views.ajax_get.post, name='ajax-get-post'),
-    url(r'^ajax/get/unread-notification-count/$', views.ajax_get.unread_notification_count, name='ajax-get-unread-notification-count'),
     url(r'^ajax/get/trends/$', views.ajax_get.trends, name='ajax-get-trends'),
+    url(r'^ajax/get/unread-notif-count/$', views.ajax_get.unread_notif_count, name='ajax-get-unread-notification-count'),
+    url(r'^ajax/get/new-post-count/$', views.ajax_get.new_post_count, name='ajax-get-new-post-count'),
     # ajax feed, gets a list of items
     url(r'^ajax/feed/main/$', views.ajax_feed.main, name='ajax-feed-main'),
     url(r'^ajax/feed/user-posts/$', views.ajax_feed.user_posts, name='ajax-feed-user-posts'),
     url(r'^ajax/feed/user-followers/$', views.ajax_feed.user_followers, name='ajax-feed-user-followers'),
     url(r'^ajax/feed/user-follows/$', views.ajax_feed.user_follows, name='ajax-feed-user-follows'),
     url(r'^ajax/feed/user-likes/$', views.ajax_feed.user_likes, name='ajax-feed-user-likes'),
+    # FIXME: old
+    url(r'^ajax/load-posts/$', views.post.ajax_load_posts, name='ajax-load-posts'),
 ]
 
 handler500 = curry(server_error, template_name='500.html')
 handler404 = curry(page_not_found, template_name='404.html')
 handler403 = curry(permission_denied, template_name='403.html')
-
 
 if settings.DEBUG:
     urlpatterns += [

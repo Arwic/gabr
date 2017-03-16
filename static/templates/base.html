@@ -55,7 +55,7 @@
 
             <!-- Right nav -->
             <div class="item right">
-                <button class="button" onclick="postTo()">
+                <button class="button" onclick="onPostTo()">
                     <span class="icon icon-post"></span>
                     New Post
                 </button>
@@ -136,9 +136,10 @@
                     <h4 class="modal-title" id="myModalLabel4">Compose Post</h4>
                 </div>
                 <div class="modal-footer">
-                    <form id="post-form" class="form-horizontal col-md-4" action="{% url "new-post" %}" method="post">{% csrf_token %}
+                    <form id="post-form" class="form-horizontal col-md-4" action="{% url "form-new-post" %}" method="post">{% csrf_token %}
                         {{ post_form.body }}
                         {{ post_form.parent }}
+                        {{ post_form.target }}
                     </form>
                 </div>
                 <div class="modal-footer">

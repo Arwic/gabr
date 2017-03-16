@@ -5,7 +5,7 @@
 {% block header %}
     <title>Feed | Gabr</title>
     <script>
-        loadUserFeed("{{ current_user.user_name }}");
+        loadMainFeed("{{ current_user.user_name }}");
         window.setInterval(function(){
             checkNewPosts();
         }, 60000);
@@ -36,7 +36,7 @@
                     <div class="avatar">
                         <img class="image" src="{{ current_user.avatar.url }}">
                     </div>
-                    <input class="text-input" type="button" value="What's happening?" onclick="postTo();">
+                    <input class="text-input" type="button" value="What's happening?" onclick="onPostTo();">
                 </div>
             </div>
             <div class="row">

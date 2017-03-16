@@ -11,42 +11,11 @@ import re
 username_regex = re.compile('@(?P<username>[^\s]+)')
 
 
-def _notify_tags(post):
-    tags = username_regex.findall(post.body)
-    for username in tags:
-        tagged_user = Profile.objects.filter(user__username=str.lower(username)).first()
-        if tagged_user is None:
-            print('user not found')
-            continue
-        Notification.objects.create(notification_type='m', user=tagged_user, mention=post)
-
-
-@login_required
-def new_post(request):
-    # TODO: "request.POST['field']" could cause issues, might have to be "request['field']"
-    if not request.is_ajax():
-        return HttpResponse('')
-    current_user = get_object_or_404(Profile, user=request.user)
-    form = PostForm(request.POST or None)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.user = current_user
-        try:
-            parent_id = request.POST["new-post-modal-reply-target"]
-            instance.parent = get_object_or_404(Post, id=parent_id)
-        except:
-            pass
-        instance.save()
-        _notify_tags(instance)
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-
 @login_required
 def like_post(request):
-    # TODO: "request.POST['field']" could cause issues, might have to be "request['field']"
     if not request.is_ajax():
         return HttpResponse('')
-    post_id = request['post_id']
+    post_id = request['post-id']
     current_user = get_object_or_404(Profile, user=request.user)
     post = get_object_or_404(Post, id=post_id)
     try:
@@ -54,7 +23,7 @@ def like_post(request):
         like.delete()
         response = {
             'liked': False,
-            'post_id': post_id,
+            'post-id': post_id,
         }
     except Like.DoesNotExist:
         Like.objects.create(user=current_user, post=post)
@@ -67,11 +36,10 @@ def like_post(request):
 
 @login_required
 def follow_user(request):
-    # TODO: "request.POST['field']" could cause issues, might have to be "request['field']"
     if not request.is_ajax():
         return HttpResponse('')
     current_user = get_object_or_404(Profile, user=request.user)
-    user = get_object_or_404(Profile, user=request.user)
+    user = get_object_or_404(Profile, user__username=request['username'])
     try:
         follow = Follow.objects.get(follower=current_user, subject=user)
         follow.delete()

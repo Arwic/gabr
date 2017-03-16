@@ -51,7 +51,7 @@ class Profile(models.Model):
         # NYI
         return 0
 
-    def get_unread_notification_count(self):
+    def get_unread_notif_count(self):
         return Notification.objects.filter(user=self, read=False).count()
 
     def has_liked(self, post):

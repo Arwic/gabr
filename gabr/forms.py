@@ -80,10 +80,12 @@ class PostForm(forms.ModelForm):
         fields = [
             'body',
             'target',
+            'parent'
         ]
         widgets = {
             'body': PostWidget,
             'target': forms.HiddenInput,
+            'parent': forms.HiddenInput
         }
 
 
