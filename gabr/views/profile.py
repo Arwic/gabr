@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from gabr.models import UserProfile, Follow, Post, Like, Repost, Notification, Trend
+from gabr.models import UserProfile, Follow, Post, Like, Notification, Trend
 from gabr.forms import PostForm, SignupForm, MessageForm, LoginForm
 import json
 

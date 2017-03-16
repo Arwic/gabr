@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^settings/payment/$', views.settings.settings_payment, name='settings_payment'),
     url(r'^settings/apps/$', views.settings.settings_apps, name='settings_apps'),
     url(r'^settings/data/$', views.settings.settings_data, name='settings_data'),
+
     url(r'^ajax/like/$', views.post.ajax_like, name='ajax-like'),
     url(r'^ajax/repost/$', views.post.ajax_repost, name='ajax-repost'),
     url(r'^ajax/follow/$', views.profile.ajax_follow, name='ajax-follow'),
@@ -54,6 +55,14 @@ urlpatterns = [
     url(r'^ajax/check-posts/$', views.post.ajax_check_posts, name='ajax-check-posts'),
     url(r'^ajax/report-user/$', views.post.ajax_report_user, name='ajax-report-user'),
     url(r'^ajax/block-user/$', views.post.ajax_block_user, name='ajax-block-user'),
+
+    url(r'^ajax/get-thread/$', views.ajax.get_thread, name='ajax-get-thread'),
+    url(r'^ajax/get-post/$', views.ajax.get_post, name='ajax-get-post'),
+    url(r'^ajax/get-user-posts/$', views.ajax.get_user_posts, name='ajax-get-user-posts'),
+    url(r'^ajax/get-user-feed/$', views.ajax.get_user_feed, name='ajax-get-user-feed'),
+    url(r'^ajax/get-user-followers/$', views.ajax.get_user_followers, name='ajax-get-user-followers'),
+    url(r'^ajax/get-user-following/$', views.ajax.get_user_following, name='ajax-get-user-following'),
+    url(r'^ajax/get-user/$', views.ajax.get_user, name='ajax-get-user'),
 ]
 
 handler500 = curry(server_error, template_name='500.html')

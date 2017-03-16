@@ -1,4 +1,4 @@
-from gabr.models import UserProfile, Follow, Post, Like, Repost
+from gabr.models import UserProfile, Follow, Post, Like
 from django import template
 from django.http import HttpResponse, HttpResponseRedirect
 

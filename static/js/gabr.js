@@ -35,7 +35,8 @@ $(document).ready(function () {
     loadTrends();
 });
 
-function guid() {
+function guid()
+{
     var d = new Date().getTime();
     var id = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
         var r = (d + Math.random()*16)%16 | 0;
@@ -60,6 +61,179 @@ function getCookie(cookieName)
         }
     }
     return "";
+}
+
+// --------------- AJAX REQUESTS ---------------
+
+function getUser(user_name)
+{
+    $.ajax({
+        url: "/ajax/get-user/",
+        type: "POST",
+        data: {
+            "user-name": user_name
+        },
+        dataType: "json",
+        success: function (data) {
+            return data;
+        },
+        failure: function (data) {
+            console.log("Unable to load user '" + user_name + "'")
+        }
+    });
+}
+
+function getThread(post_id)
+{
+    $.ajax({
+        url: "/ajax/get-thread/",
+        type: "POST",
+        data: {
+            "post-id": post_id
+        },
+        dataType: "json",
+        success: function (data) {
+            return data;
+        },
+        failure: function (data) {
+            console.log("Unable to load thread based on post '" + post_id + "'")
+        }
+    });
+}
+
+function getUserPost(user_name)
+{
+    $.ajax({
+        url: "/ajax/get-user-posts/",
+        type: "POST",
+        data: {
+            "user-name": user_name
+        },
+        dataType: "json",
+        success: function (data) {
+            return data;
+        },
+        failure: function (data) {
+            console.log("Unable to load posts for user '" + user_name + "'")
+        }
+    });
+}
+
+function getUserFollowers(user_name)
+{
+    $.ajax({
+        url: "/ajax/get-user-followers/",
+        type: "POST",
+        data: {
+            "user-name": user_name
+        },
+        dataType: "json",
+        success: function (data) {
+            return data;
+        },
+        failure: function (data) {
+            console.log("Unable to load followers for user '" + user_name + "'")
+        }
+    });
+}
+
+function getUserFollowing(user_name)
+{
+    $.ajax({
+        url: "/ajax/get-user-following/",
+        type: "POST",
+        data: {
+            "user-name": user_name
+        },
+        dataType: "json",
+        success: function (data) {
+            return data;
+        },
+        failure: function (data) {
+            console.log("Unable to load following for user '" + user_name + "'")
+        }
+    });
+}
+
+function getUserFeed(user_name, count, oldest, newest)
+{
+    $.ajax({
+        url: "/ajax/get-user-feed/",
+        type: "POST",
+        data: {
+            "user-name": user_name,
+            "count": count,
+            "time-oldest": oldest,
+            "time-newest": newest
+        },
+        dataType: "json",
+        success: function (data) {
+            return data;
+        },
+        failure: function (data) {
+            console.log("Unable to load feed for user '" + user_name + "'")
+        }
+    });
+}
+
+function getPost(post_id) {
+    $.ajax({
+        url: "/ajax/get-post/",
+        type: "POST",
+        data: {
+            "post-id": post_id
+        },
+        dataType: "json",
+        success: function (data) {
+            return data;
+        },
+        failure: function (data) {
+            console.log("Unable to load post '" + post_id + "'")
+        }
+    });
+}
+
+// --------------- AJAX COMMANDS ---------------
+
+function likePost(post_id)
+{
+
+}
+
+function repostPost(post_id)
+{
+
+}
+
+function follow(user_name)
+{
+
+}
+
+function newPost()
+{
+
+}
+
+function postTo(user_name)
+{
+
+}
+
+// --------------- PROCESSING ---------------
+
+
+// --------------- OUTPUT ---------------
+
+function writeTrend(tag)
+{
+    var div_parent = $("#trends");
+    var a_trend = document.createElement("a");
+    div_parent.append(a_trend);
+    a_trend.setAttribute("class", "body");
+    a_trend.setAttribute("href", "/tag/" + tag);
+    a_trend.appendChild(document.createTextNode(tag));
+    div_parent.append(document.createElement("br"));
 }
 
 function onLikeButton(post_id)
@@ -229,6 +403,7 @@ function viewPost(post_id)
         },
         dataType: "json",
         success: function (data) {
+            /*
             $("#modal-viewpost-postid").val(post_id);
 
             $("#modal-viewpost-postuser-avatar").attr("src", data["avatar_url"]);
@@ -248,7 +423,8 @@ function viewPost(post_id)
             var modal_repost = $("#modal-viewpost-repost");
             modal_repost.toggleClass("repost-button-true", data["has_reposted"]);
             modal_repost.toggleClass("repost-button-false", !data["has_reposted"]);
-
+            */
+            writePost(data, "#modal-viewpost-main");
             $("#modal-viewpost-replies").empty();
 
             for (var i = 0; i < data["replies"].length; i++) {
@@ -300,7 +476,7 @@ function writePost(post_json, parent_selector)
 {
     // Parent div
     if (parent_selector == null)
-        parent_selector = "#posts"
+        parent_selector = "#posts";
     var div_parent = $(parent_selector);
     // Row
     var div_row = document.createElement("div");
@@ -310,32 +486,12 @@ function writePost(post_json, parent_selector)
     var div_post = document.createElement("div");
     div_row.appendChild(div_post);
     div_post.setAttribute("class", "b-post");
-    // Repost text
-    if (post_json["repost"]) {
-        var repost_guid = guid();
-        // Repost link
-        var a_repost_link = document.createElement("a");
-        div_post.appendChild(a_repost_link);
-        a_repost_link.setAttribute("id", repost_guid);
-        a_repost_link.setAttribute("href", "/user/" + post_json["repost-user"]["username"]);
-        // Repost icon
-        var span_repost_icon = document.createElement("span");
-        a_repost_link.appendChild(span_repost_icon);
-        span_repost_icon.setAttribute("class", "icon icon-repost");
-        // Repost display name
-        var span_repost_displayname = document.createElement("span");
-        a_repost_link.appendChild(span_repost_displayname);
-        span_repost_displayname.setAttribute("class", "repost-display-name");
-        span_repost_displayname.appendChild(document.createTextNode(post_json["repost-user"]["displayname"] + " Reposted"));
-        a_repost_link.appendChild(document.createElement("br"));
-        registerHoverCard("#" + repost_guid, post_json["repost-user"]["username"]);
-    }
     var post_guid = guid();
     // Post user link
     var a_link = document.createElement("a");
     div_post.appendChild(a_link);
     a_link.setAttribute("id", post_guid);
-    a_link.setAttribute("href", "/user/" + post_json["post-user"]["username"]);
+    a_link.setAttribute("href", "/user/" + post_json["user"]["user-name"]);
     // Post user avatar
     var div_avatar = document.createElement("div");
     a_link.appendChild(div_avatar);
@@ -343,28 +499,28 @@ function writePost(post_json, parent_selector)
     var img_avatar = document.createElement("img");
     div_avatar.appendChild(img_avatar);
     img_avatar.setAttribute("class", "image");
-    img_avatar.setAttribute("src", post_json["post-user"]["avatar"]);
+    img_avatar.setAttribute("src", post_json["user"]["avatar-url"]);
     // Post user display name
     var span_post_displayname = document.createElement("span");
     a_link.appendChild(span_post_displayname);
     span_post_displayname.setAttribute("class", "display-name");
-    span_post_displayname.appendChild(document.createTextNode(post_json["post-user"]["displayname"]));
-    registerHoverCard("#" + post_guid, post_json["post-user"]["username"]);
+    span_post_displayname.appendChild(document.createTextNode(post_json["user"]["display-name"]));
+    registerHoverCard("#" + post_guid, post_json["user"]["user-name"]);
     // Post user username
     var span_username = document.createElement("span");
     div_post.appendChild(span_username);
-    span_username.setAttribute("class", "username");
-    span_username.appendChild(document.createTextNode(post_json["post-user"]["username"]));
+    span_username.setAttribute("class", "user-name");
+    span_username.appendChild(document.createTextNode(post_json["user"]["user-name"]));
     // Post time
     var span_time = document.createElement("span");
     div_post.appendChild(span_time);
     span_time.setAttribute("class", "time");
-    span_time.appendChild(document.createTextNode(post_json["post"]["time"]));
+    span_time.appendChild(document.createTextNode(post_json["time"]));
     // Post body
     var p_body = document.createElement("p");
     div_post.appendChild(p_body);
     p_body.setAttribute("class", "body");
-    p_body.appendChild(document.createTextNode(post_json["post"]["body"]));
+    p_body.appendChild(document.createTextNode(post_json["body"]));
     linkifyPostBody(p_body);
     var div_actions = document.createElement("div");
     div_post.appendChild(div_actions);
@@ -372,7 +528,8 @@ function writePost(post_json, parent_selector)
     // Reply button
     var button_reply = document.createElement("button");
     div_actions.appendChild(button_reply);
-    button_reply.setAttribute("onclick", "$('#view-post-close').click(); onReplyButton('" + post_json["post"]["user_name"] + "', " + post_json["post"]["id"] + ")");
+    button_reply.setAttribute("onclick",
+        "$('#view-post-close').click(); onReplyButton('" + post_json["user"]["user_name"] + "', " + post_json["id"] + ")");
     button_reply.setAttribute("class", "post-action-button");
     var span_reply_icon = document.createElement("span");
     button_reply.appendChild(span_reply_icon);
@@ -380,7 +537,7 @@ function writePost(post_json, parent_selector)
     // Like button
     var button_like = document.createElement("button");
     div_actions.appendChild(button_like);
-    button_like.setAttribute("onclick", "onLikeButton(" + post_json["post"]["id"] + ")");
+    button_like.setAttribute("onclick", "onLikeButton(" + post_json["id"] + ")");
     button_like.setAttribute("class", "post-action-button");
     var span_like_icon = document.createElement("span");
     button_like.appendChild(span_like_icon);
@@ -388,56 +545,36 @@ function writePost(post_json, parent_selector)
         span_like_icon.setAttribute("class", "icon like-button-true");
     else
         span_like_icon.setAttribute("class", "icon like-button-false");
-    span_like_icon.setAttribute("id", "like-" + post_json["post"]["id"]);
+    span_like_icon.setAttribute("id", "like-" + post_json["id"]);
     // Repost button
     var button_repost = document.createElement("button");
     div_actions.appendChild(button_repost);
-    button_repost.setAttribute("onclick", "onRepostButton(" + post_json["post"]["id"] + ")");
+    button_repost.setAttribute("onclick", "onRepostButton(" + post_json["id"] + ")");
     button_repost.setAttribute("class", "post-action-button");
     var span_repost_icon = document.createElement("span");
     button_repost.appendChild(span_repost_icon);
-    span_repost_icon.setAttribute("id", "repost-" + post_json["post"]["id"]);
+    span_repost_icon.setAttribute("id", "repost-" + post_json["id"]);
     if (post_json["post"]["reposted"])
         span_repost_icon.setAttribute("class", "icon repost-button-true");
     else
-        span_repost_icon    .setAttribute("class", "icon repost-button-false");
+        span_repost_icon.setAttribute("class", "icon repost-button-false");
     // Expand button
     var button_expand = document.createElement("button");
     div_actions.appendChild(button_expand);
-    button_expand.setAttribute("onclick", "viewPost(" + post_json["post"]["id"] + ")");
+    button_expand.setAttribute("onclick", "viewPost(" + post_json["id"] + ")");
     button_expand.setAttribute("class", "post-action-button");
     var span_expand_icon = document.createElement("span");
     button_expand.appendChild(span_expand_icon);
     span_expand_icon.setAttribute("class", "icon icon-postdetail");
 }
 
-function loadPosts(type, count, target, oldest, newest)
+function loadUserFeed(user_name)
 {
-    if (oldest == null)
-        oldest = 0;
-    if (newest == null)
-        newest = INT_MAX;
-    $.ajax({
-        url: "/ajax/load-posts/",
-        type: "POST",
-        data: {
-            "type": type,
-            "count": count,
-            "time-oldest": oldest,
-            "time-newest": newest,
-            "target": target
-        },
-        dataType: "json",
-        success: function (data) {
-            data = JSON.parse(data);
-            post_time_oldest = data["time-oldest"];
-            post_time_newest = data["time-newest"];
-            data["posts"].forEach(function(obj) { writePost(obj); });
-        },
-        error: function () {
-            console.log("Failed to load posts")
-        }
-    });
+    var data = getUserFeed(user_name, 50, 0, post_time_oldest);
+    for (var post_info in data)
+    {
+        writePost(post_info);
+    }
 }
 
 function loadNotificationCount()
@@ -456,17 +593,6 @@ function loadNotificationCount()
             console.log("Failed to load notifications");
         }
     });
-}
-
-function writeTrend(tag)
-{
-    var div_parent = $("#trends");
-    var a_trend = document.createElement("a");
-    div_parent.append(a_trend);
-    a_trend.setAttribute("class", "body");
-    a_trend.setAttribute("href", "/tag/" + tag);
-    a_trend.appendChild(document.createTextNode(tag));
-    div_parent.append(document.createElement("br"));
 }
 
 function loadTrends()

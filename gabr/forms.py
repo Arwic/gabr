@@ -115,7 +115,6 @@ class SettingsNotificationsForm(forms.ModelForm):
             'email_notif_like',
             'email_notif_mention',
             'email_notif_message',
-            'email_notif_repost',
         ]
 
 

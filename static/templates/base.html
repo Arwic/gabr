@@ -153,8 +153,8 @@
 <!-- Universal view post modal -->
 <div class="modal fade" id="modal-viewpost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
     <input type="hidden" id="modal-viewpost-username">
+    <input id="modal-viewpost-postid" type="hidden" />
     <div class="modal-dialog" role="document">
-        <input id="modal-viewpost-postid" type="hidden" />
         <div class="b-post rounded-top">
             <button id="view-post-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -168,12 +168,13 @@
             <span id="modal-viewpost-postuser-username" class="username" ></span>
             <span id="modal-viewpost-post-time" class="time"></span>
             <script>
-                $("#modal-viewpost-postuser-link").mouseenter(function () {
+                var modal = $("#modal-viewpost-postuser-link");
+                modal.mouseenter(function () {
                     var left = $(this).position().left;
                     var top = $(this).position().top;
                     viewProfileCard($("#modal-viewpost-username").val(), top, left);
                 });
-                $("#modal-viewpost-postuser-link").mouseout(function() {
+                modal.mouseout(function() {
                     hideProfileCard();
                 });
             </script>
@@ -186,9 +187,8 @@
                     <span id="modal-viewpost-repost" class="icon repost-button-false"></span>
                 </button>
             </div>
-            <div id="modal-viewpost-replies">
-            </div>
         </div>
+        <div id="modal-viewpost-replies" class="b-post"> </div>
         <div class="b-post rounded-bottom" style="height: 2rem;">
         </div>
     </div>

@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 import json
 
-import dateutil
 from dateutil import tz
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -9,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from gabr.forms import PostForm
-from gabr.models import UserProfile, Follow, Post, Like, Repost, Notification, Block, Report
+from gabr.models import UserProfile, Follow, Post, Like, Notification, Block, Report
 import re
 import gabr.settings
 
@@ -62,20 +61,20 @@ class PostInfo:
         if self.is_repost:
             post_json['repost-user'] = {}
             post_json['repost-user']['id'] = self.repost_user.id
-            post_json['repost-user']['username'] = self.repost_user.user_name
-            post_json['repost-user']['displayname'] = self.repost_user.display_name
+            post_json['repost-user']['user-name'] = self.repost_user.user_name
+            post_json['repost-user']['display-name'] = self.repost_user.display_name
         post_json['post-user'] = {}
         post_json['post-user']['id'] = self.post.user.user.id
         post_json['post-user']['avatar'] = self.post.user.avatar.url
-        post_json['post-user']['username'] = self.post.user.user_name
-        post_json['post-user']['displayname'] = self.post.user.display_name
+        post_json['post-user']['user-name'] = self.post.user.user_name
+        post_json['post-user']['display-name'] = self.post.user.display_name
 
         post_json['post'] = {}
         post_json['post']['id'] = self.post.id
         post_json['post']['body'] = self.post.body
         post_json['post']['time'] = str(self.user_time)
         post_json['post']['liked'] = False
-        post_json['post']['user_name'] = self.post.user.user_name
+        post_json['post']['user-name'] = self.post.user.user_name
         if self.current_user is not None:
             post_json['post']['liked'] = self.current_user.liked(self.post)
         post_json['post']['reposted'] = False
@@ -182,9 +181,9 @@ def view_post(request, post_id):
     if request.user.is_authenticated():
         current_user = UserProfile.objects.get(user=request.user)
     context = {
-        'current_user': current_user,
-        'post_form': PostForm,
-        'post_id': post_id,
+        'current-user': current_user,
+        'post-form': PostForm,
+        'post-id': post_id,
     }
     return render(request, 'post.html', context)
 
@@ -290,8 +289,8 @@ def ajax_post(request):
     if request.user.is_authenticated():
         current_user = get_object_or_404(UserProfile, user=request.user)
     # get post data
-    post_id = request.POST['post_id']
     try:
+        post_id = request.POST['post_id']
         post = Post.objects.get(id=post_id)
         post_count, following_count, follower_count = post.user.stats()
         response = {
@@ -320,6 +319,7 @@ def ajax_post(request):
             response['has_liked'] = current_user.liked(post)
             response['has_reposted'] = current_user.reposted(post)
     except Post.DoesNotExist:
+        print("POST DOES NOT EXIST")
         return HttpResponse('')
     return HttpResponse(json.dumps(response))
 

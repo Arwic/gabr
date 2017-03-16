@@ -34,7 +34,6 @@ class UserProfile(models.Model):
     show_nsfw = models.BooleanField(default=False)
     email_notif_like = models.BooleanField(default=True)
     email_notif_mention = models.BooleanField(default=True)
-    email_notif_repost = models.BooleanField(default=True)
     email_notif_follow = models.BooleanField(default=True)
     email_notif_message = models.BooleanField(default=True)
     email_newsletter = models.BooleanField(default=True)
@@ -129,21 +128,6 @@ class Follow(models.Model):
         return '@%s follows @%s' % (self.follower, self.subject)
 
 
-class Repost(models.Model):
-    class Meta:
-        unique_together = ['user', 'post']
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    time = models.DateTimeField(default=datetime.datetime.utcnow)
-
-    def save(self, *args, **kwargs):
-        super(Repost, self).save()
-        Notification.objects.create(notification_type='r', user=self.post.user, repost=self)
-
-    def __str__(self):
-        return '@%s reposted %s' % (self.user, self.post)
-
-
 class Like(models.Model):
     class Meta:
         unique_together = ['user', 'post']
@@ -163,7 +147,6 @@ NOTIFICATION_TYPE_CHOICES = [
     ('f', 'follow'),
     ('p', 'private message'),
     ('l', 'like'),
-    ('r', 'repost'),
     ('m', 'mention'),
 ]
 
@@ -176,7 +159,6 @@ class Notification(models.Model):
     follow = models.ForeignKey(Follow, null=True, blank=True, on_delete=models.CASCADE)
     message = models.ForeignKey(Message, null=True, blank=True, on_delete=models.CASCADE)
     like = models.ForeignKey(Like, null=True, blank=True, on_delete=models.CASCADE)
-    repost = models.ForeignKey(Repost, null=True, blank=True, on_delete=models.CASCADE)
     mention = models.ForeignKey(Post, null=True, blank=True, on_delete=models.CASCADE, related_name='mention')
 
     def __str__(self):
