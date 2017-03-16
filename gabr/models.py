@@ -59,9 +59,9 @@ class Profile(models.Model):
 
     def reposted(self, post):
         try:
-            Repost.objects.get(user=self, post=post)
+            Post.objects.get(user=self, post__target=post)
             return True
-        except Repost.DoesNotExist:
+        except Post.DoesNotExist:
             return False
 
 
@@ -93,7 +93,7 @@ class Post(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     body = models.CharField(max_length=140)
     time = models.DateTimeField(default=datetime.datetime.utcnow)
-    parent = models.ForeignKey('self', null=True, blank=True, default=None)
+    target = models.ForeignKey('self', null=True, blank=True, default=None)
 
     def __str__(self):
         return '@%s on %s says "%s"' % (self.user, self.time, self.body[:20])
@@ -148,6 +148,7 @@ NOTIFICATION_TYPE_CHOICES = [
     ('p', 'private message'),
     ('l', 'like'),
     ('m', 'mention'),
+    ('l', 'repost'),
 ]
 
 
@@ -160,6 +161,7 @@ class Notification(models.Model):
     message = models.ForeignKey(Message, null=True, blank=True, on_delete=models.CASCADE)
     like = models.ForeignKey(Like, null=True, blank=True, on_delete=models.CASCADE)
     mention = models.ForeignKey(Post, null=True, blank=True, on_delete=models.CASCADE, related_name='mention')
+    repost = models.ForeignKey(Post, null=True, blank=True, on_delete=models.CASCADE, related_name='repost')
 
     def __str__(self):
         return '@%s has %s' % (self.user, self.notification_type)

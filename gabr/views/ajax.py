@@ -138,34 +138,22 @@ def get_user(request):
 
 
 def get_user_feed(request):
-    print("----------------GET USER FEED")
     if not validate_request(request):
         return HttpResponse('')
     try:
         current_user = get_current_user_profile(request)
-        print("----------------GOT CUR USER")
         time_oldest = request['time-oldest']
         time_newest = request['time-newest']
-        print("----------------GOT TIMES")
         response = []
         # get posts from the people the use follows
         for follow in Follow.objects.filter(follower=current_user):
             for post in Post.objects.filter(user=follow.subject, time__gt=time_oldest, time__lt=time_newest).order_by('-time'):
                 response.append(PostInfo(post, current_user, None))
-            for repost in Repost.objects.filter(user=follow.subject, time__gt=time_oldest, time__lt=time_newest).order_by('-time'):
-                response.append(PostInfo(repost, current_user, None))
-        print("----------------GOT FOLLOWS")
         # get the user's own posts
         for post in Post.objects.filter(user=current_user, time__gt=time_oldest, time__lt=time_newest).order_by('-time'):
             response.append(PostInfo(post, current_user, None))
-        print("----------------GOT POSTS")
-        for repost in Repost.objects.filter(user=current_user, time__gt=time_oldest, time__lt=time_newest).order_by('-time'):
-            response.append(PostInfo(repost.post, current_user, repost.user))
-        print("----------------GOT REPOSTS")
         return HttpResponse(json.dumps(response))
-        print("----------------SENT RESPONSE")
     except:
-        print("----------------FAILIRE")
         return HttpResponse('')
 
 
@@ -196,23 +184,6 @@ def get_user_likes(request):
             .order_by('-time')[:post_fetch_limit]
         for like in likes:
             response.append(PostInfo(like.post, current_user, None))
-        return HttpResponse(json.dumps(response))
-    except:
-        return HttpResponse('')
-
-
-def get_user_reposts(request):
-    if not validate_request(request):
-        return HttpResponse('')
-    try:
-        current_user = get_current_user_profile(request)
-        time_oldest = request['time-oldest']
-        time_newest = request['time-newest']
-        response = []
-        reposts = Repost.objects.filter(user=current_user, time__gt=time_oldest, time__lt=time_newest) \
-            .order_by('-time')[:post_fetch_limit]
-        for repost in reposts:
-            response.append(PostInfo(repost.post, current_user, None))
         return HttpResponse(json.dumps(response))
     except:
         return HttpResponse('')
