@@ -1,6 +1,6 @@
 import json
 from django.shortcuts import get_object_or_404
-from gabr.models import Profile
+from gabr.models import Profile, Post
 
 
 class AjaxUser:
@@ -36,7 +36,10 @@ class AjaxUser:
 
 class AjaxPost:
     def __init__(self, post, current_user=None):
-        self.post = post
+        if post is int:
+            self.post = get_object_or_404(Post, pk=post)
+        else:
+            self.post = post
         if current_user is not None:
             self.liked = current_user.has_liked(self.post)
         else:

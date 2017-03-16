@@ -32,7 +32,7 @@ $(document).ready(function () {
     });
 
     updateNotificationCount();
-    loadTrends();
+    updateTrends();
 });
 
 function guid() {
@@ -59,117 +59,7 @@ function getCookie(cookieName) {
     return "";
 }
 
-// --------------- ajax get ---------------
-
-// Gets data for a single user with the given username
-function ajaxGetUser(username) {
-    $.ajax({
-        url: "/ajax/get/user/",
-        type: "POST",
-        data: {
-            "username": username
-        },
-        dataType: "json",
-        success: function (data) {
-            return { "success": true, "data": data };
-        },
-        failure: function (data) {
-            console.log("Unable to load user '" + username + "'")
-            return { "success": false, "data": null };
-        }
-    });
-}
-
-// Gets data fot a single post with the given id
-function ajaxGetPost(post_id) {
-    $.ajax({
-        url: "/ajax/get/post/",
-        type: "POST",
-        data: {
-            "post-id": post_id
-        },
-        dataType: "json",
-        success: function (data) {
-            return { "success": true, "data": data };
-        },
-        failure: function (data) {
-            console.log("Unable to load post '" + post_id + "'");
-            return { "success": false, "data": null };
-        }
-    });
-}
-
-// Gets trending tags
-function ajaxGetTrends() {
-    $.ajax({
-        url: "/ajax/get/trends/",
-        type: "POST",
-        data: {},
-        dataType: "json",
-        success: function (data) {
-            return { "success": true, "data": data };
-        },
-        failure: function (data) {
-            console.log("Unable to load trends");
-            return { "success": false, "data": null };
-        }
-    });
-}
-
-// Gets the number of unread notifications the current user has
-function ajaxGetUnreadNotifCount() {
-    $.ajax({
-        url: "/ajax/get/unread-notif-count/",
-        type: "POST",
-        data: {},
-        dataType: "json",
-        success: function (data) {
-            return { "success": true, "data": data };
-        },
-        failure: function (data) {
-            console.log("Unable to load unread notification count");
-            return { "success": false, "data": null };
-        }
-    });
-}
-
-// Gets the number of new posts the the current user hasn't loaded yet
-function ajaxGetNewPostCount() {
-    $.ajax({
-        url: "/ajax/get/new-post-count/",
-        type: "POST",
-        data: {},
-        dataType: "json",
-        success: function (data) {
-            return { "success": true, "data": data };
-        },
-        failure: function (data) {
-            console.log("Unable to load new post count");
-            return { "success": false, "data": null };
-        }
-    });
-}
-
-// --------------- ajax feed ---------------
-
-function ajaxFeedMain() {
-    $.ajax({
-        url: "/ajax/feed/main/",
-        type: "POST",
-        data: {
-            "time-oldest": post_time_oldest,
-            "time-newest": post_time_newest
-        },
-        dataType: "json",
-        success: function (data) {
-            return { "success": true, "data": data };
-        },
-        failure: function (data) {
-            console.log("Unable to load main feed");
-            return { "success": false, "data": null };
-        }
-    });
-}
+// --------------- NYI ajax code (functions like these dont work due as return is  but the code can be used later) ---------------
 
 function ajaxFeedUserPosts(target_username) {
     $.ajax({
@@ -184,11 +74,9 @@ function ajaxFeedUserPosts(target_username) {
         success: function (data) {
             post_time_oldest = data["time-oldest"];
             post_time_newest = data["time-newest"];
-            return { "success": true, "data": data };
         },
         failure: function (data) {
             console.log("Unable to load user post feed");
-            return { "success": false, "data": null };
         }
     });
 }
@@ -206,11 +94,9 @@ function ajaxFeedUserFollowers(target_username) {
         success: function (data) {
             post_time_oldest = data["time-oldest"];
             post_time_newest = data["time-newest"];
-            return { "success": true, "data": data };
         },
         failure: function (data) {
             console.log("Unable to user follower feed");
-            return { "success": false, "data": null };
         }
     });
 }
@@ -228,11 +114,9 @@ function ajaxFeedUserFollows(target_username) {
         success: function (data) {
             post_time_oldest = data["time-oldest"];
             post_time_newest = data["time-newest"];
-            return { "success": true, "data": data };
         },
         failure: function (data) {
             console.log("Unable to user follows feed");
-            return { "success": false, "data": null };
         }
     });
 }
@@ -250,103 +134,25 @@ function ajaxFeedUserLikes(target_username) {
         success: function (data) {
             post_time_oldest = data["time-oldest"];
             post_time_newest = data["time-newest"];
-            return { "success": true, "data": data };
         },
         failure: function (data) {
             console.log("Unable to user likes feed");
-            return { "success": false, "data": null };
-        }
-    });
-}
-
-// --------------- ajax command ---------------
-
-function ajaxCommandLikePost(post_id) {
-    $.ajax({
-        url: "/ajax/command/like-post/",
-        type: "POST",
-        data: {
-            "post-id": post_id
-        },
-        dataType: "json",
-        success: function (data) {
-            return { "success": true, "data": data };
-        },
-        failure: function (data) {
-            console.log("Unable to like post");
-            return { "success": false, "data": null };
-        }
-    });
-}
-
-function ajaxCommandFollowUser(target_username) {
-    $.ajax({
-        url: "/ajax/command/follow-user/",
-        type: "POST",
-        data: {
-            "username": target_username
-        },
-        dataType: "json",
-        success: function (data) {
-            return { "success": true, "data": data };
-        },
-        failure: function (data) {
-            console.log("Unable to follow user");
-            return { "success": false, "data": null };
-        }
-    });
-}
-
-function ajaxCommandReportUser(target_username) {
-    $.ajax({
-        url: "/ajax/command/onReportUserButton-user/",
-        type: "POST",
-        data: {
-            "username": target_username
-        },
-        dataType: "json",
-        success: function (data) {
-            return { "success": true, "data": data };
-        },
-        failure: function (data) {
-            console.log("Unable to onReportUserButton user");
-            return { "success": false, "data": null };
         }
     });
 }
 
 function ajaxCommandReportPost(post_id) {
     $.ajax({
-        url: "/ajax/command/onReportUserButton-post/",
+        url: "/ajax/command/report-post/",
         type: "POST",
         data: {
             "post-id": post_id
         },
         dataType: "json",
         success: function (data) {
-            return { "success": true, "data": data };
         },
         failure: function (data) {
-            console.log("Unable to onReportUserButton post");
-            return { "success": false, "data": null };
-        }
-    });
-}
-
-function ajaxCommandBlockUser(target_username) {
-    $.ajax({
-        url: "/ajax/command/onBlockButton-user/",
-        type: "POST",
-        data: {
-            "username": target_username
-        },
-        dataType: "json",
-        success: function (data) {
-            return { "success": true, "data": data };
-        },
-        failure: function (data) {
-            console.log("Unable to onBlockButton user");
-            return { "success": false, "data": null };
+            console.log("Unable to report post");
         }
     });
 }
@@ -358,17 +164,27 @@ function onLikeButton(post_id) {
     var post_modal = post_id == -1;
     if (post_modal)
         post_id = $("#modal-viewpost-postid").val();
-    var result = ajaxCommandLikePost(post_id);
-    if (result.success) {
-        var like = $("#like-" + result.data["post_id"]);
-        like.toggleClass("like-button-true", result.data["liked"]);
-        like.toggleClass("like-button-false", !result.data["liked"]);
-        if (post_modal) {
-            var modal_like = $("#modal-viewpost-like");
-            modal_like.toggleClass("like-button-true", result.data["liked"]);
-            modal_like.toggleClass("like-button-false", !result.data["liked"]);
+    $.ajax({
+        url: "/ajax/command/like-post/",
+        type: "POST",
+        data: {
+            "post-id": post_id
+        },
+        dataType: "json",
+        success: function (data) {
+            var like = $("#like-" + data["post_id"]);
+            like.toggleClass("like-button-true", data["liked"]);
+            like.toggleClass("like-button-false", !data["liked"]);
+            if (post_modal) {
+                var modal_like = $("#modal-viewpost-like");
+                modal_like.toggleClass("like-button-true", data["liked"]);
+                modal_like.toggleClass("like-button-false", !data["liked"]);
+            }
+        },
+        failure: function (data) {
+            console.log("Unable to like post");
         }
-    }
+    });
 }
 
 function onRepostButton(target_post_id) {
@@ -404,10 +220,22 @@ function onReplyButton(target_username, parent_post_id) {
 }
 
 function onFollowButton(target_username) {
-    var result = ajaxCommandFollowUser(target_username);
-    var follow = $("#follow-" + result["username"]);
-    follow.toggleClass("follow-button-true", result["follow"]);
-    follow.toggleClass("follow-button-false", !result["follow"]);
+    $.ajax({
+        url: "/ajax/command/follow-user/",
+        type: "POST",
+        data: {
+            "username": target_username
+        },
+        dataType: "json",
+        success: function (data) {
+            var follow = $("#follow-" + data["username"]);
+            follow.toggleClass("follow-button-true", data["follow"]);
+            follow.toggleClass("follow-button-false", !data["follow"]);
+        },
+        failure: function (data) {
+            console.log("Unable to follow user");
+        }
+    });
 }
 
 function onPostTo(target_username) {
@@ -420,12 +248,40 @@ function onPostTo(target_username) {
 
 function onReportUserButton(target_username) {
     // TODO: Needs modal to add report message before ajaxing it off.
-    ajaxCommandReportUser(target_username);
+    $.ajax({
+        url: "/ajax/command/report-user/",
+        type: "POST",
+        data: {
+            "username": target_username
+        },
+        dataType: "json",
+        success: function (data) {
+            // FIXME: Temp
+            alert("TEMP: report received");
+        },
+        failure: function (data) {
+            console.log("Unable to report user");
+        }
+    });
 }
 
 function onBlockButton(target_username) {
     // TODO: Should have a confirmation dialogue here
-    ajaxCommandBlockUser(target_username);
+    $.ajax({
+        url: "/ajax/command/block-user/",
+        type: "POST",
+        data: {
+            "username": target_username
+        },
+        dataType: "json",
+        success: function (data) {
+            // FIXME: Temp
+            alert("TEMP: user has been blocked");
+        },
+        failure: function (data) {
+            console.log("Unable to block user");
+        }
+    });
 }
 
 // --------------- Processing ---------------
@@ -477,23 +333,32 @@ function writeTrend(tag) {
 
 // Displays a profile card at the given position
 function viewProfileCard(target_username, top, left) {
-    var result = ajaxGetUser(target_username);
-    if (result.success) {
-        var data = result.data;
-        $("#profile-card-banner").attr("src", data["banner_url"]);
-        $("#profile-card-profile-link").attr("href", "/user/" + target_username);
-        $("#profile-card-avatar").attr("src", data["avatar_url"]);
-        $("#profile-card-display-name").text(data["display_name"]);
-        $("#profile-card-user-name").text(target_username);
-        $("#profile-card-bio").text(data["bio"]);
-        $("#profile-card-profile-link-posts").attr("href", "/user/" + target_username);
-        $("#profile-card-profile-post-count").text(data["post_count"]);
-        $("#profile-card-profile-link-following").attr("href", "/user/" + target_username + "/following");
-        $("#profile-card-profile-following-count").text(data["following_count"]);
-        $("#profile-card-profile-link-followers").attr("href", "/user/" + target_username + "/followers");
-        $("#profile-card-profile-follower-count").text(data["follower_count"]);
-        $("#global-profile-card").css({top: top, left: left}).show();
-    }
+    $.ajax({
+        url: "/ajax/get/user/",
+        type: "POST",
+        data: {
+            "username": target_username
+        },
+        dataType: "json",
+        success: function (data) {
+            $("#profile-card-banner").attr("src", data["banner_url"]);
+            $("#profile-card-profile-link").attr("href", "/user/" + target_username);
+            $("#profile-card-avatar").attr("src", data["avatar_url"]);
+            $("#profile-card-display-name").text(data["display_name"]);
+            $("#profile-card-user-name").text(target_username);
+            $("#profile-card-bio").text(data["bio"]);
+            $("#profile-card-profile-link-posts").attr("href", "/user/" + target_username);
+            $("#profile-card-profile-post-count").text(data["post_count"]);
+            $("#profile-card-profile-link-following").attr("href", "/user/" + target_username + "/following");
+            $("#profile-card-profile-following-count").text(data["following_count"]);
+            $("#profile-card-profile-link-followers").attr("href", "/user/" + target_username + "/followers");
+            $("#profile-card-profile-follower-count").text(data["follower_count"]);
+            $("#global-profile-card").css({top: top, left: left}).show();
+        },
+        failure: function (data) {
+            console.log("Unable to load user '" + target_username + "'")
+        }
+    });
 }
 
 // Causes a hover card to be displayed when mousing over the given element
@@ -509,20 +374,30 @@ function registerHoverCard(element_id, target_username) {
         }, delay);
     }, function () {
         clearTimeout(timer);
-    });
+    });viewPost
 }
 
 // Opens the post with the given id in the view post modal
 function viewPost(post_id) {
-    var result = ajaxGetPost(post_id);
-    if (result.success) {
-        writePost(data, "#modal-viewpost-main");
-        $("#modal-viewpost-replies").empty();
-        for (var i = 0; i < data["replies"].length; i++) {
-            writePost(data["replies"][i], "#modal-viewpost-replies");
+    $.ajax({
+        url: "/ajax/get/post/",
+        type: "POST",
+        data: {
+            "post-id": post_id
+        },
+        dataType: "json",
+        success: function (data) {
+            writePost(data, "#modal-viewpost-main");
+            $("#modal-viewpost-replies").empty();
+            for (var i = 0; i < data["replies"].length; i++) {
+                writePost(data["replies"][i], "#modal-viewpost-replies");
+            }
+            $("#modal-viewpost").modal();
+        },
+        failure: function (data) {
+            console.log("Unable to load post '" + post_id + "'");
         }
-        $("#modal-viewpost").modal();
-    }
+    });
 }
 
 // Writes a post to the DOM at the given parent
@@ -535,7 +410,7 @@ function writePost(post_json, parent_selector) {
     var div_row = document.createElement("div");
     div_parent.append(div_row);
     div_row.setAttribute("class", "row");
-    // Post onBlockButton
+    // Post block
     var div_post = document.createElement("div");
     div_row.appendChild(div_post);
     div_post.setAttribute("class", "b-post");
@@ -625,55 +500,87 @@ function writePost(post_json, parent_selector) {
 
 // Loads the current user's main feed
 function loadMainFeed() {
-    var result = ajaxFeedMain();
-    if (result.success) {
-        post_time_oldest = result.data["time-oldest"];
-        post_time_newest = result.data["time-newest"];
-
-        for (var post in result.data["posts"]) {
-            writePost(post);
+    $.ajax({
+        url: "/ajax/feed/main/",
+        type: "POST",
+        data: {
+            "time-oldest": post_time_oldest,
+            "time-newest": post_time_newest
+        },
+        dataType: "json",
+        success: function (data) {
+            post_time_oldest = data["time-oldest"];
+            post_time_newest = data["time-newest"];
+            for (var post in data["posts"])
+                writePost(post);
+        },
+        failure: function (data) {
+            console.log("Unable to load main feed");
         }
-    }
+    });
 }
 
 // Updates the notification count
 function updateNotificationCount() {
-    var result = ajaxGetUnreadNotifCount();
-    if (result.success) {
-        if (result.data["count"] != "0")
-            $("#nav-notifications").text(data["count"]);
-        else
-            $("#nav-notifications").text("");
-    }
+    $.ajax({
+        url: "/ajax/get/unread-notif-count/",
+        type: "POST",
+        data: {},
+        dataType: "json",
+        success: function (data) {
+            if (data["count"] != "0")
+                $("#nav-notifications").text(data["count"]);
+            else
+                $("#nav-notifications").text("");        },
+        failure: function (data) {
+            console.log("Unable to load unread notification count");
+        }
+    });
 }
 
 // Updates the trending tags
 function updateTrends() {
-    var result = ajaxGetTrends();
-    if (result.success) {
-        $("#trends").empty();
-        for (var trend in result.data["trends"])
-            writeTrend(trend);
-    }
+    $.ajax({
+        url: "/ajax/get/trends/",
+        type: "POST",
+        data: {},
+        dataType: "json",
+        success: function (data) {
+            $("#trends").empty();
+            for (var trend in data["trends"])
+                writeTrend(trend);
+        },
+        failure: function (data) {
+            console.log("Unable to load trends");
+        }
+    });
 }
 
 // Check for new posts
 function checkNewPosts() {
-    var result = ajaxGetNewPostCount();
-    if (result.success) {
-        var view_new_posts = $("#view-new-posts");
-        if (result.data["count"] != 0) {
-            if (result.data["count"] == 1)
-                view_new_posts.text("View 1 new post");
-            else
-                view_new_posts.text("View " + result.data["count"] + " new posts");
-            document.title = "(" + result.data["count"] + ") Gab | Feed";
-            view_new_posts.removeClass("hidden");
+    $.ajax({
+        url: "/ajax/get/new-post-count/",
+        type: "POST",
+        data: {},
+        dataType: "json",
+        success: function (data) {
+            var view_new_posts = $("#view-new-posts");
+            if (data["count"] != 0) {
+                if (data["count"] == 1)
+                    view_new_posts.text("View 1 new post");
+                else
+                    view_new_posts.text("View " + data["count"] + " new posts");
+                document.title = "(" + data["count"] + ") Gab | Feed";
+                view_new_posts.removeClass("hidden");
+            }
+            else {
+                view_new_posts.addClass("hidden");
+            }
+        },
+        failure: function (data) {
+            console.log("Unable to load new post count");
         }
-        else {
-            view_new_posts.addClass("hidden");
-        }
-    }
+    });
 }
 
 // Loads older posts

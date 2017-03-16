@@ -22,7 +22,7 @@ def post(request):
         current_user = None
         if request.user.is_authenticated():
             current_user = get_object_or_404(Profile, user=request.user)
-        return HttpResponse(AjaxPost(request['post-id'], current_user).json())
+        return HttpResponse(ap.json())
     except:
         return HttpResponse('')
 

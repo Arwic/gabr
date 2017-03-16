@@ -62,10 +62,10 @@ def home(request):
 def view_post(request, post_id):
     current_user = None
     if request.user.is_authenticated():
-        current_user = Profile.objects.get(user=request.user)
+        current_user = get_object_or_404(Profile, user=request.user)
     context = {
-        'current-user': current_user,
-        'post-form': PostForm,
-        'post-id': post_id,
+        'current_user': current_user,
+        'post_form': PostForm,
+        'post_id': post_id,
     }
     return render(request, 'post.html', context)
