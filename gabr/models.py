@@ -18,7 +18,7 @@ class PathAndRename(object):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     user_name = models.CharField(max_length=20, default='')
     display_name = models.CharField(max_length=20, default='')
     avatar = models.ImageField(upload_to=PathAndRename('avatars/'), default='/static/img/profile-default.png')
@@ -32,32 +32,30 @@ class Profile(models.Model):
     language = models.CharField(default='English', max_length=64)
     country = models.CharField(default='US', max_length=2)
     show_nsfw = models.BooleanField(default=False)
-    email_notif_like = models.BooleanField(default=True)
-    email_notif_mention = models.BooleanField(default=True)
-    email_notif_follow = models.BooleanField(default=True)
-    email_notif_message = models.BooleanField(default=True)
-    email_newsletter = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user_name
 
-    def stats(self):
-        post_count = Post.objects.filter(user=self).count()
-        follow_count = Follow.objects.filter(follower=self).count()
-        follower_count = Follow.objects.filter(subject=self).count()
-        return post_count, follow_count, follower_count
+    def get_follower_count(self):
+        return Follow.objects.filter(subject=self).count()
 
-    def unread_notification_count(self):
+    def get_follow_count(self):
+        return Follow.objects.filter(follower=self).count()
+
+    def get_post_count(self):
+        return Post.objects.filter(user=self).count()
+
+    def get_unread_notification_count(self):
         return Notification.objects.filter(user=self, read=False).count()
 
-    def liked(self, post):
+    def has_liked(self, post):
         try:
             Like.objects.get(user=self, post=post)
             return True
         except Like.DoesNotExist:
             return False
 
-    def reposted(self, post):
+    def has_reposted(self, post):
         try:
             Post.objects.get(user=self, post__target=post)
             return True
@@ -65,11 +63,11 @@ class Profile(models.Model):
             return False
 
 
-def create_user_profile(sender, instance, created, **kwargs):
+def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
-post_save.connect(create_user_profile, sender=User)
+post_save.connect(create_profile, sender=User)
 
 
 class Report(models.Model):
@@ -91,27 +89,13 @@ class Block(models.Model):
 
 class Post(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    body = models.CharField(max_length=140)
+    body = models.CharField(max_length=300)
     time = models.DateTimeField(default=datetime.datetime.utcnow)
+    # used for reposts, left blank if not a repost
     target = models.ForeignKey('self', null=True, blank=True, default=None)
 
     def __str__(self):
         return '@%s on %s says "%s"' % (self.user, self.time, self.body[:20])
-
-
-class Message(models.Model):
-    user = models.ForeignKey(Profile, related_name='user_user', on_delete=models.CASCADE)
-    target = models.ForeignKey(Profile, related_name='user_target', on_delete=models.CASCADE)
-    body = models.CharField(max_length=500)
-    time = models.DateTimeField(default=datetime.datetime.utcnow)
-    read = models.BooleanField(default=False)
-
-    def save(self, *args, **kwargs):
-        super(Message, self).save()
-        Notification.objects.create(notification_type='p', user=self.target, message=self)
-
-    def __str__(self):
-        return '@%s to @%s says "%s"' % (self.user, self.target, self.body[:20])
 
 
 class Follow(models.Model):
@@ -119,6 +103,7 @@ class Follow(models.Model):
         unique_together = ['follower', 'subject']
     follower = models.ForeignKey(Profile, related_name='user_follower', on_delete=models.CASCADE)
     subject = models.ForeignKey(Profile, related_name='user_subject', on_delete=models.CASCADE)
+    time = models.DateTimeField(default=datetime.datetime.utcnow)
 
     def save(self, *args, **kwargs):
         super(Follow, self).save()
@@ -148,7 +133,7 @@ NOTIFICATION_TYPE_CHOICES = [
     ('p', 'private message'),
     ('l', 'like'),
     ('m', 'mention'),
-    ('l', 'repost'),
+    ('r', 'repost'),
 ]
 
 
@@ -168,7 +153,7 @@ class Notification(models.Model):
 
 
 class Trend(models.Model):
-    tag = models.CharField(max_length=160, default='')
+    tag = models.CharField(max_length=200, default='')
 
     def __str__(self):
         return self.tag
