@@ -66,7 +66,7 @@ def report_user(request):
     if not request.is_ajax():
         return HttpResponse('')
     current_user = get_object_or_404(Profile, user=request.user)
-    target_user = get_object_or_404(Profile, user_name=str.lower(request.POST['target']))
+    target_user = get_object_or_404(Profile, username=str.lower(request.POST['target']))
     Report.objects.create(reporter=current_user, subject=target_user, message="NYI")
     return HttpResponse()
 
@@ -76,6 +76,6 @@ def block_user(request):
     if not request.is_ajax():
         return HttpResponse('')
     current_user = get_object_or_404(Profile, user=request.user)
-    target_user = get_object_or_404(Profile, user_name=str.lower(request.POST['target']))
+    target_user = get_object_or_404(Profile, username=str.lower(request.POST['target']))
     Block.objects.create(blocker=current_user, subject=target_user)
     return HttpResponse('')

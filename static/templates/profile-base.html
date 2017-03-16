@@ -20,11 +20,11 @@
                             <span class="icon icon-settings"></span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right fade-in">
-                            <a class="dropdown-item" onclick="onBlockButton('{{ target_user.user_name }}')">
+                            <a class="dropdown-item" onclick="onBlockButton('{{ target_user.username }}')">
                                 <span class="icon icon-block"></span>
                                 Block
                             </a>
-                            <a class="dropdown-item" onclick="onReportUserButton('{{ target_user.user_name }}')">
+                            <a class="dropdown-item" onclick="onReportUserButton('{{ target_user.username }}')">
                                 <span class="icon icon-report"></span>
                                 Report
                             </a>
@@ -49,7 +49,7 @@
                 </div>
             {% endif %}
             <div class="item right">
-                <a class="link" href="{% url "profile_lists" user_name=target_user.user.username %}">
+                <a class="link" href="{% url "profile_lists" username=target_user.user.username %}">
                     <div class="stat-button">
                         <span class="label">Lists</span><br>
                         <span class="value">{{ list_count }}</span>
@@ -57,7 +57,7 @@
                 </a>
             </div>
             <div class="item right">
-                <a class="link" href="{% url "profile_likes" user_name=target_user.user.username %}">
+                <a class="link" href="{% url "profile_likes" username=target_user.user.username %}">
                     <div class="stat-button">
                         <span class="label">Likes</span><br>
                         <span class="value">{{ like_count }}</span>
@@ -65,7 +65,7 @@
                 </a>
             </div>
             <div class="item right">
-                <a class="link" href="{% url "profile_followers" user_name=target_user.user.username %}">
+                <a class="link" href="{% url "profile_followers" username=target_user.user.username %}">
                     <div class="stat-button">
                         <span class="label">Followers</span><br>
                         <span class="value">{{ follower_count }}</span>
@@ -73,7 +73,7 @@
                 </a>
             </div>
             <div class="item right">
-                <a class="link" href="{% url "profile_following" user_name=target_user.user.username %}">
+                <a class="link" href="{% url "profile_following" username=target_user.user.username %}">
                     <div class="stat-button">
                         <span class="label">Following</span><br>
                         <span class="value">{{ follow_count }}</span>
@@ -81,7 +81,7 @@
                 </a>
             </div>
             <div class="item right">
-                <a class="link" href="{% url "profile" user_name=target_user.user.username %}">
+                <a class="link" href="{% url "profile" username=target_user.user.username %}">
                     <div class="stat-button">
                         <span class="label">Posts</span><br>
                         <span class="value">{{ post_count }}</span>
@@ -99,7 +99,7 @@
                     </div>
                     <div class="info">
                         <div class="display-name">{{ target_user.display_name }}</div>
-                        <div class="username">{{ target_user.user_name }}</div>
+                        <div class="username">{{ target_user.username }}</div>
                         <div class="bio">{{ target_user.bio }}</div>
                     </div>
                 </div>

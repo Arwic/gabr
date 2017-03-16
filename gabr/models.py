@@ -19,7 +19,7 @@ class PathAndRename(object):
 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_name = models.CharField(max_length=20, default='')
+    username = models.CharField(max_length=20, default='')
     display_name = models.CharField(max_length=20, default='')
     avatar = models.ImageField(upload_to=PathAndRename('avatars/'), default='/static/img/profile-default.png')
     banner = models.ImageField(upload_to=PathAndRename('banners/'), default='/static/img/banner-default.png')
@@ -33,7 +33,7 @@ class Profile(models.Model):
     show_nsfw = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user_name
+        return self.username
 
     def get_follower_count(self):
         return Follow.objects.filter(subject=self).count()
@@ -96,7 +96,7 @@ class Report(models.Model):
     message = models.CharField(default='', max_length=512)
 
     def __str__(self):
-        return '@%s was reported by @%s: "%s"' % (self.subject.user_name, self.reporter.user_name, self.message)
+        return '@%s was reported by @%s: "%s"' % (self.subject.username, self.reporter.username, self.message)
 
 
 class Block(models.Model):
@@ -104,7 +104,7 @@ class Block(models.Model):
     subject = models.ForeignKey(Profile, related_name='block_user_subject', on_delete=models.CASCADE)
 
     def __str__(self):
-        return '@%s is blocking @%s' % (self.blocker.user_name, self.subject.user_name)
+        return '@%s is blocking @%s' % (self.blocker.username, self.subject.username)
 
 
 class Post(models.Model):
@@ -152,7 +152,6 @@ class Like(models.Model):
 
 NOTIFICATION_TYPE_CHOICES = [
     ('f', 'follow'),
-    ('p', 'private message'),
     ('l', 'like'),
     ('m', 'mention'),
     ('r', 'repost'),
@@ -165,7 +164,6 @@ class Notification(models.Model):
     notification_type = models.CharField(max_length=1, choices=NOTIFICATION_TYPE_CHOICES)
     time = models.DateTimeField(default=datetime.datetime.utcnow)
     follow = models.ForeignKey(Follow, null=True, blank=True, on_delete=models.CASCADE)
-    message = models.ForeignKey(Message, null=True, blank=True, on_delete=models.CASCADE)
     like = models.ForeignKey(Like, null=True, blank=True, on_delete=models.CASCADE)
     mention = models.ForeignKey(Post, null=True, blank=True, on_delete=models.CASCADE, related_name='mention')
     repost = models.ForeignKey(Post, null=True, blank=True, on_delete=models.CASCADE, related_name='repost')

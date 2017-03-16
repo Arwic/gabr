@@ -70,12 +70,12 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right fade-in">
-                        <a class="dropdown-item" href="{% url "profile" user_name=current_user.username %}">
+                        <a class="dropdown-item" href="{% url "profile" username=current_user.username %}">
                             <span class="icon icon-user"></span>
                             View profile
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url "profile_lists" user_name=current_user.username %}">
+                        <a class="dropdown-item" href="{% url "profile_lists" username=current_user.username %}">
                             <span class="icon icon-list"></span>
                             Lists
                         </a>

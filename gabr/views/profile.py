@@ -2,15 +2,15 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from gabr.models import Profile, Follow, Post, Like, Notification, Trend
-from gabr.forms import PostForm, SignupForm, MessageForm, LoginForm
+from gabr.forms import PostForm, SignupForm, LoginForm
 import json
 
 
-def profile_posts(request, user_name):
+def profile_posts(request, username):
     current_user = None
     if request.user.is_authenticated():
         current_user = get_object_or_404(Profile, user=request.user)
-    target_user = get_object_or_404(Profile, user__username=str.lower(user_name))
+    target_user = get_object_or_404(Profile, user__username=str.lower(username))
 
     context = {
         'current_user': current_user,
@@ -30,11 +30,11 @@ def profile_posts(request, user_name):
     return render(request, 'profile-posts.html', context)
 
 
-def profile_following(request, user_name):
+def profile_following(request, username):
     current_user = None
     if request.user.is_authenticated():
         current_user = get_object_or_404(Profile, user=request.user)
-    target_user = get_object_or_404(Profile, user__username=str.lower(user_name))
+    target_user = get_object_or_404(Profile, user__username=str.lower(username))
 
     # FIXME: this is temp, move to ajax when JS profile card writer is done.
     follows = Follow.filter(subject=target_user)[:50]
@@ -62,11 +62,11 @@ def profile_following(request, user_name):
     return render(request, 'profile-following.html', context)
 
 
-def profile_followers(request, user_name):
+def profile_followers(request, username):
     current_user = None
     if request.user.is_authenticated():
         current_user = get_object_or_404(Profile, user=request.user)
-    target_user = get_object_or_404(Profile, user__username=str.lower(user_name))
+    target_user = get_object_or_404(Profile, user__username=str.lower(username))
 
     # FIXME: this is temp, move to ajax when JS profile card writer is done.
     followers = []
@@ -93,11 +93,11 @@ def profile_followers(request, user_name):
     return render(request, 'profile-followers.html', context)
 
 
-def profile_likes(request, user_name):
+def profile_likes(request, username):
     current_user = None
     if request.user.is_authenticated():
         current_user = get_object_or_404(Profile, user=request.user)
-    target_user = get_object_or_404(Profile, user__username=str.lower(user_name))
+    target_user = get_object_or_404(Profile, user__username=str.lower(username))
 
     context = {
         'current_user': current_user,
@@ -117,11 +117,11 @@ def profile_likes(request, user_name):
     return render(request, 'profile-likes.html', context)
 
 
-def profile_lists(request, user_name):
+def profile_lists(request, username):
     current_user = None
     if request.user.is_authenticated():
         current_user = Profile.objects.get(user=request.user)
-    target_user = get_object_or_404(Profile, user__username=str.lower(user_name))
+    target_user = get_object_or_404(Profile, user__username=str.lower(username))
 
     context = {
         'current_user': current_user,

@@ -5,7 +5,7 @@
 {% block header %}
     <title>Feed | Gabr</title>
     <script>
-        loadMainFeed("{{ current_user.user_name }}");
+        loadMainFeed();
         window.setInterval(function(){
             checkNewPosts();
         }, 60000);

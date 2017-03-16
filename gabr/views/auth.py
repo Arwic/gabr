@@ -76,7 +76,7 @@ def signup(request):
             user.save()
             user = get_object_or_404(Profile, user=user)
             user.display_name = display_name
-            user.user_name = username
+            user.username = username
             user.gender = gender
             user.save()
             return HttpResponseRedirect('/')

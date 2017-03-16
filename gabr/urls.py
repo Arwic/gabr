@@ -39,16 +39,16 @@ urlpatterns = [
     url(r'^post/(?P<post_id>[0-9]+)/$', views.post.view_post, name='post'),
     url(r'^tag/(?P<tag>.+)/$', views.post.feed, name='tag_feed'),
     # user profile
-    url(r'^user/(?P<user_name>[^/]+)/following/$', views.profile.profile_following, name='profile_following'),
-    url(r'^user/(?P<user_name>[^/]+)/followers/$', views.profile.profile_followers, name='profile_followers'),
-    url(r'^user/(?P<user_name>[^/]+)/likes/$', views.profile.profile_likes, name='profile_likes'),
-    url(r'^user/(?P<user_name>[^/]+)/lists/$', views.profile.profile_lists, name='profile_lists'),
-    url(r'^user/(?P<user_name>[^/]+)/$', views.profile.profile_posts, name='profile'),
+    url(r'^user/(?P<username>[^/]+)/following/$', views.profile.profile_following, name='profile_following'),
+    url(r'^user/(?P<username>[^/]+)/followers/$', views.profile.profile_followers, name='profile_followers'),
+    url(r'^user/(?P<username>[^/]+)/likes/$', views.profile.profile_likes, name='profile_likes'),
+    url(r'^user/(?P<username>[^/]+)/lists/$', views.profile.profile_lists, name='profile_lists'),
+    url(r'^user/(?P<username>[^/]+)/$', views.profile.profile_posts, name='profile'),
     # articles
     url(r'^help/$', views.post.feed, name='help'),
     url(r'^advertising/$', views.post.feed, name='advertising'),
     # global forms
-    url(r'^form/new-post/$', views.ajax_command.new_post, name='form-new-post'),
+    url(r'^form/new-post/$', views.post.new_post, name='form-new-post'),
     # ajax command, allows the user to do something
     url(r'^ajax/command/like-post/$', views.ajax_command.like_post, name='ajax-action-like-post'),
     url(r'^ajax/command/follow-user/$', views.ajax_command.follow_user, name='ajax-action-follow-user'),
@@ -68,15 +68,9 @@ urlpatterns = [
     url(r'^ajax/feed/user-follows/$', views.ajax_feed.user_follows, name='ajax-feed-user-follows'),
     url(r'^ajax/feed/user-likes/$', views.ajax_feed.user_likes, name='ajax-feed-user-likes'),
     # FIXME: old
-    url(r'^ajax/load-posts/$', views.post.ajax_load_posts, name='ajax-load-posts'),
+    #url(r'^ajax/load-posts/$', views.post.ajax_load_posts, name='ajax-load-posts'),
 ]
 
 handler500 = curry(server_error, template_name='500.html')
 handler404 = curry(page_not_found, template_name='404.html')
 handler403 = curry(permission_denied, template_name='403.html')
-
-if settings.DEBUG:
-    urlpatterns += [
-        url(r'^media/(?P<path>.*)$', django.views.static.serve, { 'document_root': settings.MEDIA_ROOT }),
-        url(r'^static/(?P<path>.*)$', django.views.static.serve, { 'document_root': settings.STATIC_ROOT, }),
-    ]

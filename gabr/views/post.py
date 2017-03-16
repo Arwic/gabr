@@ -43,7 +43,7 @@ def new_post(request):
 
 @login_required
 def feed(request):
-    current_user = AjaxUser(get_object_or_404(Profile, user=request.user))
+    current_user = get_object_or_404(Profile, user=request.user)
     context = {
         'current_user': current_user,
         'post_form': PostForm,

@@ -405,7 +405,7 @@ function onReplyButton(target_username, parent_post_id) {
 
 function onFollowButton(target_username) {
     var result = ajaxCommandFollowUser(target_username);
-    var follow = $("#follow-" + result["user_name"]);
+    var follow = $("#follow-" + result["username"]);
     follow.toggleClass("follow-button-true", result["follow"]);
     follow.toggleClass("follow-button-false", !result["follow"]);
 }
@@ -582,7 +582,7 @@ function writePost(post_json, parent_selector) {
     var button_reply = document.createElement("button");
     div_actions.appendChild(button_reply);
     button_reply.setAttribute("onclick",
-        "$('#view-post-close').click(); onReplyButton('" + post_json["user"]["user_name"] + "', " + post_json["id"] + ")");
+        "$('#view-post-close').click(); onReplyButton('" + post_json["user"]["username"] + "', " + post_json["id"] + ")");
     button_reply.setAttribute("class", "post-action-button");
     var span_reply_icon = document.createElement("span");
     button_reply.appendChild(span_reply_icon);

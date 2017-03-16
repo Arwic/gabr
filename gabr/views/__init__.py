@@ -3,7 +3,6 @@ from . import notifications
 from . import post
 from . import profile
 from . import settings
-from . import trends
 from . import ajax_command
 from . import ajax_feed
 from . import ajax_get

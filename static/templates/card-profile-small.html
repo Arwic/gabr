@@ -5,12 +5,12 @@
         <img class="image" src="{{ card_user.banner.url }}" />
     </div>
     <div>
-        <a id="card-profile-small-{{ card_user.user_name }}" href="{% url "profile" user_name=card_user.user_name %}">
+        <a id="card-profile-small-{{ card_user.username }}" href="{% url "profile" username=card_user.username %}">
             <div class="avatar">
                 <img class="image" src="{{ card_user.avatar.url }}" />
             </div>
             <span class="display-name">{{ card_user.display_name }}</span><br>
-            <span class="username">{{ card_user.user_name }}</span>
+            <span class="username">{{ card_user.username }}</span>
             {% if card_user != current_user %}
                 <div class="dropdown">
                     <button class="more-options-button" data-toggle="dropdown">
@@ -21,7 +21,7 @@
                             <span class="icon icon-block"></span>
                             Block
                         </a>
-                        <a class="dropdown-item" href="{% url "profile_lists" user_name=user.username %}">
+                        <a class="dropdown-item" href="{% url "profile_lists" username=user.username %}">
                             <span class="icon icon-report"></span>
                             Report
                         </a>
@@ -33,7 +33,7 @@
         <div class="bio">{{ card_user.bio }}</div>
 
         <div class="stats">
-            <a href="{% url "profile" user_name=card_user.user_name %}">
+            <a href="{% url "profile" username=card_user.username %}">
                 <div class="label">
                     posts<br>
                     <span class="value">
@@ -41,7 +41,7 @@
                     </span>
                 </div>
             </a>
-            <a href="{% url "profile_following" user_name=card_user.user_name %}">
+            <a href="{% url "profile_following" username=card_user.username %}">
                 <div class="label">
                     following<br>
                     <span class="value">
@@ -49,7 +49,7 @@
                     </span>
                 </div>
             </a>
-            <a href="{% url "profile_followers" user_name=card_user.user_name %}">
+            <a href="{% url "profile_followers" username=card_user.username %}">
                 <div class="label">
                     followers<br>
                     <span class="value">

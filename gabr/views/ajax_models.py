@@ -16,7 +16,7 @@ class AjaxUser:
     def get_dict(self):
         return {
             'id': self.user.id,
-            'user-name': self.user.user_name,
+            'user-name': self.user.username,
             'display-name': self.user.display_name,
             'avatar-url': self.user.avatar,
             'banner-url': self.user.banner,
