@@ -92,7 +92,9 @@ class Post(models.Model):
     body = models.CharField(max_length=300)
     time = models.DateTimeField(default=datetime.datetime.utcnow)
     # used for reposts, left blank if not a repost
-    target = models.ForeignKey('self', null=True, blank=True, default=None)
+    target = models.ForeignKey('self', related_name='post_user_target', null=True, blank=True, default=None)
+    # used for reply threads
+    parent = models.ForeignKey('self', related_name='post_user_parent', null=True, blank=True, default=None)
 
     def __str__(self):
         return '@%s on %s says "%s"' % (self.user, self.time, self.body[:20])
