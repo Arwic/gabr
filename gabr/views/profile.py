@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from gabr.models import UserProfile, Follow, Post, Like, Notification, Trend
+from gabr.models import Profile, Follow, Post, Like, Notification, Trend
 from gabr.forms import PostForm, SignupForm, MessageForm, LoginForm
 import json
 
@@ -23,8 +23,8 @@ def get_stats(user_profile):
 
 def profile_posts(request, user_name):
     if request.user.is_authenticated():
-        current_user = get_object_or_404(UserProfile, user=request.user)
-    target_user = get_object_or_404(UserProfile, user__username=str.lower(user_name))
+        current_user = get_object_or_404(Profile, user=request.user)
+    target_user = get_object_or_404(Profile, user__username=str.lower(user_name))
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
@@ -50,8 +50,8 @@ def profile_posts(request, user_name):
 
 def profile_following(request, user_name):
     if request.user.is_authenticated():
-        current_user = get_object_or_404(UserProfile, user=request.user)
-    target_user = get_object_or_404(UserProfile, user__username=str.lower(user_name))
+        current_user = get_object_or_404(Profile, user=request.user)
+    target_user = get_object_or_404(Profile, user__username=str.lower(user_name))
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
@@ -83,8 +83,8 @@ def profile_following(request, user_name):
 
 def profile_followers(request, user_name):
     if request.user.is_authenticated():
-        current_user = get_object_or_404(UserProfile, user=request.user)
-    target_user = get_object_or_404(UserProfile, user__username=str.lower(user_name))
+        current_user = get_object_or_404(Profile, user=request.user)
+    target_user = get_object_or_404(Profile, user__username=str.lower(user_name))
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
@@ -116,8 +116,8 @@ def profile_followers(request, user_name):
 
 def profile_likes(request, user_name):
     if request.user.is_authenticated():
-        current_user = get_object_or_404(UserProfile, user=request.user)
-    target_user = get_object_or_404(UserProfile, user__username=str.lower(user_name))
+        current_user = get_object_or_404(Profile, user=request.user)
+    target_user = get_object_or_404(Profile, user__username=str.lower(user_name))
     post_count, follow_count, follower_count = target_user.stats()
     like_count = len(Like.objects.filter(user=target_user))
     list_count = 0  # TODO: implements lists
@@ -142,8 +142,8 @@ def profile_likes(request, user_name):
 
 
 def profile_lists(request, user_name):
-    current_user = UserProfile.objects.get(user=request.user)
-    target_user = get_object_or_404(UserProfile, user__username=str.lower(user_name))
+    current_user = Profile.objects.get(user=request.user)
+    target_user = get_object_or_404(Profile, user__username=str.lower(user_name))
 
     context = {
         'current_user': current_user,
@@ -163,11 +163,11 @@ def ajax_follow(request):
     # get user data
     target_username = str.lower(request.POST['user_name'])
     try:
-        user = get_object_or_404(UserProfile, user=request.user)
-        target = get_object_or_404(UserProfile, user__username=str.lower(target_username))
+        user = get_object_or_404(Profile, user=request.user)
+        target = get_object_or_404(Profile, user__username=str.lower(target_username))
         if user == target:
             return HttpResponse('')
-    except UserProfile.DoesNotExist:
+    except Profile.DoesNotExist:
         return HttpResponse('')
     # get follow data
     try:
@@ -194,7 +194,7 @@ def ajax_user(request):
         return HttpResponse('')
     # get post data
     try:
-        user_profile = get_object_or_404(UserProfile, user__username=str.lower(request.POST['user_name']))
+        user_profile = get_object_or_404(Profile, user__username=str.lower(request.POST['user_name']))
         post_count, following_count, follower_count = user_profile.stats()
         post_info = {
             'display_name': user_profile.display_name,
@@ -205,6 +205,6 @@ def ajax_user(request):
             'following_count': following_count,
             'follower_count': follower_count,
         }
-    except UserProfile.DoesNotExist:
+    except Profile.DoesNotExist:
         return HttpResponse('')
     return HttpResponse(json.dumps(post_info))

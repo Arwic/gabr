@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import widgets
 from django.utils.safestring import mark_safe
-from .models import UserProfile, Post, Message, User
+from .models import Profile, Post, Message, User
 from nocaptcha_recaptcha.fields import NoReCaptchaField
 
 
@@ -38,7 +38,7 @@ class HiddenWidget(widgets.Widget):
 
 class SettingsProfileForm(forms.ModelForm):
     class Meta:
-        model = UserProfile
+        model = Profile
         fields = [
             'display_name',
             'avatar',
@@ -108,7 +108,7 @@ class SettingsAccountForm(forms.ModelForm):
 
 class SettingsNotificationsForm(forms.ModelForm):
     class Meta:
-        model = UserProfile
+        model = Profile
         fields = [
             'email_newsletter',
             'email_notif_follow',

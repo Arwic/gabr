@@ -8,12 +8,12 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 from gabr.forms import PostForm
-from gabr.models import UserProfile, Notification
+from gabr.models import Profile, Notification
 
 
 @login_required
 def notifications(request):
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     notifs = list(Notification.objects.filter(user=current_user))
     notifs.sort(key=lambda n: n.time, reverse=True)
     user_tz = tz.gettz(current_user.time_zone)
@@ -33,7 +33,7 @@ def ajax_load_notification_count(request):
     if not request.is_ajax():
         return HttpResponse('')
     if request.user.is_authenticated():
-        current_user = UserProfile.objects.get(user=request.user)
+        current_user = Profile.objects.get(user=request.user)
         response = {
             'count': Notification.objects.filter(user=current_user, read=False).count()
         }

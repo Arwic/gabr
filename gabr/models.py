@@ -17,7 +17,7 @@ class PathAndRename(object):
         return path.join(self.path, "%s.%s" % (uuid.uuid4().hex, ext))
 
 
-class UserProfile(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User)
     user_name = models.CharField(max_length=20, default='')
     display_name = models.CharField(max_length=20, default='')
@@ -67,14 +67,14 @@ class UserProfile(models.Model):
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        Profile.objects.create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
 
 
 class Report(models.Model):
-    reporter = models.ForeignKey(UserProfile, related_name='report_user_reporter', on_delete=models.CASCADE)
-    subject = models.ForeignKey(UserProfile, related_name='report_user_subject', on_delete=models.CASCADE)
+    reporter = models.ForeignKey(Profile, related_name='report_user_reporter', on_delete=models.CASCADE)
+    subject = models.ForeignKey(Profile, related_name='report_user_subject', on_delete=models.CASCADE)
     message = models.CharField(default='', max_length=512)
 
     def __str__(self):
@@ -82,15 +82,15 @@ class Report(models.Model):
 
 
 class Block(models.Model):
-    blocker = models.ForeignKey(UserProfile, related_name='block_user_blocker', on_delete=models.CASCADE)
-    subject = models.ForeignKey(UserProfile, related_name='block_user_subject', on_delete=models.CASCADE)
+    blocker = models.ForeignKey(Profile, related_name='block_user_blocker', on_delete=models.CASCADE)
+    subject = models.ForeignKey(Profile, related_name='block_user_subject', on_delete=models.CASCADE)
 
     def __str__(self):
         return '@%s is blocking @%s' % (self.blocker.user_name, self.subject.user_name)
 
 
 class Post(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     body = models.CharField(max_length=140)
     time = models.DateTimeField(default=datetime.datetime.utcnow)
     parent = models.ForeignKey('self', null=True, blank=True, default=None)
@@ -100,8 +100,8 @@ class Post(models.Model):
 
 
 class Message(models.Model):
-    user = models.ForeignKey(UserProfile, related_name='user_user', on_delete=models.CASCADE)
-    target = models.ForeignKey(UserProfile, related_name='user_target', on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile, related_name='user_user', on_delete=models.CASCADE)
+    target = models.ForeignKey(Profile, related_name='user_target', on_delete=models.CASCADE)
     body = models.CharField(max_length=500)
     time = models.DateTimeField(default=datetime.datetime.utcnow)
     read = models.BooleanField(default=False)
@@ -117,8 +117,8 @@ class Message(models.Model):
 class Follow(models.Model):
     class Meta:
         unique_together = ['follower', 'subject']
-    follower = models.ForeignKey(UserProfile, related_name='user_follower', on_delete=models.CASCADE)
-    subject = models.ForeignKey(UserProfile, related_name='user_subject', on_delete=models.CASCADE)
+    follower = models.ForeignKey(Profile, related_name='user_follower', on_delete=models.CASCADE)
+    subject = models.ForeignKey(Profile, related_name='user_subject', on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         super(Follow, self).save()
@@ -131,7 +131,7 @@ class Follow(models.Model):
 class Like(models.Model):
     class Meta:
         unique_together = ['user', 'post']
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     time = models.DateTimeField(default=datetime.datetime.utcnow)
 
@@ -152,7 +152,7 @@ NOTIFICATION_TYPE_CHOICES = [
 
 
 class Notification(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     read = models.BooleanField(default=False)
     notification_type = models.CharField(max_length=1, choices=NOTIFICATION_TYPE_CHOICES)
     time = models.DateTimeField(default=datetime.datetime.utcnow)

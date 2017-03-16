@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 from gabr.forms import PostForm
-from gabr.models import UserProfile, Notification, Trend
+from gabr.models import Profile, Notification, Trend
 
 
 def ajax_load_trends(request):

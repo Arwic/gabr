@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from axes.utils import reset
 from django.core.urlresolvers import reverse_lazy
 from axes.decorators import watch_login
-from gabr.models import UserProfile
+from gabr.models import Profile
 
 
 from gabr.forms import SignupForm, LoginForm, AxesCaptchaForm
@@ -74,7 +74,7 @@ def signup(request):
             user.first_name = first_name
             user.last_name = last_name
             user.save()
-            user = get_object_or_404(UserProfile, user=user)
+            user = get_object_or_404(Profile, user=user)
             user.display_name = display_name
             user.user_name = username
             user.gender = gender

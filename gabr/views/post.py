@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from gabr.forms import PostForm
-from gabr.models import UserProfile, Follow, Post, Like, Notification, Block, Report
+from gabr.models import Profile, Follow, Post, Like, Notification, Block, Report
 import re
 import gabr.settings
 
@@ -19,7 +19,7 @@ username_regex = re.compile('@(?P<username>[^\s]+)')
 def check_tags(post):
     tags = username_regex.findall(post.body)
     for username in tags:
-        tagged_user = UserProfile.objects.filter(user__username=str.lower(username)).first()
+        tagged_user = Profile.objects.filter(user__username=str.lower(username)).first()
         if tagged_user is None:
             print('user not found')
             continue
@@ -124,7 +124,7 @@ def get_profile_likes(current_user, target_user, time_oldest, time_newest):
 
 def feed(request):
     if request.user.is_authenticated():
-        current_user = get_object_or_404(UserProfile, user=request.user)
+        current_user = get_object_or_404(Profile, user=request.user)
     else:
         return render(request, 'landing.html')
     current_user_post_count, current_user_follow_count, current_user_follower_count = current_user.stats()
@@ -151,14 +151,14 @@ def ajax_load_posts(request):
     posts = []
     current_user = None
     if request.user.is_authenticated():
-        current_user = get_object_or_404(UserProfile, user=request.user)
+        current_user = get_object_or_404(Profile, user=request.user)
     if request_type == 'feed' and request.user.is_authenticated():
         posts = get_feed_posts(current_user, time_oldest, time_newest)
     elif request_type == 'profile-posts':
-        target_user = get_object_or_404(UserProfile, user__username=str.lower(request.POST['target']))
+        target_user = get_object_or_404(Profile, user__username=str.lower(request.POST['target']))
         posts = get_profile_posts(current_user, target_user, time_oldest, time_newest)
     elif request_type == 'profile-likes':
-        target_user = get_object_or_404(UserProfile, user__username=str.lower(request.POST['target']))
+        target_user = get_object_or_404(Profile, user__username=str.lower(request.POST['target']))
         posts = get_profile_likes(current_user, target_user, time_oldest, time_newest)
     posts.sort(key=lambda p: p.sort_time, reverse=True)
     posts = posts[:post_count]  # limit posts
@@ -179,7 +179,7 @@ def ajax_load_posts(request):
 def view_post(request, post_id):
     current_user = None
     if request.user.is_authenticated():
-        current_user = UserProfile.objects.get(user=request.user)
+        current_user = Profile.objects.get(user=request.user)
     context = {
         'current-user': current_user,
         'post-form': PostForm,
@@ -190,7 +190,7 @@ def view_post(request, post_id):
 
 @login_required
 def new_post(request):
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     form = PostForm(request.POST or None)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -220,9 +220,9 @@ def ajax_like(request):
 
     # try getting the user and the post objects
     try:
-        user = UserProfile.objects.get(user=request.user)
+        user = Profile.objects.get(user=request.user)
         post = Post.objects.get(id=post_id)
-    except UserProfile.DoesNotExist:
+    except Profile.DoesNotExist:
         return HttpResponse('')
     except Post.DoesNotExist:
         return HttpResponse('')
@@ -255,12 +255,12 @@ def ajax_repost(request):
 
     # try getting the user and the post objects
     try:
-        user = UserProfile.objects.get(user=request.user)
+        user = Profile.objects.get(user=request.user)
         post = Post.objects.get(id=post_id)
 
         if user.id == post.user.id:
             return HttpResponse('')
-    except UserProfile.DoesNotExist:
+    except Profile.DoesNotExist:
         return HttpResponse('')
 
     # check if we should like or unlike the post
@@ -287,7 +287,7 @@ def ajax_post(request):
         return HttpResponse('')
     current_user = None
     if request.user.is_authenticated():
-        current_user = get_object_or_404(UserProfile, user=request.user)
+        current_user = get_object_or_404(Profile, user=request.user)
     # get post data
     try:
         post_id = request.POST['post_id']
@@ -328,7 +328,7 @@ def ajax_post(request):
 def ajax_check_posts(request):
     if not request.is_ajax():
         return HttpResponse('')
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     time_oldest = datetime.fromtimestamp(int(request.POST['time-oldest']), tz=tz.tzutc())
     time_newest = datetime.fromtimestamp(int(request.POST['time-newest']), tz=tz.tzutc())
     posts = get_feed_posts(current_user, time_oldest, time_newest)
@@ -342,8 +342,8 @@ def ajax_check_posts(request):
 def ajax_block_user(request):
     if not request.is_ajax():
         return HttpResponse('')
-    current_user = get_object_or_404(UserProfile, user=request.user)
-    target_user = get_object_or_404(UserProfile, user_name=str.lower(request.POST['target']))
+    current_user = get_object_or_404(Profile, user=request.user)
+    target_user = get_object_or_404(Profile, user_name=str.lower(request.POST['target']))
     Block.objects.create(blocker=current_user, subject=target_user)
     response = {
     }
@@ -354,8 +354,8 @@ def ajax_block_user(request):
 def ajax_report_user(request):
     if not request.is_ajax():
         return HttpResponse('')
-    current_user = get_object_or_404(UserProfile, user=request.user)
-    target_user = get_object_or_404(UserProfile, user_name=str.lower(request.POST['target']))
+    current_user = get_object_or_404(Profile, user=request.user)
+    target_user = get_object_or_404(Profile, user_name=str.lower(request.POST['target']))
     Report.objects.create(reporter=current_user, subject=target_user, message="NYI")
     response = {
     }

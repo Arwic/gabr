@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from gabr.forms import PostForm
-from gabr.models import UserProfile, Follow, Post, Like, Notification, Block, Report
+from gabr.models import Profile, Follow, Post, Like, Notification, Block, Report
 import re
 import gabr.settings
 
@@ -27,7 +27,7 @@ def get_replies(post):
 
 
 def get_current_user_profile(request):
-    return get_object_or_404(UserProfile, user=request.user)
+    return get_object_or_404(Profile, user=request.user)
 
 
 def json_dump_thread(thread_infos):
@@ -53,7 +53,7 @@ def format_time(time, now):
 class UserInfo:
     def __init__(self, user):
         if user is str:
-            self.user = get_object_or_404(UserProfile, user__username=str.lower(user))
+            self.user = get_object_or_404(Profile, user__username=str.lower(user))
         else:
             self.user = user
 
@@ -103,7 +103,7 @@ def get_post(request):
         return HttpResponse('')
     try:
         current_user = get_current_user_profile(request)
-        post_info = PostInfo(request['post-id'], get_object_or_404(UserProfile, user=request.user), current_user)
+        post_info = PostInfo(request['post-id'], get_object_or_404(Profile, user=request.user), current_user)
         return HttpResponse(post_info.json())
     except:
         return HttpResponse('')

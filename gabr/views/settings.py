@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from gabr.forms import PostForm, SettingsProfileForm, SettingsAccountForm, SettingsNotificationsForm
-from gabr.models import UserProfile, Notification, Block
+from gabr.models import Profile, Notification, Block
 
 
 http_link_re = re.compile(r'://')
@@ -13,7 +13,7 @@ http_link_re = re.compile(r'://')
 
 @login_required
 def settings_profile(request):
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     form = SettingsProfileForm(request.POST or None, request.FILES or None, instance=current_user)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -31,7 +31,7 @@ def settings_profile(request):
 
 @login_required
 def settings_account(request):
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     form = SettingsAccountForm(request.POST or None, instance=request.user)
     if form.is_valid():
         form.save(commit=True)
@@ -46,7 +46,7 @@ def settings_account(request):
 
 @login_required
 def settings_password_success(request):
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     context = {
         'current_user': current_user,
         'post_form': PostForm,
@@ -57,7 +57,7 @@ def settings_password_success(request):
 
 @login_required
 def settings_notifications(request):
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     form = SettingsNotificationsForm(request.POST or None, instance=current_user)
     if form.is_valid():
         form.save(commit=True)
@@ -72,7 +72,7 @@ def settings_notifications(request):
 
 @login_required
 def settings_blocked(request):
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     # get all blocked accounts
     blocks = Block.objects.filter(blocker=current_user)
     blocked_users = []
@@ -89,7 +89,7 @@ def settings_blocked(request):
 
 @login_required
 def settings_payment(request):
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     form = SettingsProfileForm(request.POST or None, request.FILES or None, instance=current_user)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -108,7 +108,7 @@ def settings_payment(request):
 
 @login_required
 def settings_apps(request):
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     form = SettingsProfileForm(request.POST or None, request.FILES or None, instance=current_user)
     if form.is_valid():
         form.save(commit=True)
@@ -123,7 +123,7 @@ def settings_apps(request):
 
 @login_required
 def settings_data(request):
-    current_user = get_object_or_404(UserProfile, user=request.user)
+    current_user = get_object_or_404(Profile, user=request.user)
     form = SettingsProfileForm(request.POST or None, request.FILES or None, instance=current_user)
     if form.is_valid():
         form.save(commit=False)
