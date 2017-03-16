@@ -10,29 +10,13 @@ import django
 
 
 urlpatterns = [
+    # admin
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.post.feed, name='index'),
-    url(r'^user/(?P<user_name>[^/]+)/following/$', views.profile.profile_following, name='profile_following'),
-    url(r'^user/(?P<user_name>[^/]+)/followers/$', views.profile.profile_followers, name='profile_followers'),
-    url(r'^user/(?P<user_name>[^/]+)/likes/$', views.profile.profile_likes, name='profile_likes'),
-    url(r'^user/(?P<user_name>[^/]+)/lists/$', views.profile.profile_lists, name='profile_lists'),
-    url(r'^user/(?P<user_name>[^/]+)/$', views.profile.profile_posts, name='profile'),
-    url(r'^login/$', views.auth.login, name='login'),
-    url(r'^login/locked/$', views.auth.login_locked, name='login_locked'),
-    url(r'^logout/$', views.auth.logout, name='logout'),
-    url(r'^signup/$', views.auth.signup, name='signup'),
-    url(r'^new-post/$', views.post.new_post, name='new-post'),
-    url(r'^post/(?P<post_id>[0-9]+)/$', views.post.view_post, name='post'),
-    url(r'^tag/(?P<tag>.+)/$', views.post.feed, name='tag_feed'),
-    url(r'^messages/$', views.post.feed, name='messages'),
-    url(r'^notifications/$', views.notifications.notifications, name='notifications'),
-    url(r'^help/$', views.post.feed, name='help'),
-    url(r'^advertising/$', views.post.feed, name='advertising'),
+    # settings
     url(r'^settings/$', views.settings.settings_profile, name='settings'),
     url(r'^settings/profile/$', views.settings.settings_profile, name='settings_profile'),
     url(r'^settings/account/$', views.settings.settings_account, name='settings_account'),
-    url(r'^settings/password/$', django.contrib.auth.views.password_change,
-        {
+    url(r'^settings/password/$', django.contrib.auth.views.password_change, {
             'template_name': 'settings-password.html',
             'post_change_redirect': 'settings_password_success',
         }, name='settings_password'),
@@ -42,27 +26,51 @@ urlpatterns = [
     url(r'^settings/payment/$', views.settings.settings_payment, name='settings_payment'),
     url(r'^settings/apps/$', views.settings.settings_apps, name='settings_apps'),
     url(r'^settings/data/$', views.settings.settings_data, name='settings_data'),
-
-    url(r'^ajax/like/$', views.post.ajax_like, name='ajax-like'),
-    url(r'^ajax/repost/$', views.post.ajax_repost, name='ajax-repost'),
-    url(r'^ajax/follow/$', views.profile.ajax_follow, name='ajax-follow'),
-    url(r'^ajax/post/$', views.post.ajax_post, name='ajax-post'),
-    url(r'^ajax/user/$', views.profile.ajax_user, name='ajax-user'),
+    # auth
+    url(r'^login/$', views.auth.login, name='login'),
+    url(r'^login/locked/$', views.auth.login_locked, name='login_locked'),
+    url(r'^logout/$', views.auth.logout, name='logout'),
+    url(r'^signup/$', views.auth.signup, name='signup'),
+    # personal feeds
+    url(r'^messages/$', views.post.feed, name='messages'),
+    url(r'^notifications/$', views.notifications.notifications, name='notifications'),
+    url(r'^$', views.post.feed, name='index'),
+    # general feeds
+    url(r'^post/(?P<post_id>[0-9]+)/$', views.post.view_post, name='post'),
+    url(r'^tag/(?P<tag>.+)/$', views.post.feed, name='tag_feed'),
+    # user profile
+    url(r'^user/(?P<user_name>[^/]+)/following/$', views.profile.profile_following, name='profile_following'),
+    url(r'^user/(?P<user_name>[^/]+)/followers/$', views.profile.profile_followers, name='profile_followers'),
+    url(r'^user/(?P<user_name>[^/]+)/likes/$', views.profile.profile_likes, name='profile_likes'),
+    url(r'^user/(?P<user_name>[^/]+)/lists/$', views.profile.profile_lists, name='profile_lists'),
+    url(r'^user/(?P<user_name>[^/]+)/$', views.profile.profile_posts, name='profile'),
+    # articles
+    url(r'^help/$', views.post.feed, name='help'),
+    url(r'^advertising/$', views.post.feed, name='advertising'),
+    # ajax
     url(r'^ajax/load-posts/$', views.post.ajax_load_posts, name='ajax-load-posts'),
-    url(r'^ajax/load-notification-count/$', views.notifications.ajax_load_notification_count,
-        name='ajax-load-notification-count'),
-    url(r'^ajax/load-trends/$', views.trends.ajax_load_trends, name='ajax-load-trends'),
     url(r'^ajax/check-posts/$', views.post.ajax_check_posts, name='ajax-check-posts'),
     url(r'^ajax/report-user/$', views.post.ajax_report_user, name='ajax-report-user'),
     url(r'^ajax/block-user/$', views.post.ajax_block_user, name='ajax-block-user'),
 
-    url(r'^ajax/get-thread/$', views.ajax.get_thread, name='ajax-get-thread'),
-    url(r'^ajax/get-post/$', views.ajax.get_post, name='ajax-get-post'),
-    url(r'^ajax/get-user-posts/$', views.ajax.get_user_posts, name='ajax-get-user-posts'),
-    url(r'^ajax/get-user-feed/$', views.ajax.get_user_feed, name='ajax-get-user-feed'),
-    url(r'^ajax/get-user-followers/$', views.ajax.get_user_followers, name='ajax-get-user-followers'),
-    url(r'^ajax/get-user-following/$', views.ajax.get_user_following, name='ajax-get-user-following'),
-    url(r'^ajax/get-user/$', views.ajax.get_user, name='ajax-get-user'),
+    # ajax action, allows the user to do something
+    url(r'^ajax/action/new-post/$', views.ajax_action.new_post, name='ajax-action-new-post'),
+    url(r'^ajax/action/like-post/$', views.ajax_action.like_post, name='ajax-action-like-post'),
+    url(r'^ajax/action/follow-user/$', views.ajax_action.follow_user, name='ajax-action-follow-user'),
+    url(r'^ajax/action/report-user/$', views.ajax_action.report_user, name='ajax-action-report-user'),
+    url(r'^ajax/action/report-post/$', views.ajax_action.report_post, name='ajax-action-report-post'),
+    url(r'^ajax/action/block-user/$', views.ajax_action.block_user, name='ajax-action-block-user'),
+    # ajax get, gets a single item
+    url(r'^ajax/get/user/$', views.ajax_get.user, name='ajax-get-user'),
+    url(r'^ajax/get/post/$', views.ajax_get.post, name='ajax-get-post'),
+    url(r'^ajax/get/unread-notification-count/$', views.ajax_get.unread_notification_count, name='ajax-get-unread-notification-count'),
+    url(r'^ajax/get/trends/$', views.ajax_get.trends, name='ajax-get-trends'),
+    # ajax feed, gets a list of items
+    url(r'^ajax/feed/main/$', views.ajax_feed.main, name='ajax-feed-main'),
+    url(r'^ajax/feed/user-posts/$', views.ajax_feed.user_posts, name='ajax-feed-user-posts'),
+    url(r'^ajax/feed/user-followers/$', views.ajax_feed.user_followers, name='ajax-feed-user-followers'),
+    url(r'^ajax/feed/user-follows/$', views.ajax_feed.user_follows, name='ajax-feed-user-follows'),
+    url(r'^ajax/feed/user-likes/$', views.ajax_feed.user_likes, name='ajax-feed-user-likes'),
 ]
 
 handler500 = curry(server_error, template_name='500.html')

@@ -28,7 +28,6 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank=True, default='')
     website = models.CharField(max_length=100, blank=True, default='')
     birthday = models.DateField(default=datetime.date(1970, 1, 1), blank=True)
-    time_zone = models.CharField(max_length=100, blank=True, default='Etc/GMT0')
     language = models.CharField(default='English', max_length=64)
     country = models.CharField(default='US', max_length=2)
     show_nsfw = models.BooleanField(default=False)
@@ -45,6 +44,13 @@ class Profile(models.Model):
     def get_post_count(self):
         return Post.objects.filter(user=self).count()
 
+    def get_like_count(self):
+        return Like.objects.filter(user=self).count()
+
+    def get_list_count(self):
+        # NYI
+        return 0
+
     def get_unread_notification_count(self):
         return Notification.objects.filter(user=self, read=False).count()
 
@@ -60,6 +66,20 @@ class Profile(models.Model):
             Post.objects.get(user=self, post__target=post)
             return True
         except Post.DoesNotExist:
+            return False
+
+    def is_following(self, user):
+        try:
+            Follow.objects.get(follower=self, subject=user)
+            return True
+        except Follow.DoesNotExist:
+            return False
+
+    def is_follower(self, user):
+        try:
+            Follow.objects.get(follower=user, subject=self)
+            return True
+        except Follow.DoesNotExist:
             return False
 
 
