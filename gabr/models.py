@@ -116,6 +116,15 @@ class Post(models.Model):
     # used for reply threads
     parent = models.ForeignKey('self', related_name='post_user_parent', null=True, blank=True, default=None)
 
+    def get_reply_count(self):
+        return Post.objects.filter(parent=self).count()
+
+    def get_like_count(self):
+        return Like.objects.filter(post=self).count()
+
+    def get_repost_count(self):
+        return 0  # FIXME: NYI
+
     def __str__(self):
         return '@%s on %s says "%s"' % (self.user, self.time, self.body[:20])
 

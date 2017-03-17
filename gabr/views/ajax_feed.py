@@ -4,7 +4,7 @@ from dateutil import tz
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from gabr.models import Profile, Follow, Post, Like
-from .ajax_models import AjaxPost, AjaxUser
+from .ajax_models import AjaxPost, AjaxProfile
 from django.contrib.auth.decorators import login_required
 
 thread_reply_limit = 25
@@ -46,99 +46,87 @@ def get_thread(request):
 def main(request):
     if not request.is_ajax():
         return HttpResponse('')
-    try:
-        current_user = get_object_or_404(Profile, user=request.user)
-        time_oldest = datetime.fromtimestamp(float(request.POST['time-oldest']))
-        posts = []
-        # get posts from the people the user follows
-        for follow in Follow.objects.filter(follower=current_user):
-            for post in Post.objects.filter(user=follow.subject,
-                                            time__lt=time_oldest).order_by('-time')[:post_fetch_limit]:
-                posts.append(post)
-        # get the user's own posts
-        for post in Post.objects.filter(user=current_user,
+    current_user = get_object_or_404(Profile, user=request.user)
+    time_oldest = datetime.fromtimestamp(float(request.POST['time-oldest']))
+    posts = []
+    # get posts from the people the user follows
+    for follow in Follow.objects.filter(follower=current_user):
+        for post in Post.objects.filter(user=follow.subject,
                                         time__lt=time_oldest).order_by('-time')[:post_fetch_limit]:
             posts.append(post)
-        # sort the posts
-        posts.sort(key=lambda p: p.time, reverse=True)
-        # only return the limit or less
-        posts = posts[:post_fetch_limit]
-        response = {}
-        response['time-oldest'] = 2147483647
-        response['posts'] = []
-        for post in posts:
-            response['posts'].append(AjaxPost(post, current_user).get_dict())
-            post_utime = post.time.timestamp()  # FIXME: this is casuing issues, needs to be an int unix time not string
-            if response['time-oldest'] > post_utime:
-                response['time-oldest'] = post_utime
-        return HttpResponse(json.dumps(response))
-    except Exception as e:
-        print("failed: ", e)
-        return HttpResponse('')
+    # get the user's own posts
+    for post in Post.objects.filter(user=current_user,
+                                    time__lt=time_oldest).order_by('-time')[:post_fetch_limit]:
+        posts.append(post)
+    # sort the posts
+    posts.sort(key=lambda p: p.time, reverse=True)
+    # only return the limit or less
+    posts = posts[:post_fetch_limit]
+    response = {}
+    response['time-oldest'] = 2147483647
+    response['time-newest'] = 0
+    response['posts'] = []
+    for post in posts:
+        ap = AjaxPost(post, current_user)
+        response['posts'].append(ap.get_dict())
+        post_utime = post.time.timestamp()  # FIXME: this is casuing issues, needs to be an int unix time not string
+        if response['time-oldest'] > post_utime:
+            response['time-oldest'] = post_utime
+        if response['time-newest'] < post_utime:
+            response['time-newest'] = post_utime
+    return HttpResponse(json.dumps(response))
 
 
 def user_posts(request):
     if not request.is_ajax():
         return HttpResponse('')
-    try:
-        current_user = get_object_or_404(Profile, user=request.user)
-        target_user = get_object_or_404(Profile, user__username=request['username'])
-        time_oldest = request['time-oldest']
-        time_newest = request['time-newest']
-        response = []
-        posts = Post.objects.filter(user=target_user, time__gt=time_oldest, time__lt=time_newest).order_by('-time')[:post_fetch_limit]
-        for post in posts:
-            response.append(AjaxPost(post, current_user).get_dict())
-        return HttpResponse(json.dumps(response))
-    except:
-        return HttpResponse('')
+    current_user = get_object_or_404(Profile, user=request.user)
+    target_user = get_object_or_404(Profile, user__username=request['username'])
+    time_oldest = request['time-oldest']
+    time_newest = request['time-newest']
+    response = []
+    posts = Post.objects.filter(user=target_user, time__gt=time_oldest, time__lt=time_newest).order_by('-time')[:post_fetch_limit]
+    for post in posts:
+        response.append(AjaxPost(post, current_user).get_dict())
+    return HttpResponse(json.dumps(response))
 
 
 def user_likes(request):
     if not request.is_ajax():
         return HttpResponse('')
-    try:
-        current_user = get_object_or_404(Profile, user=request.user)
-        target_user = get_object_or_404(Profile, user__username=request['username'])
-        time_oldest = request['time-oldest']
-        time_newest = request['time-newest']
-        response = []
-        likes = Like.objects.filter(user=target_user, time__gt=time_oldest, time__lt=time_newest).order_by('-time')[:post_fetch_limit]
-        likes = likes
-        for like in likes:
-            response.append(AjaxPost(like.post, current_user).get_dict())
-        return HttpResponse(json.dumps(response))
-    except:
-        return HttpResponse('')
+    current_user = get_object_or_404(Profile, user=request.user)
+    target_user = get_object_or_404(Profile, user__username=request['username'])
+    time_oldest = request['time-oldest']
+    time_newest = request['time-newest']
+    response = []
+    likes = Like.objects.filter(user=target_user, time__gt=time_oldest, time__lt=time_newest).order_by('-time')[:post_fetch_limit]
+    likes = likes
+    for like in likes:
+        response.append(AjaxPost(like.post, current_user).get_dict())
+    return HttpResponse(json.dumps(response))
 
 
 def user_follows(request):
     if not request.is_ajax():
         return HttpResponse('')
-    try:
-        target_user = get_object_or_404(Profile, user__username=request['username'])
-        time_oldest = request['time-oldest']
-        time_newest = request['time-newest']
-        response = []
-        follows = Follow.objects.filter(follower=target_user, time__gt=time_oldest, time__lt=time_newest).order_by('-time')[:post_fetch_limit]
-        for follow in follows:
-            response.append(AjaxUser(follow.subject).get_dict())
-        return HttpResponse(json.dumps(response))
-    except:
-        return HttpResponse('')
+    target_user = get_object_or_404(Profile, user__username=request['username'])
+    time_oldest = request['time-oldest']
+    time_newest = request['time-newest']
+    response = []
+    follows = Follow.objects.filter(follower=target_user, time__gt=time_oldest, time__lt=time_newest).order_by('-time')[:post_fetch_limit]
+    for follow in follows:
+        response.append(AjaxProfile(follow.subject).get_dict())
+    return HttpResponse(json.dumps(response))
 
 
 def user_followers(request):
     if not request.is_ajax():
         return HttpResponse('')
-    try:
-        user = get_object_or_404(Profile, user__username=request['username'])
-        time_oldest = request['time-oldest']
-        time_newest = request['time-newest']
-        response = []
-        follows = Follow.objects.filter(subject=user, time__gt=time_oldest, time__lt=time_newest).order_by('-time')[:post_fetch_limit]
-        for follow in follows:
-            response.append(AjaxUser(follow.follower).get_dict())
-        return HttpResponse(json.dumps(response))
-    except:
-        return HttpResponse('')
+    user = get_object_or_404(Profile, user__username=request['username'])
+    time_oldest = request['time-oldest']
+    time_newest = request['time-newest']
+    response = []
+    follows = Follow.objects.filter(subject=user, time__gt=time_oldest, time__lt=time_newest).order_by('-time')[:post_fetch_limit]
+    for follow in follows:
+        response.append(AjaxProfile(follow.follower).get_dict())
+    return HttpResponse(json.dumps(response))

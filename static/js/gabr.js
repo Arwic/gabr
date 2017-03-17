@@ -3,6 +3,7 @@ var global_view_post;
 var cursorX;
 var cursorY;
 var post_time_oldest;
+var post_time_newest;
 
 const INT_MAX = 2147483647;
 
@@ -57,7 +58,7 @@ function getCookie(cookieName) {
     return "";
 }
 
-// --------------- NYI ajax code (functions like these dont work due as return is  but the code can be used later) ---------------
+// --------------- NYI ajax code (functions like these dont work due to how events work but the code can be used later) ---------------
 
 function ajaxFeedUserPosts(target_username) {
     $.ajax({
@@ -155,7 +156,7 @@ function ajaxCommandReportPost(post_id) {
     });
 }
 
-// --------------- Handlers ---------------
+// ------------------------------
 
 function onLikeButton(post_id) {
     // post_id = -1 when the post is in the post modal
@@ -284,8 +285,6 @@ function onBlockButton(target_username) {
     });
 }
 
-// --------------- Processing ---------------
-
 function linkifyPostBody(postBody) {
     try {
         // replace hash tags
@@ -317,8 +316,6 @@ function linkifyPostBody(postBody) {
     catch (err) {
     }
 }
-
-// --------------- Output ---------------
 
 // Writes a tag to the trending panel
 function writeTrend(tag) {
@@ -375,29 +372,6 @@ function registerHoverCard(element_id, target_username) {
     }, function () {
         clearTimeout(timer);
     });viewPost
-}
-
-// Opens the post with the given id in the view post modal
-function viewPost(post_id) {
-    $.ajax({
-        url: "/ajax/get/post/",
-        type: "POST",
-        data: {
-            "post-id": post_id
-        },
-        dataType: "json",
-        success: function (data) {
-            writePost(data, "#modal-viewpost-main");
-            $("#modal-viewpost-replies").empty();
-            for (var i = 0; i < data["replies"].length; i++) {
-                writePost(data["replies"][i], "#modal-viewpost-replies");
-            }
-            $("#modal-viewpost").modal();
-        },
-        failure: function (data) {
-            console.log("Unable to load post '" + post_id + "'");
-        }
-    });
 }
 
 function formatTime(unixTime) {
@@ -544,7 +518,32 @@ function writePost(post_json, parent_selector) {
     span_expand_icon.setAttribute("class", "icon icon-postdetail");
 }
 
-// --------------- Fetch for data ---------------
+// Opens the post with the given id in the view post modal
+function viewPost(post_id) {
+    $.ajax({
+        url: "/ajax/get/post/",
+        type: "POST",
+        data: {
+            "post-id": post_id
+        },
+        dataType: "json",
+        success: function (data) {
+            $("#modal-viewpost-parent").empty();
+            if (data["parent"])
+                writePost(data["parent"], "#modal-viewpost-parent");
+            $("#modal-viewpost-main").empty();
+            writePost(data["main"], "#modal-viewpost-main");
+            $("#modal-viewpost-replies").empty();
+            for (var i = 0; i < data["replies"].length; i++) {
+                writePost(data["replies"][i], "#modal-viewpost-replies");
+            }
+            $("#modal-viewpost").modal();
+        },
+        failure: function (data) {
+            console.log("Unable to load post '" + post_id + "'");
+        }
+    });
+}
 
 // Loads the current user's main feed
 function loadMainFeed() {
@@ -559,6 +558,7 @@ function loadMainFeed() {
         dataType: "json",
         success: function (data) {
             post_time_oldest = data["time-oldest"];
+            post_time_newest = data["time-newest"];
             for (var i = 0; i < data["posts"].length; i++) {
                 writePost(data["posts"][i]);
             }

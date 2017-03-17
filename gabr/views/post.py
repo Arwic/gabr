@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from gabr.forms import PostForm
 from gabr.models import Profile, Follow, Post, Like, Notification, Block, Report
-from gabr.views.ajax_models import AjaxPost, AjaxUser
+from gabr.views.ajax_models import AjaxPost, AjaxProfile
 
 username_regex = re.compile('@(?P<username>[^\s]+)')
 

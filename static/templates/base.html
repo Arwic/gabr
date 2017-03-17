@@ -126,12 +126,12 @@
 
 <!-- Universal new post modal -->
 {% if user.is_authenticated %}
-    <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+    <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog " role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
                     </button>
                     <h4 class="modal-title" id="myModalLabel4">Compose Post</h4>
                 </div>
@@ -152,44 +152,18 @@
 {% endif %}
 
 <!-- Universal view post modal -->
-<div class="modal fade" id="modal-viewpost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+<div class="modal fade" id="modal-viewpost" tabindex="-1" role="dialog">
     <input type="hidden" id="modal-viewpost-username">
     <input id="modal-viewpost-postid" type="hidden" />
     <div class="modal-dialog" role="document">
-        <div class="b-post rounded-top">
-            <button id="view-post-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <a id="modal-viewpost-postuser-link" href="#">
-                <div class="avatar">
-                    <img id="modal-viewpost-postuser-avatar" class="image" src="" />
-                </div>
-                <span id="modal-viewpost-postuser-displayname" class="display-name"></span>
-            </a>
-            <span id="modal-viewpost-postuser-username" class="username" ></span>
-            <span id="modal-viewpost-post-time" class="time"></span>
-            <script>
-                var modal = $("#modal-viewpost-postuser-link");
-                modal.mouseenter(function () {
-                    var left = $(this).position().left;
-                    var top = $(this).position().top;
-                    viewProfileCard($("#modal-viewpost-username").val(), top, left);
-                });
-                modal.mouseout(function() {
-                    hideProfileCard();
-                });
-            </script>
-            <p id="modal-viewpost-post-body" class="body"></p>
-            <div class="post-action-button-container">
-                <button onclick="onLikeButton(-1)" class="post-action-button" id="like-button" name="like-button" type="button">
-                    <span id="modal-viewpost-like" class="icon like-button-false"></span>
-                </button>
-                <button onclick="onRepostButton(-1)" class="post-action-button" id="repost-button" name="repost-button" type="button">
-                    <span id="modal-viewpost-repost" class="icon repost-button-false"></span>
-                </button>
-            </div>
+        <div class="b-post rounded-top" style="height: 2rem;">
+            <!--<button id="view-post-close" type="button" class="close" data-dismiss="modal">
+                <span>&times;</span>
+            </button>-->
         </div>
-        <div id="modal-viewpost-replies" class="b-post"> </div>
+        <div id="modal-viewpost-parent"> </div>
+        <div id="modal-viewpost-main"> </div>
+        <div id="modal-viewpost-replies"> </div>
         <div class="b-post rounded-bottom" style="height: 2rem;">
         </div>
     </div>
@@ -241,5 +215,4 @@
         {{ debug_info }}
     </span>
 </div>
-</body>
 </html>

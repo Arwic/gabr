@@ -1,61 +1,56 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from .ajax_models import AjaxPost, AjaxUser
-from ..models import Profile, Trend, Post
+from gabr.views.ajax_models import AjaxPost, AjaxProfile
+from gabr.models import Profile, Trend, Post
 import json
+from datetime import datetime, timedelta
 
 
 def user(request):
     if not request.is_ajax():
         return HttpResponse('')
-    try:
-        return HttpResponse(AjaxUser(request['username']).json())
-    except:
-        return HttpResponse('')
+    return HttpResponse(AjaxProfile(request['username']).json())
 
 
 def post(request):
     if not request.is_ajax():
         return HttpResponse('')
-    try:
-        current_user = None
-        if request.user.is_authenticated():
-            current_user = get_object_or_404(Profile, user=request.user)
-        return HttpResponse(ap.json())
-    except:
-        return HttpResponse('')
+    current_user = None
+    if request.user.is_authenticated():
+        current_user = get_object_or_404(Profile, user=request.user)
+    parent_post = get_object_or_404(Post, pk=request.POST["post-id"])
+    direct_replies = Post.objects.filter(parent=parent_post)
+    response = {}
+    response["main"] = AjaxPost(parent_post, current_user).get_dict()
+    response["replies"] = []
+    for reply in direct_replies:
+        response["replies"].append(AjaxPost(reply, current_user).get_dict())
+    return HttpResponse(json.dumps(response))
 
 
 @login_required
 def unread_notif_count(request):
     if not request.is_ajax():
         return HttpResponse('')
-    try:
-        notif_count = get_object_or_404(Profile, user=request.user).get_unread_notif_count()
-        response = {
-            'count': notif_count
-        }
-        return HttpResponse(json.dumps(response))
-    except:
-        return HttpResponse('')
+    notif_count = get_object_or_404(Profile, user=request.user).get_unread_notif_count()
+    response = {
+        'count': notif_count
+    }
+    return HttpResponse(json.dumps(response))
 
 
 @login_required
 def new_post_count(request):
     if not request.is_ajax():
         return HttpResponse('')
-    try:
-        current_user = get_object_or_404(Profile, user=request.user)
-        time_oldest = int(request.POST['time-oldest'])
-        time_newest = int(request.POST['time-newest'])
-        post_count = len(Post.objects.filter(user=current_user, time__gt=time_oldest, time__lt=time_newest))
-        response = {
-            'count': post_count,
-        }
-        return HttpResponse(json.dumps(response))
-    except:
-        return HttpResponse('')
+    current_user = get_object_or_404(Profile, user=request.user)
+    time_newest = datetime.fromtimestamp(float(request.POST['time-newest']))
+    post_count = len(Post.objects.filter(user=current_user, time__gt=time_newest))
+    response = {
+        'count': post_count,
+    }
+    return HttpResponse(json.dumps(response))
 
 
 def trends(request):
@@ -71,10 +66,7 @@ def trends(request):
 
     if not request.is_ajax():
         return HttpResponse('')
-    try:
-        ajax_trends = []
-        for trend in Trend.objects.all():
-            ajax_trends.append(trend.tag)
-        return HttpResponse(json.dumps(ajax_trends))
-    except:
-        return HttpResponse('')
+    ajax_trends = []
+    for trend in Trend.objects.all():
+        ajax_trends.append(trend.tag)
+    return HttpResponse(json.dumps(ajax_trends))
