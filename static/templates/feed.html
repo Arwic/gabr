@@ -17,9 +17,9 @@
         <div class="col with-3">
             <div class="row">
                 {% with current_user as card_user %}
-                {% with current_user_post_count as card_user_post_count %}
-                {% with current_user_follow_count as card_user_follow_count %}
-                {% with current_user_follower_count as card_user_follower_count %}
+                {% with current_user.post_count as card_user_post_count %}
+                {% with current_user.follow_count as card_user_follow_count %}
+                {% with current_user.follower_count as card_user_follower_count %}
                     {% include "card-profile-small.html" %}
                 {% endwith %}
                 {% endwith %}
@@ -51,7 +51,7 @@
             <div id="posts">
             </div>
             <div class="row">
-                <a class="feed-action-button" onclick="loadOlderPosts('feed', '')">
+                <a class="feed-action-button" onclick="loadMainFeed()">
                     <div id="load-more-posts" class="b-load-more-posts">
                         <div class="body">
                             <p>Load more</p>

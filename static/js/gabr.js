@@ -2,7 +2,6 @@ var global_profile_card;
 var global_view_post;
 var cursorX;
 var cursorY;
-var post_time_newest;
 var post_time_oldest;
 
 const INT_MAX = 2147483647;
@@ -18,7 +17,6 @@ $(document).ready(function () {
     $(document).mousemove(function (event) {
         cursorX = event.pageX;
         cursorY = event.pageY;
-        console.log("mouse moved")
     });
 
     global_view_post.on("hidden.bs.modal", function () {
@@ -160,7 +158,7 @@ function ajaxCommandReportPost(post_id) {
 // --------------- Handlers ---------------
 
 function onLikeButton(post_id) {
-    // post_id = 1 when the post is in the post modal
+    // post_id = -1 when the post is in the post modal
     var post_modal = post_id == -1;
     if (post_modal)
         post_id = $("#modal-viewpost-postid").val();
@@ -172,13 +170,15 @@ function onLikeButton(post_id) {
         },
         dataType: "json",
         success: function (data) {
-            var like = $("#like-" + data["post_id"]);
-            like.toggleClass("like-button-true", data["liked"]);
-            like.toggleClass("like-button-false", !data["liked"]);
             if (post_modal) {
                 var modal_like = $("#modal-viewpost-like");
                 modal_like.toggleClass("like-button-true", data["liked"]);
                 modal_like.toggleClass("like-button-false", !data["liked"]);
+            }
+            else {
+                var like = $("#like-" + data["post-id"]);
+                like.toggleClass("like-button-true", data["liked"]);
+                like.toggleClass("like-button-false", !data["liked"]);
             }
         },
         failure: function (data) {
@@ -322,7 +322,7 @@ function linkifyPostBody(postBody) {
 
 // Writes a tag to the trending panel
 function writeTrend(tag) {
-    var div_parent = $("#trends");
+    var div_parent = $("#trend-tags");
     var a_trend = document.createElement("a");
     div_parent.append(a_trend);
     a_trend.setAttribute("class", "body");
@@ -419,7 +419,7 @@ function writePost(post_json, parent_selector) {
     var a_link = document.createElement("a");
     div_post.appendChild(a_link);
     a_link.setAttribute("id", post_guid);
-    a_link.setAttribute("href", "/user/" + post_json["user"]["user-name"]);
+    a_link.setAttribute("href", "/user/" + post_json["user"]["username"]);
     // Post user avatar
     var div_avatar = document.createElement("div");
     a_link.appendChild(div_avatar);
@@ -433,12 +433,12 @@ function writePost(post_json, parent_selector) {
     a_link.appendChild(span_post_displayname);
     span_post_displayname.setAttribute("class", "display-name");
     span_post_displayname.appendChild(document.createTextNode(post_json["user"]["display-name"]));
-    registerHoverCard("#" + post_guid, post_json["user"]["user-name"]);
+    registerHoverCard("#" + post_guid, post_json["user"]["username"]);
     // Post user username
     var span_username = document.createElement("span");
     div_post.appendChild(span_username);
     span_username.setAttribute("class", "user-name");
-    span_username.appendChild(document.createTextNode(post_json["user"]["user-name"]));
+    span_username.appendChild(document.createTextNode(post_json["user"]["username"]));
     // Post time
     var span_time = document.createElement("span");
     div_post.appendChild(span_time);
@@ -469,7 +469,7 @@ function writePost(post_json, parent_selector) {
     button_like.setAttribute("class", "post-action-button");
     var span_like_icon = document.createElement("span");
     button_like.appendChild(span_like_icon);
-    if (post_json["post"]["liked"])
+    if (post_json["liked"])
         span_like_icon.setAttribute("class", "icon like-button-true");
     else
         span_like_icon.setAttribute("class", "icon like-button-false");
@@ -482,7 +482,7 @@ function writePost(post_json, parent_selector) {
     var span_repost_icon = document.createElement("span");
     button_repost.appendChild(span_repost_icon);
     span_repost_icon.setAttribute("id", "repost-" + post_json["id"]);
-    if (post_json["post"]["reposted"])
+    if (post_json["reposted"])
         span_repost_icon.setAttribute("class", "icon repost-button-true");
     else
         span_repost_icon.setAttribute("class", "icon repost-button-false");
@@ -500,19 +500,20 @@ function writePost(post_json, parent_selector) {
 
 // Loads the current user's main feed
 function loadMainFeed() {
+    if (!post_time_oldest)
+        post_time_oldest = INT_MAX;
     $.ajax({
         url: "/ajax/feed/main/",
         type: "POST",
         data: {
-            "time-oldest": post_time_oldest,
-            "time-newest": post_time_newest
+            "time-oldest": post_time_oldest
         },
         dataType: "json",
         success: function (data) {
             post_time_oldest = data["time-oldest"];
-            post_time_newest = data["time-newest"];
-            for (var post in data["posts"])
-                writePost(post);
+            for (var i = 0; i < data["posts"].length; i++) {
+                writePost(data["posts"][i]);
+            }
         },
         failure: function (data) {
             console.log("Unable to load main feed");
@@ -546,9 +547,9 @@ function updateTrends() {
         data: {},
         dataType: "json",
         success: function (data) {
-            $("#trends").empty();
-            for (var trend in data["trends"])
-                writeTrend(trend);
+            $("#trend-tags").empty();
+            for (var i = 0; i < data.length; i++)
+                writeTrend(data[i]);
         },
         failure: function (data) {
             console.log("Unable to load trends");
@@ -579,30 +580,6 @@ function checkNewPosts() {
         },
         failure: function (data) {
             console.log("Unable to load new post count");
-        }
-    });
-}
-
-// Loads older posts
-function loadOlderPosts(type, target) {
-    loadPosts(type, 50, target, 0, post_time_oldest);
-    // FIXME: THIS WAS JUST PASTED IN LAST NIGHT
-    $.ajax({
-        url: "/ajax/feed/main/",
-        type: "POST",
-        data: {
-            "time-oldest": post_time_oldest,
-            "time-newest": post_time_newest
-        },
-        dataType: "json",
-        success: function (data) {
-            post_time_oldest = data["time-oldest"];
-            post_time_newest = data["time-newest"];
-            for (var post in data["posts"])
-                writePost(post);
-        },
-        failure: function (data) {
-            console.log("Unable to load main feed");
         }
     });
 }

@@ -48,33 +48,32 @@ def main(request):
         return HttpResponse('')
     try:
         current_user = get_object_or_404(Profile, user=request.user)
-        time_oldest = request['time-oldest']
-        time_newest = request['time-newest']
+        time_oldest = datetime.fromtimestamp(float(request.POST['time-oldest']))
         posts = []
         # get posts from the people the user follows
         for follow in Follow.objects.filter(follower=current_user):
-            for post in Post.objects.filter(user=follow.subject, time__gt=time_oldest, time__lt=time_newest).order_by('-time')[:post_fetch_limit]:
+            for post in Post.objects.filter(user=follow.subject,
+                                            time__lt=time_oldest).order_by('-time')[:post_fetch_limit]:
                 posts.append(post)
         # get the user's own posts
-        for post in Post.objects.filter(user=current_user, time__gt=time_oldest, time__lt=time_newest).order_by('-time')[:post_fetch_limit]:
+        for post in Post.objects.filter(user=current_user,
+                                        time__lt=time_oldest).order_by('-time')[:post_fetch_limit]:
             posts.append(post)
         # sort the posts
         posts.sort(key=lambda p: p.time, reverse=True)
         # only return the limit or less
         posts = posts[:post_fetch_limit]
         response = {}
-        response['time-newest'] = 0
         response['time-oldest'] = 2147483647
         response['posts'] = []
         for post in posts:
             response['posts'].append(AjaxPost(post, current_user).get_dict())
-            unix_time = int(post.post.time.strftime("%s"))
-            if response['time-newest'] < unix_time:
-                response['time-newest'] = unix_time + 1
-            if response['time-oldest'] > unix_time:
-                response['time-oldest'] = unix_time - 1
+            post_utime = post.time.timestamp()  # FIXME: this is casuing issues, needs to be an int unix time not string
+            if response['time-oldest'] > post_utime:
+                response['time-oldest'] = post_utime
         return HttpResponse(json.dumps(response))
-    except:
+    except Exception as e:
+        print("failed: ", e)
         return HttpResponse('')
 
 

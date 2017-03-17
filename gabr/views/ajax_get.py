@@ -65,15 +65,15 @@ def trends(request):
     for t in Trend.objects.all():  # Drop all current trends
         t.delete()
     for i in range(8):  # Add new trends
-        trend_tag = "Trend" + i
+        trend_tag = "Trend" + str(i)
         Trend.objects.create(tag=trend_tag)
+    # END temp code
 
     if not request.is_ajax():
         return HttpResponse('')
     try:
-        trends = Trend.objects.all()
         ajax_trends = []
-        for trend in trends:
+        for trend in Trend.objects.all():
             ajax_trends.append(trend.tag)
         return HttpResponse(json.dumps(ajax_trends))
     except:

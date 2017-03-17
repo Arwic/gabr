@@ -1,6 +1,7 @@
 import json
 from django.shortcuts import get_object_or_404
 from gabr.models import Profile, Post
+from django.utils.dateformat import format
 
 
 class AjaxUser:
@@ -16,15 +17,15 @@ class AjaxUser:
     def get_dict(self):
         return {
             'id': self.user.id,
-            'user-name': self.user.username,
+            'username': self.user.username,
             'display-name': self.user.display_name,
-            'avatar-url': self.user.avatar,
-            'banner-url': self.user.banner,
+            'avatar-url': self.user.avatar.url,
+            'banner-url': self.user.banner.url,
             'bio': self.user.bio,
             'gender': self.user.gender,
             'location': self.user.location,
             'website': self.user.website,
-            'birthday': self.user.birthday,
+            'birthday': format(self.user.birthday, 'U'),
             'post-count': self.post_count,
             'follow-count': self.follow_count,
             'follower-count': self.follower_count,
@@ -49,8 +50,8 @@ class AjaxPost:
         return {
             'id': self.post.id,
             'body': self.post.body,
-            'time': str(self.post.time),
-            'user': AjaxUser(self.post.user).json(),
+            'time': format(self.post.time, 'U'),
+            'user': AjaxUser(self.post.user).get_dict(),
             'liked': self.liked,
         }
 

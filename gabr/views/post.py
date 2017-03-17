@@ -41,6 +41,9 @@ def new_post(request):
 @login_required
 def feed(request):
     current_user = get_object_or_404(Profile, user=request.user)
+    current_user.post_count = current_user.get_post_count()
+    current_user.follow_count = current_user.get_follow_count()
+    current_user.follower_count = current_user.get_follower_count()
     context = {
         'current_user': current_user,
         'post_form': PostForm,

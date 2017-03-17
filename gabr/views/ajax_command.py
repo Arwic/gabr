@@ -15,21 +15,23 @@ username_regex = re.compile('@(?P<username>[^\s]+)')
 def like_post(request):
     if not request.is_ajax():
         return HttpResponse('')
-    post_id = request['post-id']
+    post_id = request.POST['post-id']
     current_user = get_object_or_404(Profile, user=request.user)
     post = get_object_or_404(Post, id=post_id)
     try:
         like = Like.objects.get(post=post, user=current_user)
+        print("unliking")
         like.delete()
         response = {
             'liked': False,
             'post-id': post_id,
         }
     except Like.DoesNotExist:
+        print("liking")
         Like.objects.create(user=current_user, post=post)
         response = {
             'liked': True,
-            'post_id': post_id,
+            'post-id': post_id,
         }
     return HttpResponse(json.dumps(response))
 
