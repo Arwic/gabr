@@ -400,6 +400,54 @@ function viewPost(post_id) {
     });
 }
 
+function formatTime(unixTime) {
+    var longMonthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+      ];
+
+    var shortMonthNames = [
+        "Jan", "Feb", "Mar",
+        "Apr", "May", "Jun", "Jul",
+        "Aug", "Sep", "Oct",
+        "Nov", "Dec"
+      ];
+    var dateTime = new Date(unixTime * 1000);
+    var amPm = dateTime.getHours() > 12 ? "pm" : "am";
+    var hours = dateTime.getHours() > 12 ? dateTime.getHours() - 12 : dateTime.getHours();
+    var mins = dateTime.getMinutes() < 10 ? "0" + dateTime.getMinutes() : dateTime.getMinutes();
+    var dateTimeFormatted = hours + ":" + mins + amPm + " on " +
+        dateTime.getDate() + " " + shortMonthNames[dateTime.getMonth()] + " " + dateTime.getFullYear();
+
+    var millsAgo = Date.now() - (unixTime * 1000);
+    var secsAgo = Math.floor(millsAgo / 1000);
+    var minsAgo = Math.floor(millsAgo / 1000 / 60);
+    var hoursAgo = Math.floor(millsAgo / 1000 / 60 / 60);
+    var daysAgo = Math.floor(millsAgo / 1000 / 60 / 60 / 24);
+    var timeDeltaFormatted = "";
+    if (daysAgo == 1)
+        timeDeltaFormatted = daysAgo + " day ago";
+    else if (daysAgo > 1)
+        timeDeltaFormatted = daysAgo + " days ago";
+    else if (hoursAgo == 1)
+        timeDeltaFormatted = hoursAgo + " hour ago";
+    else if (hoursAgo > 1)
+        timeDeltaFormatted = hoursAgo + " hours ago";
+    else if (minsAgo == 1)
+        timeDeltaFormatted = minsAgo + " minute ago";
+    else if (minsAgo > 1)
+        timeDeltaFormatted = minsAgo + " minutes ago";
+    else if (secsAgo == 1)
+        timeDeltaFormatted = secsAgo + " second ago";
+    else if (secsAgo > 1 || secsAgo == 0)
+        timeDeltaFormatted = secsAgo + " seconds ago";
+    else
+        timeDeltaFormatted = "error";
+    return timeDeltaFormatted + " • " + dateTimeFormatted;
+}
+
 // Writes a post to the DOM at the given parent
 function writePost(post_json, parent_selector) {
     // Parent div
@@ -437,13 +485,13 @@ function writePost(post_json, parent_selector) {
     // Post user username
     var span_username = document.createElement("span");
     div_post.appendChild(span_username);
-    span_username.setAttribute("class", "user-name");
+    span_username.setAttribute("class", "username");
     span_username.appendChild(document.createTextNode(post_json["user"]["username"]));
     // Post time
     var span_time = document.createElement("span");
     div_post.appendChild(span_time);
     span_time.setAttribute("class", "time");
-    span_time.appendChild(document.createTextNode(post_json["time"]));
+    span_time.appendChild(document.createTextNode(formatTime(post_json["time"])));
     // Post body
     var p_body = document.createElement("p");
     div_post.appendChild(p_body);

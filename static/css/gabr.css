@@ -142,7 +142,7 @@ body {
     font-size: 0.9rem;
     color: #8899a6; }
     .b-post .time:before {
-      content: " · "; }
+      content: " • "; }
   .b-post .body {
     word-wrap: break-word;
     margin-left: 4rem;
