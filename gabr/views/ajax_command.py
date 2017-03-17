@@ -39,7 +39,8 @@ def follow_user(request):
     if not request.is_ajax():
         return HttpResponse('')
     current_user = get_object_or_404(Profile, user=request.user)
-    user = get_object_or_404(Profile, user__username=request['username'])
+    print("\n\n\n\n\nFOLLOWING USERNAME=" + request.POST["username"] + "\n\n\n\n\n\n\n")
+    user = get_object_or_404(Profile, username=request.POST['username'])
     try:
         follow = Follow.objects.get(follower=current_user, subject=user)
         follow.delete()

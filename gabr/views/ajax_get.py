@@ -59,6 +59,15 @@ def new_post_count(request):
 
 
 def trends(request):
+
+    # FIXME: This adds some temp trends
+    from gabr.models import Trend
+    for t in Trend.objects.all():  # Drop all current trends
+        t.delete()
+    for i in range(8):  # Add new trends
+        trend_tag = "Trend" + i
+        Trend.objects.create(tag=trend_tag)
+
     if not request.is_ajax():
         return HttpResponse('')
     try:

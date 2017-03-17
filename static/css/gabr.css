@@ -451,15 +451,17 @@ body {
     color: #373a3c; }
 
 .b-profile-header .banner {
-  display: flex;
-  align-items: center;
+  overflow: hidden;
   width: 100vw;
   height: 60vh;
-  overflow: hidden;
   margin-top: -3.5rem; }
   .b-profile-header .banner .image {
-    width: 100%;
-    height: auto; }
+    width: 100vw;
+    height: 100%;
+    background-size: cover;
+    background-position: center 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed; }
 .b-profile-header .navbar {
   width: 100vw;
   height: 3.5rem;

@@ -17,8 +17,6 @@ username_regex = re.compile('@(?P<username>[^\s]+)')
 @login_required
 def new_post(request):
     # TODO: "request.POST['field']" could cause issues, might have to be "request['field']"
-    if not request.is_ajax():
-        return HttpResponse('')
     current_user = get_object_or_404(Profile, user=request.user)
     form = PostForm(request.POST or None)
     if form.is_valid():
@@ -35,7 +33,6 @@ def new_post(request):
         for username in tags:
             tagged_user = Profile.objects.filter(user__username=str.lower(username)).first()
             if tagged_user is None:
-                print('user not found')
                 continue
             Notification.objects.create(notification_type='m', user=tagged_user, mention=instance)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

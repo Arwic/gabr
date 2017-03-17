@@ -10,7 +10,7 @@
 {% block content %}
     <div class="b-profile-header">
         <div class="banner">
-            <img class="image" src="{{ target_user.banner.url }}">
+            <div class="image" style="background-image: url('{{ target_user.banner.url }}')"> </div>
         </div>
         <div class="navbar">
             {% if current_user != target_user and user.is_authenticated %}

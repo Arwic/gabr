@@ -74,3 +74,9 @@ urlpatterns = [
 handler500 = curry(server_error, template_name='500.html')
 handler404 = curry(page_not_found, template_name='404.html')
 handler403 = curry(permission_denied, template_name='403.html')
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', django.views.static.serve, { 'document_root': settings.MEDIA_ROOT }),
+        url(r'^static/(?P<path>.*)$', django.views.static.serve, { 'document_root': settings.STATIC_ROOT, }),
+    ]

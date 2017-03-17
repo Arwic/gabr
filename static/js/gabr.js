@@ -586,4 +586,23 @@ function checkNewPosts() {
 // Loads older posts
 function loadOlderPosts(type, target) {
     loadPosts(type, 50, target, 0, post_time_oldest);
+    // FIXME: THIS WAS JUST PASTED IN LAST NIGHT
+    $.ajax({
+        url: "/ajax/feed/main/",
+        type: "POST",
+        data: {
+            "time-oldest": post_time_oldest,
+            "time-newest": post_time_newest
+        },
+        dataType: "json",
+        success: function (data) {
+            post_time_oldest = data["time-oldest"];
+            post_time_newest = data["time-newest"];
+            for (var post in data["posts"])
+                writePost(post);
+        },
+        failure: function (data) {
+            console.log("Unable to load main feed");
+        }
+    });
 }
