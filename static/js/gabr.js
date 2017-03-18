@@ -530,8 +530,15 @@ function viewPost(post_id) {
         success: function (data) {
             $("#modal-viewpost-parent").empty();
             console.log("parent = " + data["parent"]);
-            if (data["parent"])
+            if (data["parent"]) {
                 writePost(data["parent"], "#modal-viewpost-parent");
+                $("#modal-viewpost-parent-spacer").toggleClass("hidden", false);
+            }
+            else {
+                $("#modal-viewpost-parent-spacer").toggleClass("hidden", true);
+            }
+            $("#viewpost-reply-form textarea[name='body']").val("@" + data["main"]["user"]["username"] + " ");
+            $("#viewpost-reply-form input[name='parent']").val(data["main"]["id"]);
             $("#modal-viewpost-main").empty();
             writePost(data["main"], "#modal-viewpost-main");
             $("#modal-viewpost-replies").empty();
