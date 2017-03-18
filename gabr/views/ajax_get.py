@@ -113,10 +113,14 @@ def post(request):
     current_user = None
     if request.user.is_authenticated():
         current_user = get_object_or_404(Profile, user=request.user)
-    parent_post = get_object_or_404(Post, pk=request.POST["post-id"])
-    direct_replies = Post.objects.filter(parent=parent_post)
+    main_post = get_object_or_404(Post, pk=request.POST["post-id"])
+    direct_replies = Post.objects.filter(parent=main_post)
     response = {}
-    response["main"] = AjaxPost(parent_post, current_user).get_dict()
+    response["main"] = AjaxPost(main_post, current_user).get_dict()
+    if main_post.parent is not None:
+        response["parent"] = AjaxPost(main_post.parent).get_dict()
+    if main_post.target is not None:
+        response["target"] = AjaxPost(main_post.target).get_dict()
     response["replies"] = []
     for reply in direct_replies:
         response["replies"].append(AjaxPost(reply, current_user).get_dict())

@@ -115,6 +115,21 @@
     }
 }
 
+.hidden {
+    display: none;
+}
+
+.modal-viewpost-spacer {
+    border: $border-size $border-style $col-border;
+    border-bottom-style: none;
+    background-color: $col-not-focused;
+    padding: $padding;
+    margin-left: $margin;
+    margin-right: $margin;
+    animation: fadein 0.5s;
+    width: 35rem;
+}
+
 .rounded-top {
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
@@ -125,6 +140,40 @@
     border-bottom-right-radius: $border-radius;
 }
 
-#modal-viewpost-main {
+#modal-viewpost-main, #modal-viewpost-parent, #modal-viewpost-replies {
     margin-left: 15px; // FIXME: this is a bandaid fix
+}
+
+#modal-viewpost-replybox {
+    border: $border-size $border-style $col-border;
+    border-bottom-style: none;
+    background-color: $col-not-focused;
+    padding: $padding;
+    margin-left: $margin;
+    margin-right: $margin;
+    animation: fadein 0.5s;
+    width: 35rem;
+
+    form {
+        margin: $margin;
+        display: flex;
+
+        .image-container {
+            margin: $margin;
+            width: 2rem;
+            height: 2rem;
+            overflow: hidden;
+            border-radius: $border-radius;
+
+            .image {
+                width: 100%;
+                height: auto;
+                border-radius: $border-radius;
+            }
+        }
+
+        button {
+            margin: $margin;
+        }
+    }
 }

@@ -167,6 +167,19 @@ body {
       height: 2rem;
       color: #8899a6; }
 
+.hidden {
+  display: none; }
+
+.modal-viewpost-spacer {
+  border: 0.0625rem solid #e1e8ed;
+  border-bottom-style: none;
+  background-color: #f5f8fa;
+  padding: 0.625rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  animation: fadein 0.5s;
+  width: 35rem; }
+
 .rounded-top {
   border-top-left-radius: 0.3125rem;
   border-top-right-radius: 0.3125rem; }
@@ -175,8 +188,33 @@ body {
   border-bottom-left-radius: 0.3125rem;
   border-bottom-right-radius: 0.3125rem; }
 
-#modal-viewpost-main {
+#modal-viewpost-main, #modal-viewpost-parent, #modal-viewpost-replies {
   margin-left: 15px; }
+
+#modal-viewpost-replybox {
+  border: 0.0625rem solid #e1e8ed;
+  border-bottom-style: none;
+  background-color: #f5f8fa;
+  padding: 0.625rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  animation: fadein 0.5s;
+  width: 35rem; }
+  #modal-viewpost-replybox form {
+    margin: 0.25rem;
+    display: flex; }
+    #modal-viewpost-replybox form .image-container {
+      margin: 0.25rem;
+      width: 2rem;
+      height: 2rem;
+      overflow: hidden;
+      border-radius: 0.3125rem; }
+      #modal-viewpost-replybox form .image-container .image {
+        width: 100%;
+        height: auto;
+        border-radius: 0.3125rem; }
+    #modal-viewpost-replybox form button {
+      margin: 0.25rem; }
 
 .b-table {
   max-width: 100%;
