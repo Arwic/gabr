@@ -549,6 +549,8 @@ function viewPost(post_id) {
 function loadMainFeed() {
     if (!post_time_oldest)
         post_time_oldest = INT_MAX;
+    if (!post_time_newest)
+        post_time_newest = 0;
     $.ajax({
         url: "/ajax/feed/main/",
         type: "POST",
