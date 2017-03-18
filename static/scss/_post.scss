@@ -144,6 +144,14 @@
     margin-left: 15px; // FIXME: this is a bandaid fix
 }
 
+#modal-viewpost-parent {
+    .row {
+        .b-post {
+            background-color: $col-not-focused !important;
+        }
+    }
+}
+
 #modal-viewpost-replybox {
     border: $border-size $border-style $col-border;
     border-bottom-style: none;

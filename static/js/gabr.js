@@ -537,7 +537,9 @@ function viewPost(post_id) {
             else {
                 $("#modal-viewpost-parent-spacer").toggleClass("hidden", true);
             }
-            $("#viewpost-reply-form textarea[name='body']").val("@" + data["main"]["user"]["username"] + " ");
+            $("#viewpost-reply-form textarea[name='body']").attr("placeholder", "Reply to @" + data["main"]["user"]["username"]);
+            $("#viewpost-reply-form textarea[name='body']").attr("onclick",
+                "console.log('clicked textarea');$('#viewpost-reply-form textarea[name='body']').val('@' + data['main']['user']['username'] + ' ');");
             $("#viewpost-reply-form input[name='parent']").val(data["main"]["id"]);
             $("#modal-viewpost-main").empty();
             writePost(data["main"], "#modal-viewpost-main");

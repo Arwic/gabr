@@ -191,6 +191,9 @@ body {
 #modal-viewpost-main, #modal-viewpost-parent, #modal-viewpost-replies {
   margin-left: 15px; }
 
+#modal-viewpost-parent .row .b-post {
+  background-color: #f5f8fa !important; }
+
 #modal-viewpost-replybox {
   border: 0.0625rem solid #e1e8ed;
   border-bottom-style: none;
