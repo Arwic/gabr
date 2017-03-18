@@ -124,3 +124,7 @@
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
 }
+
+#modal-viewpost-main {
+    margin-left: 15px; // FIXME: this is a bandaid fix
+}

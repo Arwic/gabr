@@ -175,6 +175,9 @@ body {
   border-bottom-left-radius: 0.3125rem;
   border-bottom-right-radius: 0.3125rem; }
 
+#modal-viewpost-main {
+  margin-left: 15px; }
+
 .b-table {
   max-width: 100%;
   width: 100%;

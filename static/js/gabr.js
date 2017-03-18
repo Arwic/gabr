@@ -62,7 +62,7 @@ function getCookie(cookieName) {
 
 function ajaxFeedUserPosts(target_username) {
     $.ajax({
-        url: "/ajax/feed/user-posts/",
+        url: "/ajax/get/user-posts/",
         type: "POST",
         data: {
             "username": target_username,
@@ -82,7 +82,7 @@ function ajaxFeedUserPosts(target_username) {
 
 function ajaxFeedUserFollowers(target_username) {
     $.ajax({
-        url: "/ajax/feed/user-followers/",
+        url: "/ajax/get/user-followers/",
         type: "POST",
         data: {
             "username": target_username,
@@ -102,7 +102,7 @@ function ajaxFeedUserFollowers(target_username) {
 
 function ajaxFeedUserFollows(target_username) {
     $.ajax({
-        url: "/ajax/feed/user-follows/",
+        url: "/ajax/get/user-follows/",
         type: "POST",
         data: {
             "username": target_username,
@@ -122,7 +122,7 @@ function ajaxFeedUserFollows(target_username) {
 
 function ajaxFeedUserLikes(target_username) {
     $.ajax({
-        url: "/ajax/feed/user-likes/",
+        url: "/ajax/get/user-likes/",
         type: "POST",
         data: {
             "username": target_username,
@@ -529,6 +529,7 @@ function viewPost(post_id) {
         dataType: "json",
         success: function (data) {
             $("#modal-viewpost-parent").empty();
+            console.log("parent = " + data["parent"]);
             if (data["parent"])
                 writePost(data["parent"], "#modal-viewpost-parent");
             $("#modal-viewpost-main").empty();
@@ -552,7 +553,7 @@ function loadMainFeed() {
     if (!post_time_newest)
         post_time_newest = 0;
     $.ajax({
-        url: "/ajax/feed/main/",
+        url: "/ajax/get/feed/",
         type: "POST",
         data: {
             "time-oldest": post_time_oldest
@@ -609,10 +610,14 @@ function updateTrends() {
 
 // Check for new posts
 function checkNewPosts() {
+    if (!post_time_newest)
+        post_time_newest = 0;
     $.ajax({
         url: "/ajax/get/new-post-count/",
         type: "POST",
-        data: {},
+        data: {
+            "time-newest": post_time_newest
+        },
         dataType: "json",
         success: function (data) {
             var view_new_posts = $("#view-new-posts");
