@@ -64,9 +64,9 @@ class AjaxPost:
             'time': format(self.post.time, 'U'),
             'user': AjaxProfile(self.post.user).get_dict(),
             'liked': self.liked,
-            'reply-count': 0,
-            'like-count': 0,
-            'repost-count': 0
+            'reply-count': self.reply_count,
+            'like-count': self.like_count,
+            'repost-count': self.repost_count
         }
 
     def json(self):

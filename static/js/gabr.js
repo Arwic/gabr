@@ -173,13 +173,14 @@ function onLikeButton(post_id) {
         success: function (data) {
             if (post_modal) {
                 var modal_like = $("#modal-viewpost-like");
-                modal_like.toggleClass("like-button-true", data["liked"]);
-                modal_like.toggleClass("like-button-false", !data["liked"]);
+                modal_like.toggleClass("like-true", data["liked"]);
+                modal_like.toggleClass("like-false", !data["liked"]);
             }
             else {
+                console.log("");
                 var like = $("#like-" + data["post-id"]);
-                like.toggleClass("like-button-true", data["liked"]);
-                like.toggleClass("like-button-false", !data["liked"]);
+                like.toggleClass("like-true", data["liked"]);
+                like.toggleClass("like-false", !data["liked"]);
             }
         },
         failure: function (data) {
@@ -380,14 +381,14 @@ function formatTime(unixTime) {
         "April", "May", "June", "July",
         "August", "September", "October",
         "November", "December"
-      ];
+    ];
 
     var shortMonthNames = [
         "Jan", "Feb", "Mar",
         "Apr", "May", "Jun", "Jul",
         "Aug", "Sep", "Oct",
         "Nov", "Dec"
-      ];
+    ];
     var dateTime = new Date(unixTime * 1000);
     var amPm = dateTime.getHours() > 12 ? "pm" : "am";
     var hours = dateTime.getHours() > 12 ? dateTime.getHours() - 12 : dateTime.getHours();
@@ -422,100 +423,87 @@ function formatTime(unixTime) {
     return timeDeltaFormatted + " • " + dateTimeFormatted;
 }
 
+// Writes post with extra detail to the DOM at the given parent
+function writePostDetailed(post_json, parent_selector) {
+
+}
+
 // Writes a post to the DOM at the given parent
 function writePost(post_json, parent_selector) {
-    // Parent div
+    function c_div(parent, _class, content) {
+        var e = document.createElement("div");
+        if (_class)
+            e.setAttribute("class", _class);
+        if (content)
+            e.appendChild(document.createTextNode(content));
+        parent.append(e);
+        return e;
+    }
+
+    function c_span(parent, _class, content) {
+        var e = document.createElement("span");
+        if (_class)
+            e.setAttribute("class", _class);
+        if (content) {
+            e.appendChild(document.createTextNode(content));
+        }
+        parent.append(e);
+        return e;
+    }
+
+    // Default the parent selector to 'posts'
     if (parent_selector == null)
         parent_selector = "#posts";
-    var div_parent = $(parent_selector);
-    // Row
-    var div_row = document.createElement("div");
-    div_parent.append(div_row);
-    div_row.setAttribute("class", "row");
-    // Post block
-    var div_post = document.createElement("div");
-    div_row.appendChild(div_post);
-    div_post.setAttribute("class", "b-post");
-    var post_guid = guid();
-    // Post user link
-    var a_link = document.createElement("a");
-    div_post.appendChild(a_link);
-    a_link.setAttribute("id", post_guid);
-    a_link.setAttribute("href", "/user/" + post_json["user"]["username"]);
-    // Post user avatar
-    var div_avatar = document.createElement("div");
-    a_link.appendChild(div_avatar);
-    div_avatar.setAttribute("class", "avatar");
-    var img_avatar = document.createElement("img");
-    div_avatar.appendChild(img_avatar);
-    img_avatar.setAttribute("class", "image");
-    img_avatar.setAttribute("src", post_json["user"]["avatar-url"]);
-    // Post user display name
-    var span_post_displayname = document.createElement("span");
-    a_link.appendChild(span_post_displayname);
-    span_post_displayname.setAttribute("class", "display-name");
-    span_post_displayname.appendChild(document.createTextNode(post_json["user"]["display-name"]));
-    registerHoverCard("#" + post_guid, post_json["user"]["username"]);
-    // Post user username
-    var span_username = document.createElement("span");
-    div_post.appendChild(span_username);
-    span_username.setAttribute("class", "username");
-    span_username.appendChild(document.createTextNode(post_json["user"]["username"]));
-    // Post time
-    var span_time = document.createElement("span");
-    div_post.appendChild(span_time);
-    span_time.setAttribute("class", "time");
-    span_time.appendChild(document.createTextNode(formatTime(post_json["time"])));
-    // Post body
-    var p_body = document.createElement("p");
-    div_post.appendChild(p_body);
-    p_body.setAttribute("class", "body");
-    p_body.appendChild(document.createTextNode(post_json["body"]));
-    linkifyPostBody(p_body);
-    var div_actions = document.createElement("div");
-    div_post.appendChild(div_actions);
-    div_actions.setAttribute("class", "post-action-button-container");
-    // Reply button
-    var button_reply = document.createElement("button");
-    div_actions.appendChild(button_reply);
-    button_reply.setAttribute("onclick",
-        "$('#view-post-close').click(); onReplyButton('" + post_json["user"]["username"] + "', " + post_json["id"] + ")");
-    button_reply.setAttribute("class", "post-action-button");
-    var span_reply_icon = document.createElement("span");
-    button_reply.appendChild(span_reply_icon);
-    span_reply_icon.setAttribute("class", "icon icon-reply");
-    // Like button
-    var button_like = document.createElement("button");
-    div_actions.appendChild(button_like);
-    button_like.setAttribute("onclick", "onLikeButton(" + post_json["id"] + ")");
-    button_like.setAttribute("class", "post-action-button");
-    var span_like_icon = document.createElement("span");
-    button_like.appendChild(span_like_icon);
+
+    var userUrl = "/user/" + post_json["user"]["username"];
+
+    var post_guid = post_json["id"];
+    var d_post = c_div($(parent_selector), "post");
+    d_post.setAttribute("id", post_guid);
+    $(d_post).on('click', function(e) {
+        if ($(e.target).hasClass("block-expand"))
+            return;
+        viewPost(post_guid);
+    });
+
+    var d_avatar = c_div(d_post, "avatar-container block-expand");
+    d_avatar.setAttribute("onclick", userUrl);
+    var i_avatar = document.createElement("img");
+    d_avatar.append(i_avatar);
+    i_avatar.setAttribute("src", post_json["user"]["avatar-url"]);
+    i_avatar.setAttribute("class", "image block-expand");
+
+    var s_displayname = c_span(d_post, "display-name block-expand", post_json["user"]["display-name"]);
+    s_displayname.setAttribute("href", userUrl);
+
+    var s_username = c_span(d_post, "username block-expand", post_json["user"]["username"]);
+    s_username.setAttribute("href", userUrl);
+    var s_time = c_span(d_post, "time", " • " + formatTime(post_json["time"]));
+
+    var d_body = c_div(d_post, "body", post_json["body"]);
+
+    var d_actions = c_div(d_post, "actions");
+
+    var s_reply_container = c_span(d_actions, "action-container");
+    var s_reply = c_span(s_reply_container, "action-button icon reply block-expand");
+    s_reply.setAttribute("onclick",
+        "onReplyButton('" + post_json["user"]["username"] + "', " + post_json["id"] + ")");
+    var s_reply_count = c_span(s_reply_container, "action-count", post_json["reply-count"]);
+
+    var s_like_container = c_span(d_actions, "action-container");
+    var like_class = "action-button icon like-false block-expand";
     if (post_json["liked"])
-        span_like_icon.setAttribute("class", "icon like-button-true");
-    else
-        span_like_icon.setAttribute("class", "icon like-button-false");
-    span_like_icon.setAttribute("id", "like-" + post_json["id"]);
-    // Repost button
-    var button_repost = document.createElement("button");
-    div_actions.appendChild(button_repost);
-    button_repost.setAttribute("onclick", "onRepostButton(" + post_json["id"] + ")");
-    button_repost.setAttribute("class", "post-action-button");
-    var span_repost_icon = document.createElement("span");
-    button_repost.appendChild(span_repost_icon);
-    span_repost_icon.setAttribute("id", "repost-" + post_json["id"]);
+        like_class = "action-button icon like-true block-expand";
+    var s_like = c_span(s_like_container, like_class);
+    s_like.setAttribute("onclick", "onLikeButton(" + post_json["id"] + ")");
+    var s_like_count = c_span(s_like_container, "action-count", post_json["like-count"]);
+
+    var s_repost_container = c_span(d_actions, "action-container");
+    var repost_class = "action-button icon repost-false block-expand";
     if (post_json["reposted"])
-        span_repost_icon.setAttribute("class", "icon repost-button-true");
-    else
-        span_repost_icon.setAttribute("class", "icon repost-button-false");
-    // Expand button
-    var button_expand = document.createElement("button");
-    div_actions.appendChild(button_expand);
-    button_expand.setAttribute("onclick", "viewPost(" + post_json["id"] + ")");
-    button_expand.setAttribute("class", "post-action-button");
-    var span_expand_icon = document.createElement("span");
-    button_expand.appendChild(span_expand_icon);
-    span_expand_icon.setAttribute("class", "icon icon-postdetail");
+        repost_class = "action-button icon repost-true block-expand";
+    var s_repost = c_span(s_repost_container, repost_class);
+    var s_repost_count = c_span(s_repost_container, "action-count", post_json["repost-count"]);
 }
 
 // Opens the post with the given id in the view post modal

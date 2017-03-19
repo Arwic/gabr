@@ -1,4 +1,4 @@
-.b-post {
+.post {
     border: $border-size $border-style $col-border;
     border-bottom-style: none;
     background-color: $col-background;
@@ -7,52 +7,26 @@
     margin-right: $margin;
     animation: fadein 0.5s;
     width: 35rem;
+    cursor: pointer;
 
     &:hover {
         background-color: $col-body-background;
     }
 
-    .like-button-true:before {
-        content: "\f004";
-        color: #ac2925;
-        transition: color 0.2s;
-    }
-
-    .like-button-false:before {
-        content: "\f004";
-        transition: color 0.2s;
-    }
-
-    .repost-button-true:before {
-        content: "\f079";
-        color: #5cb85c;
-        transition: color 0.2s;
-    }
-
-    .repost-button-false:before {
-        content: "\f079";
-        transition: color 0.2s;
-    }
-
-    .follow-button-false:before {
-        content: "Follow";
-    }
-
-    .follow-button-true:before {
-        content: "Unfollow";
-    }
-
-    .avatar {
+    .avatar-container {
         display: inline;
         float: left;
         border-radius: $border-radius;
         width: 3rem;
+        height: 3rem;
         margin-right: 1rem;
         overflow: hidden;
 
         .image {
             border-radius: $border-radius;
             width: 100%;
+            width: 3rem;
+            height: 3rem;
             height: auto;
         }
     }
@@ -75,10 +49,6 @@
     .time {
         font-size: 0.9rem;
         color: $col-text-sec;
-
-        &:before {
-            content: " • ";
-        }
     }
 
     .body {
@@ -89,99 +59,57 @@
         font-size: 0.9rem;
     }
 
-    .icon-repost {
-        color: $col-text-sec;
-    }
-
-    .repost-display-name {
-        color: $col-text-sec;
-        font-size: 0.9rem;
-        margin-left: 0.25rem;
-    }
-
-    .post-action-button-container {
+    .actions {
         margin-left: 4rem;
 
-        .post-action-button {
-            display: inline;
-            border: none;
-            background-color: transparent;
-            padding: 0;
-            margin-right: 2rem;
-            width: 2rem;
-            height: 2rem;
-            color: $col-text-sec;
-        }
-    }
-}
+        .action-container {
+            display: inline-block;
+            width: 5rem;
 
-.hidden {
-    display: none;
-}
-
-.modal-viewpost-spacer {
-    border: $border-size $border-style $col-border;
-    border-bottom-style: none;
-    background-color: $col-not-focused;
-    padding: $padding;
-    margin-left: $margin;
-    margin-right: $margin;
-    animation: fadein 0.5s;
-    width: 35rem;
-}
-
-.rounded-top {
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
-}
-
-.rounded-bottom {
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
-}
-
-#modal-viewpost-main, #modal-viewpost-parent, #modal-viewpost-replies {
-    margin-left: 15px; // FIXME: this is a bandaid fix
-}
-
-#modal-viewpost-parent {
-    .row {
-        .b-post {
-            background-color: $col-not-focused !important;
-        }
-    }
-}
-
-#modal-viewpost-replybox {
-    border: $border-size $border-style $col-border;
-    border-bottom-style: none;
-    background-color: $col-not-focused;
-    padding: $padding;
-    margin-left: $margin;
-    margin-right: $margin;
-    animation: fadein 0.5s;
-    width: 35rem;
-
-    form {
-        margin: $margin;
-        display: flex;
-
-        .image-container {
-            margin: $margin;
-            width: 2rem;
-            height: 2rem;
-            overflow: hidden;
-            border-radius: $border-radius;
-
-            .image {
-                width: 100%;
-                height: auto;
-                border-radius: $border-radius;
+            .action-button {
+                cursor: pointer;
+                display: inline;
+                background-color: transparent;
+                padding: 0;
+                font-size: 1rem;
+                color: $col-text-sec;
             }
-        }
 
-        button {
-            margin: $margin;
+            .reply:before {
+                content: "\f112";
+            }
+
+            .action-count {
+                font-weight: $font-bold;
+                font-size: 0.7rem;
+                color: $col-text-sec;
+
+                &:before {
+                    content: " ";
+                }
+            }
+
+            .like-true:before {
+                content: "\f004";
+                color: #ac2925;
+                transition: color 0.2s;
+            }
+
+            .like-false:before {
+                content: "\f004";
+                transition: color 0.2s;
+            }
+
+            .repost-true:before {
+                content: "\f079";
+                color: #5cb85c;
+                transition: color 0.2s;
+            }
+
+            .repost-false:before {
+                content: "\f079";
+                transition: color 0.2s;
+            }
         }
     }
 }

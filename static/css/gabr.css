@@ -89,7 +89,7 @@ body {
         border: 0.0625rem solid #e1e8ed;
         border-radius: 1000rem; }
 
-.b-post {
+.post {
   border: 0.0625rem solid #e1e8ed;
   border-bottom-style: none;
   background-color: #ffffff;
@@ -97,127 +97,76 @@ body {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
   animation: fadein 0.5s;
-  width: 35rem; }
-  .b-post:hover {
+  width: 35rem;
+  cursor: pointer; }
+  .post:hover {
     background-color: #f5f8fa; }
-  .b-post .like-button-true:before {
-    content: "\f004";
-    color: #ac2925;
-    transition: color 0.2s; }
-  .b-post .like-button-false:before {
-    content: "\f004";
-    transition: color 0.2s; }
-  .b-post .repost-button-true:before {
-    content: "\f079";
-    color: #5cb85c;
-    transition: color 0.2s; }
-  .b-post .repost-button-false:before {
-    content: "\f079";
-    transition: color 0.2s; }
-  .b-post .follow-button-false:before {
-    content: "Follow"; }
-  .b-post .follow-button-true:before {
-    content: "Unfollow"; }
-  .b-post .avatar {
+  .post .avatar-container {
     display: inline;
     float: left;
     border-radius: 0.3125rem;
     width: 3rem;
+    height: 3rem;
     margin-right: 1rem;
     overflow: hidden; }
-    .b-post .avatar .image {
+    .post .avatar-container .image {
       border-radius: 0.3125rem;
       width: 100%;
+      width: 3rem;
+      height: 3rem;
       height: auto; }
-  .b-post .display-name {
+  .post .display-name {
     font-size: 0.875rem;
     font-weight: 600;
     color: #373a3c; }
-  .b-post .username {
+  .post .username {
     font-size: 0.9rem;
     color: #8899a6; }
-    .b-post .username:before {
+    .post .username:before {
       content: " @"; }
-  .b-post .time {
+  .post .time {
     font-size: 0.9rem;
     color: #8899a6; }
-    .b-post .time:before {
-      content: " • "; }
-  .b-post .body {
+  .post .body {
     word-wrap: break-word;
     margin-left: 4rem;
     color: #373a3c;
     font-weight: normal;
     font-size: 0.9rem; }
-  .b-post .icon-repost {
-    color: #8899a6; }
-  .b-post .repost-display-name {
-    color: #8899a6;
-    font-size: 0.9rem;
-    margin-left: 0.25rem; }
-  .b-post .post-action-button-container {
+  .post .actions {
     margin-left: 4rem; }
-    .b-post .post-action-button-container .post-action-button {
-      display: inline;
-      border: none;
-      background-color: transparent;
-      padding: 0;
-      margin-right: 2rem;
-      width: 2rem;
-      height: 2rem;
-      color: #8899a6; }
-
-.hidden {
-  display: none; }
-
-.modal-viewpost-spacer {
-  border: 0.0625rem solid #e1e8ed;
-  border-bottom-style: none;
-  background-color: #f5f8fa;
-  padding: 0.625rem;
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-  animation: fadein 0.5s;
-  width: 35rem; }
-
-.rounded-top {
-  border-top-left-radius: 0.3125rem;
-  border-top-right-radius: 0.3125rem; }
-
-.rounded-bottom {
-  border-bottom-left-radius: 0.3125rem;
-  border-bottom-right-radius: 0.3125rem; }
-
-#modal-viewpost-main, #modal-viewpost-parent, #modal-viewpost-replies {
-  margin-left: 15px; }
-
-#modal-viewpost-parent .row .b-post {
-  background-color: #f5f8fa !important; }
-
-#modal-viewpost-replybox {
-  border: 0.0625rem solid #e1e8ed;
-  border-bottom-style: none;
-  background-color: #f5f8fa;
-  padding: 0.625rem;
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-  animation: fadein 0.5s;
-  width: 35rem; }
-  #modal-viewpost-replybox form {
-    margin: 0.25rem;
-    display: flex; }
-    #modal-viewpost-replybox form .image-container {
-      margin: 0.25rem;
-      width: 2rem;
-      height: 2rem;
-      overflow: hidden;
-      border-radius: 0.3125rem; }
-      #modal-viewpost-replybox form .image-container .image {
-        width: 100%;
-        height: auto;
-        border-radius: 0.3125rem; }
-    #modal-viewpost-replybox form button {
-      margin: 0.25rem; }
+    .post .actions .action-container {
+      display: inline-block;
+      width: 5rem; }
+      .post .actions .action-container .action-button {
+        cursor: pointer;
+        display: inline;
+        background-color: transparent;
+        padding: 0;
+        font-size: 1rem;
+        color: #8899a6; }
+      .post .actions .action-container .reply:before {
+        content: "\f112"; }
+      .post .actions .action-container .action-count {
+        font-weight: 600;
+        font-size: 0.7rem;
+        color: #8899a6; }
+        .post .actions .action-container .action-count:before {
+          content: " "; }
+      .post .actions .action-container .like-true:before {
+        content: "\f004";
+        color: #ac2925;
+        transition: color 0.2s; }
+      .post .actions .action-container .like-false:before {
+        content: "\f004";
+        transition: color 0.2s; }
+      .post .actions .action-container .repost-true:before {
+        content: "\f079";
+        color: #5cb85c;
+        transition: color 0.2s; }
+      .post .actions .action-container .repost-false:before {
+        content: "\f079";
+        transition: color 0.2s; }
 
 .b-table {
   max-width: 100%;
