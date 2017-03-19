@@ -17,13 +17,13 @@
         <div class="col with-3">
             <div class="row">
                 {% with current_user as card_user %}
-                {% with current_user.post_count as card_user_post_count %}
-                {% with current_user.follow_count as card_user_follow_count %}
-                {% with current_user.follower_count as card_user_follower_count %}
-                    {% include "card-profile-small.html" %}
-                {% endwith %}
-                {% endwith %}
-                {% endwith %}
+                    {% with current_user.post_count as card_user_post_count %}
+                        {% with current_user.follow_count as card_user_follow_count %}
+                            {% with current_user.follower_count as card_user_follower_count %}
+                                {% include "card-profile-small.html" %}
+                            {% endwith %}
+                        {% endwith %}
+                    {% endwith %}
                 {% endwith %}
             </div>
             <div class="row">
@@ -31,34 +31,28 @@
             </div>
         </div>
         <div class="col width-6">
-            <div class="row">
-                <div class="b-feed-cap">
-                    <div class="avatar">
-                        <img class="image" src="{{ current_user.avatar.url }}">
-                    </div>
-                    <input class="text-input" type="button" value="What's happening?" onclick="onPostTo();">
+            <div class="b-feed-cap">
+                <div class="avatar">
+                    <img class="image" src="{{ current_user.avatar.url }}">
                 </div>
+                <input class="text-input" type="button" value="What's happening?" onclick="onPostTo();">
             </div>
-            <div class="row">
-                <a class="feed-action-button" href="/">
-                    <div id="view-new-posts" class="b-view-new-posts hidden">
-                        <div class="body">
-                            <p>View x new posts</p>
-                        </div>
+            <a class="feed-action-button" href="/">
+                <div id="view-new-posts" class="b-view-new-posts hidden">
+                    <div class="body">
+                        <p>View x new posts</p>
                     </div>
-                </a>
+                </div>
+            </a>
+            <div id="posts" class="row">
             </div>
-            <div id="posts">
-            </div>
-            <div class="row">
-                <a class="feed-action-button" onclick="loadMainFeed()">
-                    <div id="load-more-posts" class="b-load-more-posts">
-                        <div class="body">
-                            <p>Load more</p>
-                        </div>
+            <a class="feed-action-button" onclick="loadMainFeed()">
+                <div id="load-more-posts" class="b-load-more-posts">
+                    <div class="body">
+                        <p>Load more</p>
                     </div>
-                </a>
-            </div>
+                </div>
+            </a>
         </div>
         <div class="col width-3">
             {% include "card-site-info.html" %}

@@ -126,44 +126,37 @@
 
 <!-- Universal new post modal -->
 {% if user.is_authenticated %}
-    <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog " role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel4">Compose Post</h4>
-                </div>
-                <div class="modal-footer">
-                    <form id="post-form" class="form-horizontal col-md-4" action="{% url "form-new-post" %}" method="post">{% csrf_token %}
-                        {{ post_form.body }}
-                        {{ post_form.parent }}
-                        {{ post_form.target }}
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="button" data-dismiss="modal">Close</button>
-                    <button type="submit" form="post-form" class="button">Post</button>
-                </div>
+    <div class="modal fade" id="new-post-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="spacer rounded-top">
+                <span class="caption">Compose Post</span>
+            </div>
+            <div class="content">
+                <form id="post-form" action="{% url "form-new-post" %}" method="post">{% csrf_token %}
+                    {{ post_form.body }}
+                    {{ post_form.parent }}
+                    {{ post_form.target }}
+                </form>
+            </div>
+            <div class="spacer rounded-bottom">
+                <button type="button" class="button" data-dismiss="modal">Close</button>
+                <button type="submit" form="post-form" class="button">Post</button>
             </div>
         </div>
     </div>
 {% endif %}
 
 <!-- Universal view post modal -->
-<div class="modal fade" id="modal-viewpost" tabindex="-1" role="dialog">
-    <input type="hidden" id="modal-viewpost-username">
-    <input id="modal-viewpost-postid" type="hidden" />
-    <div class="modal-dialog" role="document">
-        <div class="modal-viewpost-spacer rounded-top "> </div>
-        <div id="modal-viewpost-parent"> </div>
-        <div id="modal-viewpost-parent-spacer" class="modal-viewpost-spacer"> </div>
-        <div id="modal-viewpost-main"> </div>
+<div class="modal fade" id="modal-viewpost" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="spacer rounded-top"></div>
+        <div id="modal-viewpost-parent" class="content"> </div>
+        <div id="modal-viewpost-parent-spacer" class="spacer"> </div>
+        <div id="modal-viewpost-main" class="content focus"> </div>
         <div id="modal-viewpost-replybox">
             <form id="viewpost-reply-form" action="{% url "form-new-post" %}" method="post">{% csrf_token %}
                 <div class="image-container">
-                    <img class="image" src="{{ current_user.avatar.url }}" />
+                    <img src="{{ current_user.avatar.url }}" />
                 </div>
                 <textarea id="modal-viewpost-replybox-textarea" class="form-control" rows="1" cols="75" name="body" maxlength="140"></textarea>
                 <input id="modal-viewpost-replybox-parent" name="parent" type="hidden" value="">
@@ -171,11 +164,12 @@
                 <button type="submit" class="button">Reply</button>
             </form>
         </div>
-        <div id="modal-viewpost-replies"> </div>
-        <div class="modal-viewpost-spacer rounded-bottom"> </div>
+        <div id="modal-viewpost-replies" class="content focus"> </div>
+        <div class="spacer rounded-bottom"> </div>
     </div>
 </div>
 
+<!-- Universal hover card -->
 <div class="b-profile-small" id="global-profile-card">
     <div class="banner">
         <img class="image" id="profile-card-banner" src="" />

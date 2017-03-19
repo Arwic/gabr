@@ -1,12 +1,8 @@
 .post {
-    border: $border-size $border-style $col-border;
-    border-bottom-style: none;
-    background-color: $col-background;
+    border: none;
     padding: $padding;
-    margin-left: $margin;
-    margin-right: $margin;
     animation: fadein 0.5s;
-    width: 35rem;
+    width: 100%;
     cursor: pointer;
 
     &:hover {
@@ -111,5 +107,15 @@
                 transition: color 0.2s;
             }
         }
+    }
+}
+
+#posts {
+    .post {
+        border: $border-size $border-style $col-border;
+        border-bottom-style: none;
+        margin-left: $margin;
+        margin-right: $margin;
+        background-color: $col-background;
     }
 }

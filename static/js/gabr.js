@@ -496,6 +496,7 @@ function writePost(post_json, parent_selector) {
         like_class = "action-button icon like-true block-expand";
     var s_like = c_span(s_like_container, like_class);
     s_like.setAttribute("onclick", "onLikeButton(" + post_json["id"] + ")");
+    s_like.setAttribute("id", "like-" + post_json["id"]);
     var s_like_count = c_span(s_like_container, "action-count", post_json["like-count"]);
 
     var s_repost_container = c_span(d_actions, "action-container");
@@ -517,7 +518,6 @@ function viewPost(post_id) {
         dataType: "json",
         success: function (data) {
             $("#modal-viewpost-parent").empty();
-            console.log("parent = " + data["parent"]);
             if (data["parent"]) {
                 writePost(data["parent"], "#modal-viewpost-parent");
                 $("#modal-viewpost-parent-spacer").toggleClass("hidden", true);

@@ -9,6 +9,10 @@
     overflow: hidden;
     outline: 0;
 
+    .caption {
+
+    }
+
     .modal-dialog {
         width: 600px;
         animation: fadein 0.5s;
@@ -23,7 +27,15 @@
         }
 
         .content {
+            border: $border-size $border-style $col-border;
+            border-bottom-style: none;
+            background-color: $col-not-focused;
+            margin-left: $margin;
+            margin-right: $margin;
+        }
 
+        .focus {
+            background-color: $col-background;
         }
 
         .rounded-top {
@@ -38,29 +50,15 @@
     }
 }
 
-#modal-viewpost-main, #modal-viewpost-parent, #modal-viewpost-replies {
-    margin-left: 15px; // FIXME: this is a bandaid fix
-}
-
-#modal-viewpost-parent {
-    .row {
-        .b-post {
-            background-color: $col-not-focused !important;
-        }
-    }
-}
-
 #modal-viewpost-replybox {
     border: $border-size $border-style $col-border;
     border-bottom-style: none;
     background-color: $col-not-focused;
     padding: $padding;
-    margin-left: $margin;
-    margin-right: $margin;
     animation: fadein 0.5s;
     width: 35rem;
 
-    form {
+    #viewpost-reply-form {
         margin: $margin;
         display: flex;
 
@@ -71,7 +69,7 @@
             overflow: hidden;
             border-radius: $border-radius;
 
-            .image {
+            img {
                 width: 100%;
                 height: auto;
                 border-radius: $border-radius;
