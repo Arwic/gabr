@@ -532,15 +532,16 @@ function viewPost(post_id) {
             console.log("parent = " + data["parent"]);
             if (data["parent"]) {
                 writePost(data["parent"], "#modal-viewpost-parent");
-                $("#modal-viewpost-parent-spacer").toggleClass("hidden", false);
+                $("#modal-viewpost-parent-spacer").toggleClass("hidden", true);
             }
             else {
                 $("#modal-viewpost-parent-spacer").toggleClass("hidden", true);
             }
-            $("#viewpost-reply-form textarea[name='body']").attr("placeholder", "Reply to @" + data["main"]["user"]["username"]);
-            $("#viewpost-reply-form textarea[name='body']").attr("onclick",
-                "console.log('clicked textarea');$('#viewpost-reply-form textarea[name='body']').val('@' + data['main']['user']['username'] + ' ');");
-            $("#viewpost-reply-form input[name='parent']").val(data["main"]["id"]);
+            var ta = $("#modal-viewpost-replybox-textarea");
+            ta.attr("placeholder", "Reply to @" + data["main"]["user"]["username"]);
+            ta.attr("onfocus", "$('#viewpost-reply-form textarea[name='body']').val('@' + data['main']['user']['username'] + ' ');");
+            $("#modal-viewpost-replybox-parent").val(data["main"]["id"]);
+            $("#modal-viewpost-replybox-target").val("");
             $("#modal-viewpost-main").empty();
             writePost(data["main"], "#modal-viewpost-main");
             $("#modal-viewpost-replies").empty();
