@@ -241,7 +241,7 @@ function onRepostButton(target_post_id) {
 function onReplyButton(target_username, parent_post_id) {
     $("#post-form textarea[name='body']").val("@" + target_username + " ");
     $("#post-form input[name='parent']").val(parent_post_id);
-    $("#new-post-modal").modal();
+    $("#modal-newpost").modal();
 }
 
 function onFollowButton(target_username) {
@@ -267,7 +267,7 @@ function onPostTo(target_username) {
     if (target_username != null)
         $("#post-form textarea[name='body']").val("@" + target_username + " ");
     $("#post-form input[name='parent']").val("");
-    $("#new-post-modal").modal();
+    $("#modal-newpost").modal();
 }
 
 

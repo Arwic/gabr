@@ -78,3 +78,15 @@
 #modal-viewpost-bottom-cap, #modal-viewpost-top-cap {
     border: $border-size $border-style $col-border;
 }
+
+#modal-newpost {
+    #post-form {
+        textarea {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        border: $border-size $border-style $col-border;
+        padding: $padding;
+    }
+}

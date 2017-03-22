@@ -113,4 +113,10 @@ tests/report/
 media/*
 */migrations/*
 __private.*
+
+# Virtual env files
 gabrenv/*
+
+# Generated files
+static/css/gabr.css
+static/css/gabr.css.map
