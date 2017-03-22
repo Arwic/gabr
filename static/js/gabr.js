@@ -44,21 +44,6 @@ function guid() {
     return id;
 }
 
-// http://stackoverflow.com/a/499158/3105105
-function setSelectionRange(input, selectionStart, selectionEnd) {
-    if (input.setSelectionRange) {
-        input.focus();
-        input.setSelectionRange(selectionStart, selectionEnd);
-    }
-    else if (input.createTextRange) {
-        var range = input.createTextRange();
-        range.collapse(true);
-        range.moveEnd('character', selectionEnd);
-        range.moveStart('character', selectionStart);
-        range.select();
-    }
-}
-
 // http://stackoverflow.com/a/841121/3105105
 $.fn.selectRange = function(start, end) {
     if(end === undefined) {
