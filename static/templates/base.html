@@ -153,7 +153,7 @@
         <div id="modal-viewpost-parent" class="content"> </div>
         <div id="modal-viewpost-parent-spacer" class="spacer"> </div>
         <div id="modal-viewpost-main" class="content focus"> </div>
-        <div id="modal-viewpost-replybox">
+        <div id="modal-viewpost-replybox" class="spacer">
             <form id="viewpost-reply-form" action="{% url "form-new-post" %}" method="post">{% csrf_token %}
                 <div class="image-container">
                     <img src="{{ current_user.avatar.url }}" />

@@ -50,34 +50,25 @@
     }
 }
 
-#modal-viewpost-replybox {
-    border: $border-size $border-style $col-border;
-    border-bottom-style: none;
-    background-color: $col-not-focused;
-    padding: $padding;
-    animation: fadein 0.5s;
-    width: 35rem;
+#viewpost-reply-form {
+    margin: 0.4rem;
+    display: flex;
 
-    #viewpost-reply-form {
+    .image-container {
         margin: $margin;
-        display: flex;
+        width: 2rem;
+        height: 2rem;
+        overflow: hidden;
+        border-radius: $border-radius;
 
-        .image-container {
-            margin: $margin;
-            width: 2rem;
-            height: 2rem;
-            overflow: hidden;
+        img {
+            width: 100%;
+            height: auto;
             border-radius: $border-radius;
-
-            img {
-                width: 100%;
-                height: auto;
-                border-radius: $border-radius;
-            }
         }
+    }
 
-        button {
-            margin: $margin;
-        }
+    button {
+        margin: $margin;
     }
 }

@@ -66,28 +66,21 @@ body {
       border-bottom-left-radius: 0.3125rem;
       border-bottom-right-radius: 0.3125rem; }
 
-#modal-viewpost-replybox {
-  border: 0.0625rem solid #e1e8ed;
-  border-bottom-style: none;
-  background-color: #f5f8fa;
-  padding: 0.625rem;
-  animation: fadein 0.5s;
-  width: 35rem; }
-  #modal-viewpost-replybox #viewpost-reply-form {
+#viewpost-reply-form {
+  margin: 0.4rem;
+  display: flex; }
+  #viewpost-reply-form .image-container {
     margin: 0.25rem;
-    display: flex; }
-    #modal-viewpost-replybox #viewpost-reply-form .image-container {
-      margin: 0.25rem;
-      width: 2rem;
-      height: 2rem;
-      overflow: hidden;
+    width: 2rem;
+    height: 2rem;
+    overflow: hidden;
+    border-radius: 0.3125rem; }
+    #viewpost-reply-form .image-container img {
+      width: 100%;
+      height: auto;
       border-radius: 0.3125rem; }
-      #modal-viewpost-replybox #viewpost-reply-form .image-container img {
-        width: 100%;
-        height: auto;
-        border-radius: 0.3125rem; }
-    #modal-viewpost-replybox #viewpost-reply-form button {
-      margin: 0.25rem; }
+  #viewpost-reply-form button {
+    margin: 0.25rem; }
 
 .textbox {
   border-radius: 0.3125rem;
