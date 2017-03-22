@@ -50,6 +50,8 @@
 
 #modal-viewpost-replybox {
     border: $border-size $border-style $col-border;
+    margin-top: -1px;
+    margin-bottom: -1px;
 
     #viewpost-reply-form {
         margin: 0.4rem;

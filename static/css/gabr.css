@@ -65,7 +65,9 @@ body {
       border-bottom-right-radius: 0.3125rem; }
 
 #modal-viewpost-replybox {
-  border: 0.0625rem solid #e1e8ed; }
+  border: 0.0625rem solid #e1e8ed;
+  margin-top: -1px;
+  margin-bottom: -1px; }
   #modal-viewpost-replybox #viewpost-reply-form {
     margin: 0.4rem;
     display: flex; }
