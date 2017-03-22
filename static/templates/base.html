@@ -149,9 +149,8 @@
 <!-- Universal view post modal -->
 <div class="modal fade" id="modal-viewpost" tabindex="-1">
     <div class="modal-dialog">
-        <div class="spacer rounded-top"></div>
+        <div id="modal-viewpost-top-cap" class="spacer rounded-top"></div>
         <div id="modal-viewpost-parent" class="content"> </div>
-        <div id="modal-viewpost-parent-spacer" class="spacer"> </div>
         <div id="modal-viewpost-main" class="content focus"> </div>
         <div id="modal-viewpost-replybox" class="spacer">
             <form id="viewpost-reply-form" action="{% url "form-new-post" %}" method="post">{% csrf_token %}
@@ -165,7 +164,7 @@
             </form>
         </div>
         <div id="modal-viewpost-replies" class="content focus"> </div>
-        <div class="spacer rounded-bottom"> </div>
+        <div id="modal-viewpost-bottom-cap" class="spacer rounded-bottom"> </div>
     </div>
 </div>
 

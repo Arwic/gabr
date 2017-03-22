@@ -18,8 +18,7 @@
         animation: fadein 0.5s;
 
         .spacer {
-            border: $border-size $border-style $col-border;
-            border-bottom-style: none;
+            border-style: none;
             background-color: $col-not-focused;
             padding: $padding;
             margin-left: $margin;
@@ -27,8 +26,7 @@
         }
 
         .content {
-            border: $border-size $border-style $col-border;
-            border-bottom-style: none;
+            border-style: none;
             background-color: $col-not-focused;
             margin-left: $margin;
             margin-right: $margin;
@@ -50,25 +48,33 @@
     }
 }
 
-#viewpost-reply-form {
-    margin: 0.4rem;
-    display: flex;
+#modal-viewpost-replybox {
+    border: $border-size $border-style $col-border;
 
-    .image-container {
-        margin: $margin;
-        width: 2rem;
-        height: 2rem;
-        overflow: hidden;
-        border-radius: $border-radius;
+    #viewpost-reply-form {
+        margin: 0.4rem;
+        display: flex;
 
-        img {
-            width: 100%;
-            height: auto;
+        .image-container {
+            margin: $margin;
+            width: 2rem;
+            height: 2rem;
+            overflow: hidden;
             border-radius: $border-radius;
+
+            img {
+                width: 100%;
+                height: auto;
+                border-radius: $border-radius;
+            }
+        }
+
+        button {
+            margin: $margin;
         }
     }
+}
 
-    button {
-        margin: $margin;
-    }
+#modal-viewpost-bottom-cap, #modal-viewpost-top-cap {
+    border: $border-size $border-style $col-border;
 }

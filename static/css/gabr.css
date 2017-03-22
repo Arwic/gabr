@@ -45,15 +45,13 @@ body {
     width: 600px;
     animation: fadein 0.5s; }
     .modal .modal-dialog .spacer {
-      border: 0.0625rem solid #e1e8ed;
-      border-bottom-style: none;
+      border-style: none;
       background-color: #f5f8fa;
       padding: 0.625rem;
       margin-left: 0.25rem;
       margin-right: 0.25rem; }
     .modal .modal-dialog .content {
-      border: 0.0625rem solid #e1e8ed;
-      border-bottom-style: none;
+      border-style: none;
       background-color: #f5f8fa;
       margin-left: 0.25rem;
       margin-right: 0.25rem; }
@@ -66,21 +64,26 @@ body {
       border-bottom-left-radius: 0.3125rem;
       border-bottom-right-radius: 0.3125rem; }
 
-#viewpost-reply-form {
-  margin: 0.4rem;
-  display: flex; }
-  #viewpost-reply-form .image-container {
-    margin: 0.25rem;
-    width: 2rem;
-    height: 2rem;
-    overflow: hidden;
-    border-radius: 0.3125rem; }
-    #viewpost-reply-form .image-container img {
-      width: 100%;
-      height: auto;
+#modal-viewpost-replybox {
+  border: 0.0625rem solid #e1e8ed; }
+  #modal-viewpost-replybox #viewpost-reply-form {
+    margin: 0.4rem;
+    display: flex; }
+    #modal-viewpost-replybox #viewpost-reply-form .image-container {
+      margin: 0.25rem;
+      width: 2rem;
+      height: 2rem;
+      overflow: hidden;
       border-radius: 0.3125rem; }
-  #viewpost-reply-form button {
-    margin: 0.25rem; }
+      #modal-viewpost-replybox #viewpost-reply-form .image-container img {
+        width: 100%;
+        height: auto;
+        border-radius: 0.3125rem; }
+    #modal-viewpost-replybox #viewpost-reply-form button {
+      margin: 0.25rem; }
+
+#modal-viewpost-bottom-cap, #modal-viewpost-top-cap {
+  border: 0.0625rem solid #e1e8ed; }
 
 .textbox {
   border-radius: 0.3125rem;
@@ -144,7 +147,6 @@ body {
   border: none;
   padding: 0.625rem;
   animation: fadein 0.5s;
-  width: 100%;
   cursor: pointer; }
   .post:hover {
     background-color: #f5f8fa; }
@@ -221,6 +223,11 @@ body {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
   background-color: #ffffff; }
+
+#modal-viewpost .post {
+  border: 0.0625rem solid #e1e8ed;
+  margin-top: -1px;
+  margin-bottom: -1px; }
 
 .b-table {
   max-width: 100%;
