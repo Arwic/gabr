@@ -20,14 +20,12 @@ def like_post(request):
     post = get_object_or_404(Post, id=post_id)
     try:
         like = Like.objects.get(post=post, user=current_user)
-        print("unliking")
         like.delete()
         response = {
             'liked': False,
             'post-id': post_id,
         }
     except Like.DoesNotExist:
-        print("liking")
         Like.objects.create(user=current_user, post=post)
         response = {
             'liked': True,

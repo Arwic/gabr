@@ -44,6 +44,41 @@ function guid() {
     return id;
 }
 
+// http://stackoverflow.com/a/499158/3105105
+function setSelectionRange(input, selectionStart, selectionEnd) {
+    if (input.setSelectionRange) {
+        input.focus();
+        input.setSelectionRange(selectionStart, selectionEnd);
+    }
+    else if (input.createTextRange) {
+        var range = input.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', selectionEnd);
+        range.moveStart('character', selectionStart);
+        range.select();
+    }
+}
+
+// http://stackoverflow.com/a/841121/3105105
+$.fn.selectRange = function(start, end) {
+    if(end === undefined) {
+        end = start;
+    }
+    return this.each(function() {
+        if('selectionStart' in this) {
+            this.selectionStart = start;
+            this.selectionEnd = end;
+        } else if(this.setSelectionRange) {
+            this.setSelectionRange(start, end);
+        } else if(this.createTextRange) {
+            var range = this.createTextRange();
+            range.collapse(true);
+            range.moveEnd('character', end);
+            range.moveStart('character', start);
+            range.select();
+        }
+    });
+};
 
 function getCookie(cookieName) {
     if (document.cookie.length > 0) {
@@ -177,10 +212,13 @@ function onLikeButton(post_id) {
                 modal_like.toggleClass("like-false", !data["liked"]);
             }
             else {
-                console.log("");
                 var like = $("#like-" + data["post-id"]);
                 like.toggleClass("like-true", data["liked"]);
                 like.toggleClass("like-false", !data["liked"]);
+                var s_like_count = $("#like-count-" + data["post-id"]);
+                var deltaL = data["liked"] ? 1 : -1;
+                s_like_count.val(parseInt(s_like_count.val()) + deltaL);
+                console.log("adding " + deltaL + " to like count " + data["post-id"])
             }
         },
         failure: function (data) {
@@ -489,6 +527,7 @@ function writePost(post_json, parent_selector) {
     s_reply.setAttribute("onclick",
         "onReplyButton('" + post_json["user"]["username"] + "', " + post_json["id"] + ")");
     var s_reply_count = c_span(s_reply_container, "action-count", post_json["reply-count"]);
+    s_reply_count.setAttribute("id", "reply-count-" + post_json["id"]);
 
     var s_like_container = c_span(d_actions, "action-container");
     var like_class = "action-button icon like-false block-expand";
@@ -498,6 +537,7 @@ function writePost(post_json, parent_selector) {
     s_like.setAttribute("onclick", "onLikeButton(" + post_json["id"] + ")");
     s_like.setAttribute("id", "like-" + post_json["id"]);
     var s_like_count = c_span(s_like_container, "action-count", post_json["like-count"]);
+    s_like_count.setAttribute("id", "like-count-" + post_json["id"]);
 
     var s_repost_container = c_span(d_actions, "action-container");
     var repost_class = "action-button icon repost-false block-expand";
@@ -505,6 +545,7 @@ function writePost(post_json, parent_selector) {
         repost_class = "action-button icon repost-true block-expand";
     var s_repost = c_span(s_repost_container, repost_class);
     var s_repost_count = c_span(s_repost_container, "action-count", post_json["repost-count"]);
+    s_repost_count.setAttribute("id", "repost-count-" + post_json["id"]);
 }
 
 // Opens the post with the given id in the view post modal
@@ -518,16 +559,20 @@ function viewPost(post_id) {
         dataType: "json",
         success: function (data) {
             $("#modal-viewpost-parent").empty();
-            if (data["parent"]) {
+            if (data["parent"])
                 writePost(data["parent"], "#modal-viewpost-parent");
-                $("#modal-viewpost-parent-spacer").toggleClass("hidden", true);
-            }
-            else {
-                $("#modal-viewpost-parent-spacer").toggleClass("hidden", true);
-            }
             var ta = $("#modal-viewpost-replybox-textarea");
+            ta.val("");
             ta.attr("placeholder", "Reply to @" + data["main"]["user"]["username"]);
-            ta.attr("onfocus", "$('#viewpost-reply-form textarea[name='body']').val('@' + data['main']['user']['username'] + ' ');");
+            var ta_on_focus =
+                "$('#viewpost-reply-form textarea[name=\"body\"]').val('@" + data['main']['user']['username'] + " ');" +
+                "$('#viewpost-reply-form textarea[name=\"body\"]').selectRange(50);";
+            var ta_on_click =
+                "var ta = $('#viewpost-reply-form textarea[name=\"body\"]');" +
+                "if (ta.val() == '' || ta.val() == '@Tim ') " +
+                "   ta.selectRange(50);";
+            ta.attr("onfocus", ta_on_focus);
+            ta.attr("onclick", ta_on_click);
             $("#modal-viewpost-replybox-parent").val(data["main"]["id"]);
             $("#modal-viewpost-replybox-target").val("");
             $("#modal-viewpost-main").empty();
